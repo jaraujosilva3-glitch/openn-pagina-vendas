@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Openn Business Solutions — Regularização Fiscal para Psicólogos</title>
+    <meta name="description" content="Regularização fiscal completa para psicólogos. Recibos, notas fiscais, IRPF — tudo feito por especialistas. Você cuida dos seus pacientes, a gente cuida do resto.">
+
+    <!-- META PIXEL — substituir REPLACE_FB_PIXEL_ID pelo seu ID -->
+    <!--
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'REPLACE_FB_PIXEL_ID');
+    fbq('track', 'PageView');
+    </script>
+    -->
+
+    <!-- GOOGLE TAG MANAGER — substituir GTM-XXXXXXX pelo seu ID -->
+    <!--
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    -->
+
+    <!-- GOOGLE FONTS — Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─────────────────────────────────────
+           BRAND VARIABLES
+        ───────────────────────────────────── */
+        :root {
+            --gold:        rgb(213, 171, 57);
+            --gold-light:  rgba(213, 171, 57, 0.10);
+            --gold-border: rgba(213, 171, 57, 0.28);
+            --petrol:      rgb(1, 91, 127);
+            --petrol-light:rgba(1, 91, 127, 0.07);
+            --gray:        rgb(64, 64, 64);
+            --white:       #ffffff;
+            --warm:        #fafaf8;
+            --dark:        #06151d;
+            --dark-2:      #0a1f2e;
+            --radius:      18px;
+            --radius-sm:   10px;
+            --radius-pill: 100px;
+            --shadow-sm:   0 2px 14px rgba(1,91,127,0.07);
+            --shadow-gold: 0 4px 28px rgba(213,171,57,0.18);
+            --shadow-dark: 0 8px 40px rgba(0,0,0,0.3);
+        }
+
+        /* ─────────────────────────────────────
+           RESET & BASE
+        ───────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 126.5%; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: var(--gray);
+            background: var(--white);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─────────────────────────────────────
+           TYPOGRAPHY
+        ───────────────────────────────────── */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--petrol);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        h1 { font-size: clamp(1.52rem, 5vw, 2.61rem); }
+        h2 { font-size: clamp(1.13rem, 3.5vw, 1.74rem); }
+        h3 { font-size: clamp(0.87rem, 2.5vw, 1.17rem); }
+        p  { font-weight: 300; color: var(--gray); line-height: 1.8; }
+
+        .num-gold   { font-weight: 800; color: var(--gold); }
+        .num-petrol { font-weight: 800; color: var(--petrol); }
+        .gold-text  { color: var(--gold); }
+
+        /* ─────────────────────────────────────
+           LAYOUT
+        ───────────────────────────────────── */
+        .container      { width: min(100% - 80px, 1480px); margin: 0 auto; padding: 0 2rem; }
+        .container-wide { width: min(100% - 80px, 1480px); margin: 0 auto; padding: 0 2rem; }
+        .container-hero { width: min(100% - 80px, 1560px); margin: 0 auto; padding: 0 3rem; }
+        section { padding: 3.5rem 0; }
+
+        .gold-line      { width: 56px; height: 3px; background: var(--gold); margin: 1.5rem auto; }
+        .gold-line-left { width: 56px; height: 3px; background: var(--gold); margin: 1.5rem 0; }
+
+        /* ─────────────────────────────────────
+           SECTION LABEL
+        ───────────────────────────────────── */
+        .section-label {
+            display: inline-block;
+            background: var(--gold-light);
+            color: var(--gold);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            padding: 0.38rem 1.1rem;
+            border: 1px solid var(--gold-border);
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius-pill);
+        }
+
+        /* ─────────────────────────────────────
+           BUTTONS
+        ───────────────────────────────────── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1.1rem 2.4rem;
+            border: 2px solid var(--gold);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .btn-primary:hover { background: rgb(228,183,55); border-color: rgb(228,183,55); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: var(--petrol);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1.05rem 2.2rem;
+            border: 2px solid var(--petrol);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .btn-outline:hover { background: var(--petrol); color: var(--white); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: #25D366;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+
+        .btn-sub {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+            text-transform: none;
+            color: var(--gray);
+            margin-top: 0.6rem;
+            text-align: center;
+        }
+
+        /* ─────────────────────────────────────
+           COUNTDOWN BAR
+        ───────────────────────────────────── */
+        .countdown-bar {
+            background: var(--gold);
+            color: white;
+            text-align: center;
+            padding: 0.85rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+        .countdown-bar strong { font-weight: 800; font-size: 0.92rem; color: var(--petrol); }
+
+        /* ─────────────────────────────────────
+           SECTION 1 — HERO
+        ───────────────────────────────────── */
+        #hero {
+            background: var(--dark);
+            border-bottom: none;
+            padding: 0;
+            text-align: left;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(520px, 1fr) minmax(520px, 1fr);
+            min-height: 92vh;
+            align-items: center;
+            gap: 4rem;
+            padding: 5rem 0;
+        }
+        .hero-left-col { max-width: 100%; }
+        @media (min-width: 861px) and (max-width: 1100px) {
+            .hero-grid { gap: 3rem; grid-template-columns: 1fr 1fr; }
+            .hero-left-col { max-width: 100%; }
+        }
+        @media (max-width: 860px) {
+            .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0 3rem; gap: 2rem; }
+            .hero-right-col { display: none; }
+            .hero-left-col { max-width: 100%; }
+        }
+        #hero .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(213,171,57,0.1);
+            color: var(--gold);
+            font-size: 0.63rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.45rem 1.2rem;
+            border: 1px solid rgba(213,171,57,0.22);
+            border-radius: var(--radius-pill);
+            margin-bottom: 2rem;
+        }
+        .hero-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; flex-shrink: 0; }
+        #hero h1 {
+            color: white;
+            font-size: clamp(1.88rem, 4.95vw, 3.13rem);
+            line-height: 1.08;
+            letter-spacing: 0.01em;
+            text-transform: none;
+            font-weight: 800;
+            margin-bottom: 0;
+        }
+        #hero h1 em {
+            color: var(--gold);
+            font-style: normal;
+            display: block;
+        }
+        #hero .hero-sub {
+            font-size: 1rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.65);
+            margin: 1.75rem 0 2rem;
+            line-height: 1.8;
+        }
+        .hero-bullets {
+            list-style: none;
+            display: block;
+            text-align: left;
+            margin: 0 0 2.5rem;
+        }
+        .hero-bullets li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.93rem;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 0.65rem;
+            font-weight: 300;
+        }
+        .hero-bullets li::before {
+            content: "✦";
+            color: var(--gold);
+            font-weight: 800;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+        }
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 3rem;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(213,171,57,0.18);
+        }
+        .stat-item { text-align: left; }
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+        .stat-num span { color: var(--gold); }
+        .stat-label {
+            font-size: 0.68rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.4rem;
+        }
+
+        /* Hero photo side */
+        .hero-right-col {
+            position: relative;
+            height: 86vh;
+            max-height: 780px;
+        }
+        .hero-photo-wrap {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+        }
+        .hero-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+        .hero-photo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6,21,29,0.15) 0%, transparent 60%);
+            border-radius: var(--radius);
+        }
+
+        /* Floating cards */
+        .float-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-dark);
+            min-width: 170px;
+            z-index: 10;
+        }
+        .float-card-1 { top: 12%; right: -6rem; }
+        .float-card-2 { bottom: 22%; left: -1.75rem; background: var(--dark-2); border: 1px solid rgba(213,171,57,0.2); }
+        .float-card .fc-dot-green { display: inline-block; width: 7px; height: 7px; background: #4ade80; border-radius: 50%; margin-right: 0.3rem; vertical-align: middle; }
+        .float-card .fc-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--petrol); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.3rem; }
+        .float-card .fc-num { font-size: 1.7rem; font-weight: 800; color: var(--petrol); line-height: 1; }
+        .float-card .fc-desc { font-size: 0.7rem; color: var(--gray); margin-top: 0.25rem; font-weight: 300; }
+        .float-card-2 .fc-label { color: rgba(255,255,255,0.45); }
+        .float-card-2 .fc-num { color: var(--gold); }
+        .float-card-2 .fc-desc { color: rgba(255,255,255,0.55); }
+
+        /* Nameplate Joyce */
+        .photo-nameplate {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 2.5rem 1.5rem 1.4rem;
+            background: linear-gradient(to top, rgba(6,21,29,0.94) 0%, rgba(6,21,29,0.6) 60%, transparent 100%);
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+        .pn-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
+        .pn-name { font-size: 1.2rem; font-weight: 800; color: white; letter-spacing: 0.02em; line-height: 1.2; }
+        .pn-title { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 0.25rem; letter-spacing: 0.04em; }
+
+        /* ─────────────────────────────────────
+           SECTION 2 — PROBLEMA
+        ───────────────────────────────────── */
+        #problema { background: var(--white); }
+
+        .problema-card {
+            background: var(--petrol-light);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        .problema-card p { font-weight: 400; color: var(--petrol); font-size: 1rem; }
+
+        /* ─────────────────────────────────────
+           SECTION 3 — AMPLIFICAÇÃO
+        ───────────────────────────────────── */
+        #amplificacao { background: var(--dark); border-top: 1px solid rgba(213,171,57,0.12); border-bottom: 1px solid rgba(213,171,57,0.12); }
+        #amplificacao h2 { color: var(--white); }
+        #amplificacao p  { color: rgba(255,255,255,0.8); }
+        #amplificacao .section-label {
+            background: rgba(213,171,57,0.15);
+            color: var(--gold);
+            border-color: rgba(213,171,57,0.35);
+        }
+        .amp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+        @media (max-width: 720px) { .amp-grid { grid-template-columns: 1fr; } }
+        .amp-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .amp-list li {
+            display: flex;
+            gap: 0.75rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .amp-list li span.arr { color: var(--gold); font-weight: 700; flex-shrink: 0; }
+        .calc-box {
+            border: 1px solid rgba(213,171,57,0.3);
+            padding: 2rem;
+            margin: 2.5rem 0;
+        }
+        .calc-box .intro { color: rgba(255,255,255,0.9); font-weight: 400; margin-bottom: 1.5rem; }
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            gap: 1rem;
+        }
+        .calc-row:last-child { border-bottom: none; }
+        .calc-row .cl { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+        .calc-row .cv { font-weight: 800; font-size: 1rem; color: var(--gold); text-align: right; }
+        .trial-close {
+            font-style: italic;
+            color: rgba(255,255,255,0.55);
+            font-size: 0.9rem;
+            margin-top: 2.5rem;
+            text-align: right;
+        }
+
+        /* ─────────────────────────────────────
+           SECTION 4 — HISTÓRIA
+        ───────────────────────────────────── */
+        #historia { background: var(--warm); }
+        .historia-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        @media (max-width: 720px) { .historia-grid { grid-template-columns: 1fr; gap: 2rem; } }
+        .historia-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: var(--petrol-light);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .historia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .photo-placeholder {
+            text-align: center;
+            color: var(--petrol);
+            padding: 2rem;
+        }
+        .photo-placeholder span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+        .photo-placeholder p { font-size: 0.75rem; color: var(--petrol); font-weight: 300; }
+        .photo-placeholder small { color: var(--gold); font-size: 0.65rem; }
+        .historia-quote {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--petrol);
+            border-left: 3px solid var(--gold);
+            padding: 0.75rem 1.5rem;
+            margin: 2rem 0;
+            font-weight: 400;
+        }
+
+        /* ─────────────────────────────────────
+           SECTION 5 — AUTORIDADE
+        ───────────────────────────────────── */
+        #autoridade { background: var(--dark); }
+        #autoridade h2 { color: var(--white); }
+        #autoridade p  { color: rgba(255,255,255,0.65); }
+        #autoridade .section-label { background: rgba(213,171,57,0.1); color: var(--gold); border-color: rgba(213,171,57,0.22); }
+        .numeros-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        @media (max-width: 580px) { .numeros-grid { grid-template-columns: repeat(2, 1fr); } }
+        .num-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(213,171,57,0.12);
+            padding: 2.25rem 1.25rem;
+            text-align: center;
+            border-radius: var(--radius-sm);
+        }
+        .num-card:nth-child(odd)  { border-bottom: 3px solid var(--gold); }
+        .num-card:nth-child(even) { border-bottom: 3px solid var(--petrol); }
+        .num-card .big { font-size: 2.6rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
+        .num-card .big span { color: var(--gold); }
+        .num-card .desc { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.6rem; line-height: 1.4; }
+        .depo-destaque {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(213,171,57,0.2);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        .depo-destaque .qt { font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.8); font-weight: 300; line-height: 1.8; }
+        .depo-destaque .aut { margin-top: 1rem; font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.7); }
+        .depo-destaque .det { font-size: 0.75rem; color: var(--gold); font-weight: 300; }
+
+        /* ─────────────────────────────────────
+           SECTION 6 — TRANSFORMAÇÃO
+        ───────────────────────────────────── */
+        #transformacao { background: var(--white); }
+        .dream-box {
+            background: var(--petrol-light);
+            border: 1px solid var(--gold-border);
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            border-radius: var(--radius);
+        }
+        .dream-box p { font-size: 1rem; color: var(--petrol); font-weight: 300; }
+        .dream-box strong { font-weight: 700; color: var(--petrol); }
+        table.ad {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2.5rem 0;
+        }
+        table.ad th {
+            background: var(--petrol);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 1rem 1.5rem;
+            text-align: left;
+        }
+        table.ad th:first-child { border-right: 2px solid var(--gold); }
+        table.ad td {
+            padding: 0.9rem 1.5rem;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(64,64,64,0.08);
+            vertical-align: top;
+        }
+        table.ad tr:last-child td { border-bottom: none; }
+        table.ad td:first-child { background: rgba(64,64,64,0.03); border-right: 2px solid var(--gold); color: var(--gray); }
+        table.ad td:first-child::before { content: "✗  "; color: #b00; font-weight: 700; }
+        table.ad td:last-child { color: var(--petrol); font-weight: 400; }
+        table.ad td:last-child::before { content: "✓  "; color: var(--gold); font-weight: 800; }
+        @media (max-width: 560px) {
+            table.ad td, table.ad th { padding: 0.75rem 1rem; font-size: 0.8rem; }
+        }
+
+        /* ─────────────────────────────────────
+           SECTION 7 — DEPOIMENTOS
+        ───────────────────────────────────── */
+        #depoimentos { background: var(--warm); }
+        .depos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 3rem auto;
+            max-width: 740px;
+        }
+        @media (max-width: 600px) { .depos-grid { grid-template-columns: 1fr; } }
+        .depo-card {
+            background: var(--white);
+            border: 1px solid rgba(64,64,64,0.08);
+            border-top: 3px solid var(--gold);
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .depo-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(1,91,127,0.1); }
+        .depo-card img.depo-img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        .depo-card .depo-caption {
+            padding: 0.85rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--white);
+        }
+        .depo-card .depo-caption .stars { color: var(--gold); font-size: 0.75rem; flex-shrink: 0; white-space: nowrap; }
+        .depo-card .depo-caption .name { font-weight: 700; font-size: 0.8rem; color: var(--petrol); }
+        .depo-card .depo-caption .loc  { font-size: 0.68rem; color: rgba(64,64,64,0.6); font-weight: 300; }
+
+        /* ─────────────────────────────────────
+           SECTION 8 — PARA QUEM É
+        ───────────────────────────────────── */
+        #para-quem { background: var(--white); }
+        .pq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2.5rem 0;
+        }
+        @media (max-width: 580px) { .pq-grid { grid-template-columns: 1fr; } }
+        .pq-heading { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .pq-heading.yes { color: var(--gold); }
+        .pq-heading.no  { color: rgba(64,64,64,0.4); }
+        .ck-list { list-style: none; }
+        .ck-list li {
+            display: flex; gap: 0.75rem;
+            align-items: flex-start;
+            font-size: 0.88rem; color: var(--gray);
+            margin-bottom: 1rem; line-height: 1.6;
+        }
+        .ck-list.yes li::before { content: "✓"; color: var(--gold); font-weight: 800; flex-shrink: 0; }
+        .ck-list.no  li::before { content: "✗"; color: rgba(64,64,64,0.35); font-weight: 800; flex-shrink: 0; }
+
+        /* ─────────────────────────────────────
+           SECTION 9 — OFERTA
+        ───────────────────────────────────── */
+        #oferta { background: var(--dark-2); }
+        #oferta h2 { color: var(--white); }
+        #oferta p  { color: rgba(255,255,255,0.6); }
+        #oferta .section-label { background: rgba(213,171,57,0.1); color: var(--gold); border-color: rgba(213,171,57,0.22); }
+        #oferta .nao-sabe { background: rgba(255,255,255,0.04); border-color: rgba(213,171,57,0.2); }
+        #oferta .nao-sabe h3 { color: var(--white); }
+        #oferta .nao-sabe p  { color: rgba(255,255,255,0.55); }
+
+        /* ── OVERRIDE: força cores escuras em todos os elementos dos cards de plano ── */
+        #oferta .plano p,
+        #oferta .plano p * {
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
+            opacity: 1 !important;
+        }
+        #oferta .plano li,
+        #oferta .plano li * {
+            color: #333333 !important;
+            -webkit-text-fill-color: #333333 !important;
+            opacity: 1 !important;
+        }
+        #oferta .plano .plano-nome {
+            color: var(--gold) !important;
+            -webkit-text-fill-color: var(--gold) !important;
+        }
+        #oferta .plano .plano-titulo {
+            color: var(--petrol) !important;
+            -webkit-text-fill-color: var(--petrol) !important;
+        }
+        #oferta .plano .preco-valor {
+            color: var(--petrol) !important;
+            -webkit-text-fill-color: var(--petrol) !important;
+        }
+        #oferta .plano .preco-mes,
+        #oferta .plano .preco-dia {
+            color: #555555 !important;
+            -webkit-text-fill-color: #555555 !important;
+        }
+        #oferta .plano .plano-preco-final::before {
+            color: var(--petrol) !important;
+            -webkit-text-fill-color: var(--petrol) !important;
+        }
+        #oferta .plano li::before {
+            color: var(--gold) !important;
+            -webkit-text-fill-color: var(--gold) !important;
+        }
+        .planos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+            align-items: start;
+        }
+        @media (max-width: 960px) { .planos-grid { grid-template-columns: 1fr; } }
+        .plano {
+            background: var(--white);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 2.5rem 2rem;
+            position: relative;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+            transition: box-shadow 0.2s, transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .plano:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.3); transform: translateY(-2px); }
+        .plano.star { border: 2px solid var(--gold); box-shadow: 0 4px 36px rgba(213,171,57,0.22); }
+        .plano.star:hover { box-shadow: 0 10px 50px rgba(213,171,57,0.3); transform: translateY(-3px); }
+        .plano .plano-items { flex: 1; }
+        .plano > a.btn-primary, .plano > a.btn-outline { margin-top: auto; }
+        .plano-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: white;
+            font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+            padding: 0.38rem 1.3rem; white-space: nowrap;
+            border-radius: var(--radius-pill);
+        }
+        .plano-nome { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+        .plano-titulo { font-size: 1.3rem; font-weight: 700; color: var(--petrol); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .plano-desc { font-size: 0.82rem; color: var(--dark); font-weight: 300; margin-bottom: 0.75rem; line-height: 1.5; }
+        .plano-preco {
+            padding: 1.25rem 0;
+            border-top: 1px solid var(--gold-border);
+            border-bottom: 1px solid var(--gold-border);
+            margin-bottom: 1.5rem;
+        }
+        .plano-preco .de { font-size: 0.75rem; font-weight: 300; color: var(--gray); display: block; }
+        .plano-preco .valor { font-size: 2.4rem; font-weight: 800; color: var(--petrol); line-height: 1; }
+        .plano-preco .valor sup { font-size: 1.1rem; font-weight: 700; vertical-align: super; }
+        .plano-preco .valor sub { font-size: 1.1rem; font-weight: 400; vertical-align: baseline; }
+        .plano-preco .periodo { font-size: 0.78rem; font-weight: 300; color: var(--gray); }
+        .plano-preco .econ { font-size: 0.72rem; color: var(--gold); font-weight: 700; margin-top: 0.4rem; }
+        .plano-items { list-style: none; margin: 0 0 1.5rem; }
+        .plano-items li {
+            display: flex; gap: 0.7rem; align-items: flex-start;
+            font-size: 0.83rem; color: var(--gray);
+            padding: 0.5rem 0; border-bottom: 1px solid rgba(64,64,64,0.06);
+            line-height: 1.5;
+        }
+        .plano-items li:last-child { border-bottom: none; }
+        .plano-items li::before { content: "→"; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+        .plano-items .mkt { font-size: 0.68rem; color: rgba(64,64,64,0.5); display: block; }
+        .plano-items .plano-preco-final {
+            background: var(--petrol-light);
+            border-radius: var(--radius-sm);
+            margin-top: 1rem;
+            padding: 1.1rem 1rem;
+            border-top: none;
+            color: var(--petrol);
+            text-align: center;
+            flex-direction: column;
+            gap: 0;
+        }
+        .plano-items .plano-preco-final::before {
+            content: "SEU INVESTIMENTO";
+            display: block;
+            font-size: 0.56rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--petrol);
+            opacity: 0.55;
+            margin-bottom: 0.35rem;
+        }
+        .preco-linha {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.2rem;
+            line-height: 1.1;
+        }
+        .preco-valor { font-size: 1.75rem; font-weight: 800; color: var(--petrol); }
+        .preco-mes { font-size: 0.82rem; font-weight: 300; color: var(--gray); }
+        .plano.star .plano-items .plano-preco-final {
+            background: var(--gold-light);
+            border: 1px solid var(--gold-border);
+        }
+        .plano.star .preco-valor { font-size: 1.45rem; }
+        .preco-dia {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--petrol);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-top: 0.35rem;
+            opacity: 0.75;
+        }
+        .plano-stack {
+            background: var(--petrol-light);
+            padding: 1.25rem 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .plano-stack .sl {
+            font-size: 0.65rem; font-weight: 300; color: rgba(64,64,64,0.55);
+            text-decoration: line-through; letter-spacing: 0.03em;
+        }
+        .plano-stack .sv {
+            font-size: 0.82rem; font-weight: 400; color: rgb(139, 30, 30);
+            text-decoration: line-through;
+        }
+        .plano-stack .se-label { font-size: 0.62rem; font-weight: 700; color: var(--petrol); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.6rem; display: block; }
+        .plano-stack .se { font-size: 2rem; font-weight: 800; color: var(--petrol); line-height: 1.1; display: block; }
+        .plano-stack .se-sub { font-size: 0.65rem; font-weight: 300; color: var(--gray); margin-top: 0.2rem; display: block; }
+        .nao-sabe {
+            background: var(--white);
+            border: 1px solid var(--gold-border);
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+        .nao-sabe h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+        .nao-sabe p  { font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+        /* ─────────────────────────────────────
+           SECTION 10 — GARANTIA
+        ───────────────────────────────────── */
+        #garantia { background: var(--petrol); }
+        #garantia h2, #garantia p { color: var(--white); }
+        #garantia .section-label { background: rgba(213,171,57,0.15); color: var(--gold); border-color: rgba(213,171,57,0.3); }
+        .garantia-box {
+            border: 1px solid rgba(213,171,57,0.35);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem auto;
+            max-width: 620px;
+            border-radius: var(--radius);
+        }
+        .g-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .g-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+        .g-dias { font-size: 4.5rem; font-weight: 800; color: var(--gold); line-height: 1; }
+        .g-sub  { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 0.4rem; }
+        .g-body { color: rgba(255,255,255,0.8); font-size: 0.95rem; max-width: 520px; margin: 2rem auto 0; line-height: 1.8; }
+        .g-body strong { color: var(--white); font-weight: 700; }
+        .g-assinatura { margin-top: 2rem; font-style: italic; font-size: 0.85rem; color: rgba(255,255,255,0.5); border-top: 1px solid rgba(213,171,57,0.2); padding-top: 1.5rem; }
+
+        /* ─────────────────────────────────────
+           SECTION 11 — FAQ
+        ───────────────────────────────────── */
+        #faq { background: var(--white); }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 3rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 720px) { .faq-grid { grid-template-columns: 1fr; } }
+        .faq-item { border-bottom: 1px solid rgba(64,64,64,0.08); }
+        .faq-btn {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 1.4rem 0; background: none; border: none; cursor: pointer;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
+            color: var(--petrol); letter-spacing: 0.02em; text-align: left; gap: 1rem;
+        }
+        .faq-btn .ic { color: var(--gold); font-size: 1.3rem; font-weight: 700; flex-shrink: 0; transition: transform 0.2s; }
+        .faq-btn.open .ic { transform: rotate(45deg); }
+        .faq-ans { display: none; padding: 0 0 1.4rem; font-size: 0.88rem; color: var(--gray); line-height: 1.8; }
+        .faq-ans.open { display: block; }
+
+        /* ─────────────────────────────────────
+           SECTION 12 — CTA FINAL
+        ───────────────────────────────────── */
+        #cta-final { background: var(--white); text-align: center; border-top: 1px solid var(--gold-border); }
+        .cta-slogan { font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 700; color: var(--petrol); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.4; margin: 2rem 0; }
+        .cta-slogan span { color: var(--gold); display: block; }
+        .ps-block { text-align: left; max-width: 680px; margin: 3rem auto 0; padding: 2rem 0; border-top: 1px solid var(--gold-border); }
+        .ps-block p { font-size: 0.85rem; margin-bottom: 1rem; }
+        .ps-block strong { color: var(--petrol); font-weight: 700; }
+
+        /* ─────────────────────────────────────
+           FOOTER
+        ───────────────────────────────────── */
+        footer { background: var(--petrol); padding: 3.5rem 0; text-align: center; }
+        .footer-logo { font-size: 1.3rem; font-weight: 700; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+        footer p { color: rgba(255,255,255,0.45); font-size: 0.75rem; }
+        footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--gold); }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin: 1.5rem 0; }
+
+        /* ─────────────────────────────────────
+           FLOATING WHATSAPP
+        ───────────────────────────────────── */
+        .wa-float {
+            position: fixed; bottom: 2rem; right: 1.5rem; z-index: 990;
+            width: 56px; height: 56px; background: #25D366;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 18px rgba(37,211,102,0.4);
+            transition: all 0.2s;
+        }
+        .wa-float:hover { transform: scale(1.08); background: #1fb855; }
+
+        /* ─────────────────────────────────────
+           STICKY MOBILE CTA
+        ───────────────────────────────────── */
+        .sticky-mob {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--white); border-top: 2px solid var(--gold);
+            padding: 0.75rem 1.5rem; z-index: 989;
+            display: none; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .sticky-mob .sl { font-size: 0.72rem; font-weight: 700; color: var(--petrol); line-height: 1.3; }
+        .sticky-mob .sl span { display: block; font-weight: 300; font-size: 0.67rem; color: var(--gray); }
+        .sticky-mob .btn-primary { font-size: 0.75rem; padding: 0.75rem 1.2rem; white-space: nowrap; flex-shrink: 0; }
+        @media (max-width: 768px) {
+            .sticky-mob { display: flex; }
+            .wa-float { bottom: 5.5rem; }
+            body { padding-bottom: 3.5rem; }
+        }
+
+        /* ─────────────────────────────────────
+           COOKIE BANNER (LGPD)
+        ───────────────────────────────────── */
+        #cookie {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(1,91,127,0.97); color: rgba(255,255,255,0.8);
+            padding: 1.25rem 1.5rem; z-index: 9999;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        #cookie p { font-size: 0.78rem; color: rgba(255,255,255,0.75); flex: 1; min-width: 200px; }
+        #cookie a { color: var(--gold); }
+        #cookie-ok {
+            background: var(--gold); color: white;
+            border: none; padding: 0.6rem 1.5rem;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+            cursor: pointer; flex-shrink: 0;
+            border-radius: var(--radius-pill);
+        }
+
+        /* ─────────────────────────────────────
+           UTILITIES
+        ───────────────────────────────────── */
+        .tc  { text-align: center; }
+        .mt2 { margin-top: 1rem; }
+        .mt3 { margin-top: 1.5rem; }
+        .mt4 { margin-top: 2rem; }
+        .mt6 { margin-top: 3rem; }
+        .mb2 { margin-bottom: 1rem; }
+        .mb3 { margin-bottom: 1.5rem; }
+        .w100 { width: 100%; }
+    </style>
+</head>
+<body>
+
+<!-- ── COOKIE BANNER (LGPD) ── -->
+<div id="cookie">
+    <p>Utilizamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa <a href="#" target="_blank">Política de Privacidade</a>.</p>
+    <button id="cookie-ok">Aceitar</button>
+</div>
+
+<!-- ── COUNTDOWN BAR ── -->
+<div class="countdown-bar">
+    Consulta diagnóstica gratuita disponível agora — resposta em até 1h&nbsp;·&nbsp;
+    <strong id="countdown">carregando...</strong>
+</div>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 1 — HERO
+══════════════════════════════════════ -->
+<section id="hero">
+    <div class="container-hero">
+        <div class="hero-grid">
+
+            <!-- COLUNA ESQUERDA -->
+            <div class="hero-left-col">
+                <div class="hero-tag">
+                    <span class="hero-dot"></span>
+                    Especialistas em psicólogos · Desde 2020
+                </div>
+
+                <h1>
+                    Você cuida dos<br>seus pacientes.<br>
+                    <em>Eu cuido<br>do resto.</em>
+                </h1>
+
+                <p class="hero-sub">
+                    Me chamo Joyce. Há 15 anos cuido da vida fiscal, contábil e financeira de psicólogos — para que você foque no que realmente importa: seus pacientes.
+                </p>
+
+                <ul class="hero-bullets">
+                    <li>Recibos e notas fiscais emitidos pela minha equipe</li>
+                    <li>Assessoria financeira pessoal e do consultório</li>
+                    <li>Organização fiscal e tributária perante a Receita Federal</li>
+                </ul>
+
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20quero%20conhecer%20os%20planos%20da%20Openn"
+                   target="_blank" class="btn-whatsapp">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    FALAR COM NOSSOS ESPECIALISTAS
+                </a>
+                <span class="btn-sub" style="color:rgba(255,255,255,0.4);margin-top:0.75rem;">Consulta diagnóstica gratuita · Sem compromisso</span>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-num">+3 mil</span>
+                        <p class="stat-label">clientes atendidos</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">300+</span>
+                        <p class="stat-label">psicólogos atendidos</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">15 anos</span>
+                        <p class="stat-label">no mercado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="hero-right-col">
+                <div class="hero-photo-wrap">
+                    <img src="images/joyce.jpg" alt="Joyce Araújo — Openn Business Solutions" loading="eager">
+                    <div class="photo-nameplate">
+                        <p class="pn-eyebrow">Sua especialista</p>
+                        <p class="pn-name">Joyce Araújo</p>
+                        <p class="pn-title">Contadora CRC GO 027331/O</p>
+                        <p class="pn-title">15 anos especializada em psicólogos</p>
+                    </div>
+                </div>
+
+                <!-- Card flutuante 1 -->
+                <div class="float-card float-card-1">
+                    <div class="fc-label"><span class="fc-dot-green"></span> Resposta garantida</div>
+                    <div class="fc-num">20 min</div>
+                    <div class="fc-desc">Tempo médio de atendimento</div>
+                </div>
+
+                <!-- Card flutuante 2 -->
+                <div class="float-card float-card-2">
+                    <div class="fc-label">Economia média no PJ</div>
+                    <div class="fc-num">50%</div>
+                    <div class="fc-desc">menos impostos por mês</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 2 — PROBLEMA
+══════════════════════════════════════ -->
+<section id="problema">
+    <div class="container">
+        <div class="section-label">Você se identifica?</div>
+
+        <h2>Deixa eu te fazer uma pergunta direta.</h2>
+        <div class="gold-line-left"></div>
+
+        <p class="mt3">Quando um paciente te pede um recibo ou uma nota fiscal — o que acontece?</p>
+        <p class="mt2">Você sabe exatamente o que fazer, sem hesitar?</p>
+
+        <div class="problema-card">
+            <p>Ou bate aquela insegurança? Aquela sensação de <em>"vou resolver isso depois"</em> que vira... depois de novo?</p>
+        </div>
+
+        <p>Se você parou um segundo antes de responder, você não está sozinha.</p>
+
+        <p class="mt3">Mais de <strong class="num-petrol">60%</strong> dos psicólogos brasileiros nunca emitiram um documento fiscal de forma regular. Não por descuido — mas porque ninguém ensinou como.</p>
+
+        <p class="mt2">A faculdade de psicologia prepara você para cuidar de pessoas. Não para lidar com a Receita Federal.</p>
+
+        <div class="problema-card mt4">
+            <p><strong>E tem uma coisa que a maioria ainda não sabe:</strong><br><br>
+            Desde 2022, a Receita Federal monitora automaticamente todos os recebimentos via Pix. Os dados dos seus pacientes são cruzados com os seus — mesmo que você nunca tenha feito nada de errado.</p>
+        </div>
+
+        <p>O problema não é culpa sua. O problema é que você nunca teve uma especialista do seu lado explicando como isso funciona — e fazendo por você.</p>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 3 — AMPLIFICAÇÃO
+══════════════════════════════════════ -->
+<section id="amplificacao">
+    <div class="container">
+        <div class="section-label">O custo real de esperar</div>
+
+        <h2>Vamos ser honestas por um momento.</h2>
+        <div class="gold-line-left" style="background: rgba(213,171,57,0.45);"></div>
+
+        <div class="amp-grid">
+            <!-- COLUNA ESQUERDA -->
+            <div>
+                <p class="mt2">Cada mês sem organização fiscal é um mês carregando um peso que você nem percebe mais.</p>
+                <ul class="amp-list">
+                    <li><span class="arr">→</span> É aquela ansiedade quando um paciente pergunta se você emite nota.</li>
+                    <li><span class="arr">→</span> É o desconforto de não saber se está fazendo o certo.</li>
+                    <li><span class="arr">→</span> É a preocupação que ocupa espaço que deveria estar inteiro para os seus pacientes.</li>
+                </ul>
+                <p>A pergunta não é <em style="color: rgba(255,255,255,0.65);">"quanto custa regularizar"</em>.</p>
+                <p class="mt2" style="color: var(--white); font-weight: 700; font-size: 1.05rem;">A pergunta é: quanto está custando <em>não</em> regularizar?</p>
+                <p class="trial-close">Faz sentido pra você?</p>
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="calc-box" style="margin: 0;">
+                <p class="intro">Psicólogos com enquadramento correto economizam:</p>
+                <div class="calc-row">
+                    <span class="cl">Economia ao migrar de PF para PJ</span>
+                    <span class="cv">30 a 50% em impostos</span>
+                </div>
+                <div class="calc-row">
+                    <span class="cl">Consultório que fatura R$ 8.000/mês pode pagar</span>
+                    <span class="cv">até R$ 1.600 a mais/mês</span>
+                </div>
+                <div class="calc-row">
+                    <span class="cl">Em 12 meses, isso representa</span>
+                    <span class="cv">até R$ 19.200</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 4 — HISTÓRIA
+══════════════════════════════════════ -->
+<section id="historia">
+    <div class="container">
+        <div class="section-label">A história da Openn</div>
+
+        <div class="historia-grid">
+            <div class="historia-photo">
+                <img src="images/joyce-historia.jpg" alt="Joyce Araújo — Fundadora da Openn Business Solutions">
+            </div>
+
+            <div>
+                <h2 style="text-align: left;">A história da Openn não começou em um escritório contábil.</h2>
+                <div class="gold-line-left"></div>
+                <p style="font-size: 1.05rem; color: var(--petrol); font-weight: 400;">Começou em uma sala de espera de psicóloga.</p>
+
+                <div class="historia-quote mt3">
+                    Joyce Araújo é contadora há 15 anos. E como qualquer outra pessoa, ela também cuidava da sua saúde mental — com acompanhamento psicológico regular.
+                </div>
+
+                <p>Foi nessas sessões que ela percebeu algo que mudou o rumo da sua carreira.</p>
+
+                <p class="mt3">Toda vez que precisava de um recibo para abater no IR, era a mesma cena: a psicóloga sem saber exatamente como emitir, com medo de fazer errado.</p>
+                <p class="mt2">Não foi uma. Foram muitas.</p>
+            </div>
+        </div>
+
+        <div class="mt4">
+            <p>Mas o mais revelador ainda estava por vir. Quando as psicólogas descobriam que Joyce era contadora, as sessões ganhavam uma pauta diferente. As dúvidas fiscais saíam do armário:</p>
+
+            <div class="problema-card mt3">
+                <p><em>"Será que estou fazendo certo?"<br>
+                "Pago mais imposto do que deveria?"<br>
+                "Preciso abrir CNPJ?"<br>
+                "Tenho medo da Receita, mas não sei nem do quê."</em></p>
+            </div>
+
+            <p class="mt3">Ali ficou claro: o problema não era falta de inteligência nem de vontade. Era falta de alguém especializado que entendesse a realidade do psicólogo — e que falasse a língua deles, sem assustar.</p>
+
+            <p class="mt3">Em 2020, Joyce fundou a Openn com uma missão simples:<br>
+            <strong style="color: var(--petrol); font-weight: 700;">tirar a burocracia fiscal das mãos do psicólogo — de vez.</strong></p>
+
+            <p class="mt3">Nos últimos 5 anos, foram mais de <strong class="num-petrol">300</strong> psicólogos atendidos. Cada um com a mesma promessa: você não precisa entender de imposto. Eu entendo por você.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 5 — AUTORIDADE
+══════════════════════════════════════ -->
+<section id="autoridade">
+    <div class="container">
+        <div class="section-label tc" style="display: block; width: fit-content; margin: 0 auto 2rem;">Por que a Openn</div>
+
+        <h2 class="tc">A Openn não é uma contabilidade que<br>"também atende psicólogos".</h2>
+        <div class="gold-line"></div>
+        <p class="tc mt2">Somos especialistas em psicólogos — <strong style="color:var(--gold);font-weight:800;">e só em psicólogos.</strong></p>
+
+        <div class="numeros-grid">
+            <div class="num-card">
+                <span class="big"><span>15</span></span>
+                <p class="desc">Anos como<br>contadora</p>
+            </div>
+            <div class="num-card">
+                <span class="big"><span>5</span></span>
+                <p class="desc">Anos exclusivos<br>no nicho</p>
+            </div>
+            <div class="num-card">
+                <span class="big"><span>300</span>+</span>
+                <p class="desc">Psicólogos<br>atendidos</p>
+            </div>
+            <div class="num-card">
+                <span class="big"><span>3 mil</span>+</span>
+                <p class="desc">Clientes<br>atendidos</p>
+            </div>
+        </div>
+
+        <p class="tc">Conhecemos as particularidades do Receita Saúde. Sabemos quando vale abrir PJ e quando não vale. Entendemos o enquadramento correto para convênios. Sabemos o que protege o seu dinheiro — e o que não protege.</p>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 6 — TRANSFORMAÇÃO
+══════════════════════════════════════ -->
+<section id="transformacao">
+    <div class="container">
+        <div class="section-label">Como vai ser</div>
+
+        <h2>Imagine como seria a sua semana com a Openn ao seu lado.</h2>
+        <div class="gold-line-left"></div>
+
+        <div class="dream-box mt4">
+            <p>Um paciente te pede uma nota fiscal.<br>
+            Você responde: <em>"Claro, vou pedir para enviarem pra você."</em><br><br>
+            E é só isso. <strong>Sem pesquisa. Sem tutorial. Sem medo de errar.</strong><br><br>
+            No fim do mês, sua situação fiscal está organizada — sem você ter movido um dedo para isso.<br><br>
+            Na época do imposto de renda, nada de pânico. Tudo documentado, organizado e entregue.<br><br>
+            E o melhor: você sabe, com certeza, que está pagando exatamente o que é justo — nem mais, nem menos.</p>
+        </div>
+
+        <table class="ad">
+            <thead>
+                <tr>
+                    <th>ANTES da Openn</th>
+                    <th>DEPOIS da Openn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Não sabe se está fazendo certo</td>
+                    <td>Tudo cuidado por especialistas</td>
+                </tr>
+                <tr>
+                    <td>Ansiedade quando pedem nota fiscal</td>
+                    <td>Responde com segurança e tranquilidade</td>
+                </tr>
+                <tr>
+                    <td>Insegurança na época do IR</td>
+                    <td>Declaração pronta, sem surpresa</td>
+                </tr>
+                <tr>
+                    <td>Dúvida sobre abrir CNPJ</td>
+                    <td>Decisão com assessoria especializada</td>
+                </tr>
+                <tr>
+                    <td>Pagando mais imposto do que deveria</td>
+                    <td>Só o imposto justo, nada além</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="tc mt4" style="font-size: 1rem; color: var(--petrol); font-weight: 400; font-style: italic;">Você consegue se imaginar assim?</p>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 7 — DEPOIMENTOS
+══════════════════════════════════════ -->
+<section id="depoimentos">
+    <div class="container-wide">
+        <div class="tc">
+            <div class="section-label">O que dizem nossas clientes</div>
+            <h2 class="mt2">Histórias reais. Resultados reais.</h2>
+            <div class="gold-line"></div>
+        </div>
+
+        <div class="depos-grid">
+            <!-- CELINE SOUSA -->
+            <div class="depo-card">
+                <img class="depo-img" src="images/dep-celine.png" alt="Depoimento de Celine Sousa" loading="lazy">
+                <div class="depo-caption">
+                    <span class="stars">★★★★★</span>
+                    <div>
+                        <p class="name">Celine Sousa</p>
+                        <p class="loc">Psicóloga · via WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROBERTA XAVIER -->
+            <div class="depo-card">
+                <img class="depo-img" src="images/dep-roberta.png" alt="Depoimento de Roberta Xavier" loading="lazy">
+                <div class="depo-caption">
+                    <span class="stars">★★★★★</span>
+                    <div>
+                        <p class="name">Roberta Xavier</p>
+                        <p class="loc">Psicóloga · via WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="tc mt2" style="font-size: 0.85rem;">
+            <span class="num-petrol">300+</span> psicólogos já escolheram a Openn.
+            <span style="color: var(--gold); font-weight: 700;">Quando vai ser a sua vez?</span>
+        </p>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 8 — PARA QUEM É
+══════════════════════════════════════ -->
+<section id="para-quem">
+    <div class="container">
+        <div class="section-label">Identificação</div>
+        <h2>A Openn foi feita para você se...</h2>
+        <div class="gold-line-left"></div>
+
+        <div class="pq-grid">
+            <div>
+                <p class="pq-heading yes">Você se encaixa se...</p>
+                <ul class="ck-list yes">
+                    <li>Você é psicóloga recém-formada e não sabe como emitir o primeiro recibo</li>
+                    <li>Você já atende pacientes mas nunca organizou sua situação fiscal</li>
+                    <li>Você tem convênio ou plano de saúde que exige nota fiscal com CNPJ</li>
+                    <li>Você tem CNPJ mas não tem certeza se o enquadramento está correto</li>
+                    <li>Você quer focar 100% nos seus pacientes e delegar a burocracia de vez</li>
+                    <li>Você recebe pelo Pix e nunca emitiu nenhum documento fiscal</li>
+                </ul>
+            </div>
+            <div>
+                <p class="pq-heading no">A Openn não é para você se...</p>
+                <ul class="ck-list no">
+                    <li>Você já tem contador especialista em psicólogos e está completamente satisfeita</li>
+                    <li>Você prefere lidar com toda a parte fiscal por conta própria</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 9 — OFERTA
+══════════════════════════════════════ -->
+<section id="oferta">
+    <div class="container">
+        <div class="tc">
+            <div class="section-label">Escolha seu plano</div>
+            <h2 class="mt2">Escolha o plano que faz sentido para você</h2>
+            <div class="gold-line"></div>
+            <p class="mt2">Se tudo que você leu faz sentido — o próximo passo é simples.</p>
+        </div>
+
+        <div class="planos-grid">
+
+            <!-- PLANO PF BÁSICO -->
+            <div class="plano">
+                <div class="plano-nome">Para quem atua como</div>
+                <div class="plano-titulo">Pessoa Física</div>
+                <p class="plano-desc">Organização fiscal essencial para psicólogas em início de carreira.</p>
+
+                <ul class="plano-items">
+                    <li>Manual Operacional</li>
+                    <li>Controle de Sessões e Atendimentos</li>
+                    <li>Cadastro de Pacientes</li>
+                    <li>Controle de Livro Caixa</li>
+                    <li>Apuração de Impostos</li>
+                    <li>Emissão Carnê Leão / Receita Saúde</li>
+                    <li>Suporte no Imposto de Renda (IRPF)</li>
+                    <li class="plano-preco-final">
+                        <div class="preco-linha">
+                            <span class="preco-valor">R$ 129,90</span>
+                            <span class="preco-mes">/mês</span>
+                        </div>
+                        <small class="preco-dia">menos de R$ 5 por dia</small>
+                    </li>
+                </ul>
+
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20o%20Plano%20PF%20da%20Openn"
+                   target="_blank" class="btn-outline w100">
+                    QUERO O PLANO PF
+                </a>
+            </div>
+
+            <!-- PLANO PF COMPLETO -->
+            <div class="plano star">
+                <div class="plano-badge">⭐ MAIS ESCOLHIDO</div>
+                <div class="plano-nome">Para quem atua como</div>
+                <div class="plano-titulo">PF Completo</div>
+                <p class="plano-desc">Tudo do PF Básico + assessoria financeira pessoal para você crescer com segurança.</p>
+
+                <ul class="plano-items">
+                    <li>Manual Operacional</li>
+                    <li>Controle de Sessões e Atendimentos</li>
+                    <li>Cadastro de Pacientes</li>
+                    <li>Controle de Livro Caixa</li>
+                    <li>Apuração de Impostos</li>
+                    <li>Emissão Carnê Leão / Receita Saúde</li>
+                    <li>Suporte no Imposto de Renda (IRPF)</li>
+                    <li>Consultoria financeira pessoal personalizada</li>
+                    <li class="plano-preco-final">
+                        <div class="preco-linha">
+                            <span class="preco-valor">R$ 219,90</span>
+                            <span class="preco-mes">/mês</span>
+                        </div>
+                        <small class="preco-dia">menos de R$ 8 por dia</small>
+                    </li>
+                </ul>
+
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20o%20Plano%20PF%20Completo%20da%20Openn"
+                   target="_blank" class="btn-primary w100">
+                    QUERO O PLANO PF COMPLETO
+                </a>
+            </div>
+
+            <!-- PLANO PJ -->
+            <div class="plano">
+                <div class="plano-nome">Para quem atua como</div>
+                <div class="plano-titulo">Pessoa Jurídica</div>
+                <p class="plano-desc">Para psicólogas com CNPJ ou que precisam abrir. Economize até 50% em impostos.</p>
+
+                <ul class="plano-items">
+                    <li>Tudo do Plano PF Completo</li>
+                    <li>Abertura de CNPJ</li>
+                    <li>Alvarás de Funcionamento</li>
+                    <li>Emissão de Notas Fiscais Eletrônicas — enviadas direto ao paciente</li>
+                    <li>Assessoria Contábil completa</li>
+                    <li>Conciliação Bancária de Recebimentos e Pagamentos</li>
+                    <li>Relatório Financeiro e Contábil</li>
+                    <li>Gestão Financeira do Consultório</li>
+                    <li>Planejamento Tributário contínuo</li>
+                    <li class="plano-preco-final">
+                        <div class="preco-linha">
+                            <span class="preco-valor">A partir de R$ 499,90</span>
+                            <span class="preco-mes">/mês</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20o%20Plano%20PJ%20da%20Openn"
+                   target="_blank" class="btn-outline w100">
+                    QUERO O PLANO PJ
+                </a>
+            </div>
+
+        </div>
+
+        <!-- NÃO SABE QUAL -->
+        <div class="nao-sabe">
+            <h3>Não sabe qual plano é o seu?</h3>
+            <p>Sem problema. Mande uma mensagem — em menos de 1 hora nossa equipe te diz qual faz mais sentido para a sua situação, sem nenhum compromisso.</p>
+            <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20N%C3%A3o%20sei%20qual%20plano%20escolher%2C%20pode%20me%20ajudar%3F"
+               target="_blank" class="btn-whatsapp">
+                <svg viewBox="0 0 24 24" fill="white" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                FALAR COM NOSSOS ESPECIALISTAS — É GRATUITO
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 10 — GARANTIA
+══════════════════════════════════════ -->
+<section id="garantia">
+    <div class="container tc">
+        <div class="section-label">Sem risco para você</div>
+
+        <h2 class="mt3" style="color: var(--white);">O risco é 100% meu.</h2>
+        <div class="gold-line"></div>
+
+        <div class="garantia-box">
+            <div class="g-icon">🛡️</div>
+            <div class="g-label">Garantia Tranquilidade Total</div>
+            <div class="g-dias">30</div>
+            <p class="g-sub">dias de garantia incondicional</p>
+
+            <p class="g-body">
+                Entre no plano. Conheça a equipe. Veja como funciona.<br><br>
+                Se em 30 dias você sentir que não foi exatamente o que esperava — por qualquer motivo — devolvo seu investimento integralmente. <strong>Sem perguntas. Sem formulário. Sem constrangimento.</strong><br><br>
+                Você não arrisca nada. Porque quando você experimenta a Openn de verdade, eu sei o que acontece.
+            </p>
+            <div class="g-assinatura">— Joyce Araújo, fundadora da Openn Business Solutions</div>
+        </div>
+
+        <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+           target="_blank" class="btn-primary">
+            QUERO COMEÇAR AGORA →
+        </a>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 11 — FAQ
+══════════════════════════════════════ -->
+<section id="faq">
+    <div class="container">
+        <div class="section-label">Tire suas dúvidas</div>
+        <h2>Perguntas frequentes</h2>
+        <div class="gold-line-left"></div>
+
+        <div class="faq-grid">
+            <!-- COLUNA 1 -->
+            <div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"Nunca me cobraram nada — deve estar tudo bem."<span class="ic">+</span></button>
+                    <div class="faq-ans">Desde 2022, a Receita Federal cruza automaticamente os dados de Pix com declarações de renda. O monitoramento acontece sem aviso prévio. Regularizar agora é a forma mais inteligente de proteger tudo que você já construiu.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"R$ 129,90 é um investimento alto para mim agora."<span class="ic">+</span></button>
+                    <div class="faq-ans">Com 5 pacientes por semana, você já tem renda suficiente para garantir sua regularização por menos de R$ 5 por dia. Menos do que um lanche — em troca de tranquilidade fiscal todos os meses.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"Já tenho um contador."<span class="ic">+</span></button>
+                    <div class="faq-ans">Ótimo. Mas há uma diferença entre um contador generalista e um especialista em psicólogos: nós conhecemos o Receita Saúde, as deduções específicas da categoria, o enquadramento correto para convênios.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"Não sei se preciso de CNPJ."<span class="ic">+</span></button>
+                    <div class="faq-ans">É exatamente para isso que existe a consulta gratuita. A Joyce analisa a sua situação real e te diz, com clareza, se vale ou não abrir PJ — e qual seria o impacto no seu bolso. Sem pressão.</div>
+                </div>
+            </div>
+            <!-- COLUNA 2 -->
+            <div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"E se eu tiver alguma pendência com a Receita?"<span class="ic">+</span></button>
+                    <div class="faq-ans">Sem problema. A regularização começa exatamente de onde você está. Nossa equipe avalia a situação atual e traz um plano claro — sem alarmismo, sem julgamento, sem surpresa.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"Posso fazer isso sozinha, por que precisaria da Openn?"<span class="ic">+</span></button>
+                    <div class="faq-ans">Pode, sim. Você pode aprender sozinha sobre carnê-leão, DARF, regime tributário, IRPF, emissão de notas e obrigações acessórias. Mas quanto tempo vai levar para estudar tudo isso com segurança? E quanto vai custar um erro no meio do caminho? A maioria das psicólogas que chegam até nós tentou antes — e veio justamente porque o tempo e o risco não compensaram. Na Openn, você tem 15 anos de experiência no seu lado, sem precisar virar especialista em contabilidade para isso.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="faq(this)">"Como funciona depois que eu entro?"<span class="ic">+</span></button>
+                    <div class="faq-ans">Simples. Você assina, a gente recolhe seus dados, e o primeiro recibo ou nota fiscal sai em até 24 horas úteis. Do seu lado: nenhum esforço. Do nosso lado: tudo.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEÇÃO 12 — CTA FINAL
+══════════════════════════════════════ -->
+<section id="cta-final">
+    <div class="container tc">
+        <div class="section-label">O próximo passo é simples</div>
+
+        <p class="mt4" style="font-size: 1rem; max-width: 580px; margin: 2rem auto;">
+            Se você chegou até aqui, algo ressoou. Talvez seja a história da Joyce. Talvez seja o alívio de imaginar que você nunca mais vai precisar pensar em recibo, nota ou imposto.
+        </p>
+
+        <p style="max-width: 580px; margin: 0 auto;">
+            Seja qual for o motivo: <strong style="color: var(--petrol);">confie nessa sensação.</strong>
+        </p>
+
+        <p class="mt4" style="font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em;">
+            Mais de 300 psicólogas já tomaram essa decisão.
+        </p>
+
+        <div class="cta-slogan">
+            VOCÊ CUIDA DOS SEUS PACIENTES.
+            <span>A GENTE CUIDA DE VOCÊ.</span>
+        </div>
+
+        <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+           target="_blank" class="btn-whatsapp" style="font-size: 1rem; padding: 1.35rem 2.5rem;">
+            <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            FALAR COM NOSSOS ESPECIALISTAS — É GRATUITO
+        </a>
+        <span class="btn-sub">A equipe responde em até 1 hora em horário comercial</span>
+
+        <div class="ps-block">
+            <p><strong>P.S.</strong> — Se ainda tem dúvida sobre qual plano é o certo para você, não precisa decidir agora. Mande uma mensagem. Nossa equipe faz o diagnóstico gratuito e te diz exatamente o que faz sentido para a sua situação — sem compromisso nenhum.</p>
+            <p><strong>P.P.S.</strong> — A <strong>Garantia Tranquilidade Total de 30 dias</strong> está de pé. O risco é zero da sua parte. O único jeito de não ganhar nada com isso é não tentar.</p>
+            <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+               target="_blank" class="btn-primary mt3" style="display: inline-flex;">
+                QUERO FALAR COM NOSSOS ESPECIALISTAS →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="footer-logo">OPENN</div>
+        <p>Openn Business Solutions · Consultoria Fiscal para Psicólogos</p>
+        <p style="margin-top: 0.4rem;">Goiânia · GO · Brasil · Desde 2020</p>
+
+        <div class="footer-links">
+            <a href="https://www.grupoopenn.com/opennpsi" target="_blank">Site</a>
+            <a href="https://instagram.com/openn.psi" target="_blank">@openn.psi</a>
+            <a href="https://wa.me/5562996550808" target="_blank">WhatsApp</a>
+            <a href="#">Política de Privacidade</a>
+        </div>
+
+        <p style="font-size: 0.68rem; margin-top: 2rem; opacity: 0.35;">
+            © 2026 Openn Business Solutions · Todos os direitos reservados
+        </p>
+    </div>
+</footer>
+
+<!-- ── FLOATING WHATSAPP ── -->
+<a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+   target="_blank" class="wa-float" title="Falar com nossos especialistas no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ── STICKY MOBILE CTA ── -->
+<div class="sticky-mob">
+    <div class="sl">
+        OPENN BUSINESS
+        <span>Consulta gratuita · Resposta em 1h</span>
+    </div>
+    <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+       target="_blank" class="btn-primary">
+        FALAR AGORA
+    </a>
+</div>
+
+<!-- ── SCRIPTS ── -->
+<script>
+    // ── FAQ ACCORDION ──
+    function faq(btn) {
+        const ans = btn.nextElementSibling;
+        const wasOpen = ans.classList.contains('open');
+        document.querySelectorAll('.faq-ans').forEach(a => a.classList.remove('open'));
+        document.querySelectorAll('.faq-btn').forEach(b => b.classList.remove('open'));
+        if (!wasOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+    }
+
+    // ── COUNTDOWN ──
+    // TROCAR: altere esta data para o prazo desejado (YYYY-MM-DDTHH:MM:SS)
+    const deadline = new Date('2026-04-28T23:59:59');
+    function tick() {
+        const d = deadline - new Date();
+        if (d <= 0) { document.getElementById('countdown').textContent = 'Disponível agora'; return; }
+        const h = Math.floor(d / 36e5) % 24;
+        const m = Math.floor(d / 6e4) % 60;
+        const s = Math.floor(d / 1e3) % 60;
+        const days = Math.floor(d / 864e5);
+        let out = '';
+        if (days > 0) out += days + 'd ';
+        out += String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm ' + String(s).padStart(2,'0') + 's';
+        document.getElementById('countdown').textContent = out;
+    }
+    tick(); setInterval(tick, 1000);
+
+    // ── COOKIE BANNER ──
+    const banner = document.getElementById('cookie');
+    if (localStorage.getItem('openn_ck')) banner.style.display = 'none';
+    document.getElementById('cookie-ok').onclick = () => {
+        localStorage.setItem('openn_ck', '1');
+        banner.style.display = 'none';
+    };
+
+    // ── UTM PASSTHROUGH ──
+    (function() {
+        const p = new URLSearchParams(location.search);
+        const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+        const str = keys.filter(k => p.has(k)).map(k => k + '=' + p.get(k)).join('&');
+        if (!str) return;
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+            a.href += (a.href.includes('?') ? '&' : '?') + str;
+        });
+    })();
+</script>
+
+</body>
+</html>
