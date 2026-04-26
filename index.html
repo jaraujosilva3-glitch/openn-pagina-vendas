@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Openn Business Solutions — Regularização Fiscal para Psicólogos</title>
+    <title>Openn — Consultoria Fiscal Exclusiva para Psicólogos</title>
     <meta name="description" content="Regularização fiscal completa para psicólogos. Recibos, notas fiscais, IRPF — tudo feito por especialistas. Você cuida dos seus pacientes, a gente cuida do resto.">
 
     <!-- META PIXEL — substituir REPLACE_FB_PIXEL_ID pelo seu ID -->
@@ -878,10 +878,80 @@
         .ps-block strong { color: var(--petrol); font-weight: 700; }
 
         /* ─────────────────────────────────────
+           TOP NAVBAR
+        ───────────────────────────────────── */
+        #topnav {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: var(--dark);
+            border-bottom: 1px solid rgba(213,171,57,0.14);
+            padding: 0.9rem 0;
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .nav-logo-wrap {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+            gap: 0;
+        }
+        .nav-logo-clip {
+            display: block;
+        }
+        .nav-logo-clip img {
+            height: 52px;
+            width: auto;
+            display: block;
+        }
+        .nav-logo-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.46rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700;
+            margin-top: -2px;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-logo-wrap {
+            display: flex;
+            align-items: center;
+        }
+        .nav-brand-desc {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            line-height: 1;
+        }
+        @media (max-width: 600px) {
+            .nav-cta { display: none; }
+            .nav-brand-desc { display: none; }
+            .nav-logo-clip img { height: 36px; }
+            #topnav { padding: 0.65rem 0; }
+            .container-wide { padding: 0 1.2rem; }
+        }
+
+        /* ─────────────────────────────────────
            FOOTER
         ───────────────────────────────────── */
         footer { background: var(--petrol); padding: 3.5rem 0; text-align: center; }
-        .footer-logo { font-size: 1.3rem; font-weight: 700; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .footer-logo-wrap { display: inline-flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem; }
+        .footer-logo-clip { display: block; }
+        .footer-logo-clip img { height: 52px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.9; }
+        .footer-logo-sub { font-size: 0.5rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-top: 0.3rem; font-family: 'Montserrat', sans-serif; }
         footer p { color: rgba(255,255,255,0.45); font-size: 0.75rem; }
         footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
         footer a:hover { color: var(--gold); }
@@ -1007,6 +1077,24 @@
     </style>
 </head>
 <body>
+
+<!-- ── TOP NAVBAR ── -->
+<nav id="topnav">
+    <div class="container-wide nav-inner">
+        <div class="nav-brand">
+            <a href="#hero" class="nav-logo-wrap">
+                <div class="nav-logo-clip">
+                    <img src="images/openn-logo.png" alt="Openn">
+                </div>
+            </a>
+            <span class="nav-brand-desc">Consultoria Fiscal e Financeira para Psicólogos</span>
+        </div>
+        <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
+           target="_blank" class="btn-primary nav-cta" style="font-size: 0.7rem; padding: 0.6rem 1.5rem;">
+            FALAR COM A OPENN PSI
+        </a>
+    </div>
+</nav>
 
 <!-- ── COOKIE BANNER (LGPD) ── -->
 <div id="cookie">
@@ -1521,7 +1609,7 @@
                 Se em 30 dias você sentir que não foi exatamente o que esperava — por qualquer motivo — devolvo seu investimento integralmente. <strong>Sem perguntas. Sem formulário. Sem constrangimento.</strong><br><br>
                 Você não arrisca nada. Porque quando você experimenta a Openn de verdade, eu sei o que acontece.
             </p>
-            <div class="g-assinatura">— Joyce Araújo, fundadora da Openn Business Solutions</div>
+            <div class="g-assinatura">— Joyce Araújo, fundadora da Openn</div>
         </div>
 
         <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
@@ -1624,8 +1712,12 @@
 <!-- ── FOOTER ── -->
 <footer>
     <div class="container">
-        <div class="footer-logo">OPENN</div>
-        <p>Openn Business Solutions · Consultoria Fiscal para Psicólogos</p>
+        <div class="footer-logo-wrap">
+            <div class="footer-logo-clip">
+                <img src="images/openn-logo.png" alt="Openn">
+            </div>
+        </div>
+        <p>Consultoria Fiscal e Financeira para Psicólogos</p>
         <p style="margin-top: 0.4rem;">Goiânia · GO · Brasil · Desde 2020</p>
 
         <div class="footer-links">
@@ -1636,7 +1728,7 @@
         </div>
 
         <p style="font-size: 0.68rem; margin-top: 2rem; opacity: 0.35;">
-            © 2026 Openn Business Solutions · Todos os direitos reservados
+            © 2026 Openn · Todos os direitos reservados
         </p>
     </div>
 </footer>
