@@ -1286,6 +1286,120 @@
         }
 
         /* ─────────────────────────────────────
+           DIAGNÓSTICO GRATUITO
+        ───────────────────────────────────── */
+        #diagnostico {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+            border-top: 3px solid var(--gold);
+            border-bottom: 3px solid var(--gold);
+            padding: 2.5rem 0;
+        }
+        .diag-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .diag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(213,171,57,0.15);
+            border: 1px solid rgba(213,171,57,0.35);
+            color: var(--gold);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.9rem;
+            border-radius: var(--radius-pill);
+            margin-bottom: 0.75rem;
+        }
+        .diag-badge .diag-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .diag-left { flex: 1; min-width: 260px; }
+        .diag-left h3 {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .diag-left h3 em { color: var(--gold); font-style: normal; }
+        .diag-left p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.72);
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .diag-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+        }
+        .diag-timer-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .diag-timer {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+        }
+        .diag-timer-sub {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+        .diag-right { flex-shrink: 0; text-align: center; }
+        .btn-diag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--gold);
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-pill);
+            transition: all 0.22s ease;
+            white-space: nowrap;
+        }
+        .btn-diag:hover { background: rgb(228,183,55); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(213,171,57,0.4); }
+        .diag-right small {
+            display: block;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.5rem;
+            letter-spacing: 0.04em;
+        }
+        #diagnostico.expirado { display: none; }
+
+        @media (max-width: 768px) {
+            .diag-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .diag-center { align-items: flex-start; }
+            .diag-right { width: 100%; }
+            .btn-diag { width: 100%; justify-content: center; }
+        }
+
+        /* ─────────────────────────────────────
            UTILITIES
         ───────────────────────────────────── */
         .tc  { text-align: center; }
@@ -1366,7 +1480,8 @@
             <span class="nav-brand-desc">Consultoria Tributária e Financeira para Psicólogos</span>
         </div>
         <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
-           target="_blank" class="btn-primary nav-cta" style="font-size: 0.7rem; padding: 0.6rem 1.5rem;">
+           target="_blank" class="nav-cta" style="display:inline-flex;align-items:center;gap:0.45rem;background:#25D366;color:#fff;font-weight:700;font-size:0.7rem;padding:0.6rem 1.5rem;border-radius:999px;text-decoration:none;letter-spacing:0.03em;white-space:nowrap;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
             FALAR COM A OPENN PSI
         </a>
     </div>
@@ -1408,15 +1523,9 @@
 
                 <ul class="hero-bullets">
                     <li>Recibos e notas fiscais emitidos pela minha equipe</li>
-                    <li>Assessoria financeira pessoal e do consultório</li>
+                    <li>Consultoria financeira do consultório com especialista dedicado</li>
                     <li>Organização fiscal e tributária perante a Receita Federal</li>
                 </ul>
-
-                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20quero%20conhecer%20os%20planos%20da%20Openn"
-                   target="_blank" class="btn-whatsapp">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    COMEÇAR MINHA CONSULTA GRATUITA
-                </a>
 
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -1458,6 +1567,40 @@
                     <div class="fc-num">50%</div>
                     <div class="fc-desc">menos impostos por mês</div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DIAGNÓSTICO FINANCEIRO GRATUITO
+══════════════════════════════════════ -->
+<section id="diagnostico">
+    <div class="container-wide">
+        <div class="diag-inner">
+
+            <div class="diag-left">
+                <div class="diag-badge">
+                    <span class="diag-dot"></span>
+                    Gratuito por tempo limitado
+                </div>
+                <h3>Diagnóstico financeiro <em>gratuito</em><br>para psicólogos</h3>
+                <p>Responda 5 minutos de perguntas e receba um PDF com seu diagnóstico financeiro completo + próximos passos personalizados.</p>
+            </div>
+
+            <div class="diag-center">
+                <span class="diag-timer-label">Esta oferta expira em</span>
+                <span class="diag-timer" id="diag-countdown">24:00:00</span>
+                <span class="diag-timer-sub">horas · minutos · segundos</span>
+            </div>
+
+            <div class="diag-right">
+                <a href="https://openndhub.com/" target="_blank" class="btn-diag">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                    QUERO MEU DIAGNÓSTICO
+                </a>
+                <small>Sem compromisso · 100% gratuito</small>
             </div>
 
         </div>
@@ -2027,6 +2170,40 @@
         }
         tick(); setInterval(tick, 1000);
     }
+
+    // ── DIAGNÓSTICO COUNTDOWN (24h por visitante) ──
+    (function() {
+        const KEY = 'openn_diag_start';
+        const LIMIT = 24 * 60 * 60 * 1000; // 24h em ms
+        const el = document.getElementById('diag-countdown');
+        const sec = document.getElementById('diagnostico');
+        if (!el || !sec) return;
+
+        let start = localStorage.getItem(KEY);
+        if (!start) {
+            start = Date.now();
+            localStorage.setItem(KEY, start);
+        } else {
+            start = parseInt(start);
+        }
+
+        function tickDiag() {
+            const remaining = LIMIT - (Date.now() - start);
+            if (remaining <= 0) {
+                sec.classList.add('expirado');
+                return;
+            }
+            const h = Math.floor(remaining / 36e5);
+            const m = Math.floor((remaining % 36e5) / 6e4);
+            const s = Math.floor((remaining % 6e4) / 1e3);
+            el.textContent =
+                String(h).padStart(2,'0') + ':' +
+                String(m).padStart(2,'0') + ':' +
+                String(s).padStart(2,'0');
+        }
+        tickDiag();
+        setInterval(tickDiag, 1000);
+    })();
 
     // ── COOKIE BANNER ──
     const banner = document.getElementById('cookie');
