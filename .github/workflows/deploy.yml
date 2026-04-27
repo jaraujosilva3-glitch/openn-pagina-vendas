@@ -17,4 +17,4 @@ jobs:
           ssh-keyscan -H 177.7.34.232 >> ~/.ssh/known_hosts
       - name: Deploy
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no root@177.7.34.232 "cd /var/www/html && git pull origin main"
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no root@177.7.34.232 "cd /var/www/html && git fetch origin && git reset --hard origin/main"
