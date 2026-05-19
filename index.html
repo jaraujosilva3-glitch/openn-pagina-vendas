@@ -68,6 +68,7 @@
             background: var(--white);
             line-height: 1.75;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         /* ─────────────────────────────────────
@@ -1198,13 +1199,16 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-shrink: 1;
+            min-width: 0;
         }
         .nav-logo-wrap {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         .nav-brand-desc {
-            font-size: 1rem;
+            font-size: 0.82rem;
             font-weight: 400;
             color: rgba(255,255,255,0.82);
             letter-spacing: 0.06em;
@@ -1212,9 +1216,11 @@
             white-space: nowrap;
             line-height: 1;
         }
+        @media (max-width: 900px) {
+            .nav-brand-desc { display: none; }
+        }
         @media (max-width: 600px) {
             .nav-cta { display: none; }
-            .nav-brand-desc { display: none; }
             .nav-logo-clip img { height: 36px; }
             #topnav { padding: 0.65rem 0; }
             .container-wide { padding: 0 1.2rem; }
