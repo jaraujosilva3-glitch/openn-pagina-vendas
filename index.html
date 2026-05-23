@@ -57,10 +57,20 @@
         }
 
         /* ─────────────────────────────────────
+           SECTION DIVIDER
+        ───────────────────────────────────── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent 0%, rgba(213,171,57,0.45) 50%, transparent 100%);
+            margin: 0;
+            border: none;
+        }
+
+        /* ─────────────────────────────────────
            RESET & BASE
         ───────────────────────────────────── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; font-size: 131%; }
+        html { scroll-behavior: smooth; font-size: 100%; }
         body {
             font-family: 'Montserrat', sans-serif;
             font-weight: 300;
@@ -68,6 +78,7 @@
             background: var(--white);
             line-height: 1.75;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         /* ─────────────────────────────────────
@@ -199,13 +210,33 @@
         .countdown-bar {
             background: var(--gold);
             color: white;
-            text-align: center;
-            padding: 0.85rem 1rem;
+            padding: 0.65rem 1.5rem;
             font-size: 0.8rem;
             font-weight: 700;
             letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
         }
         .countdown-bar strong { font-weight: 800; font-size: 0.92rem; color: var(--petrol); }
+        .countdown-bar-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--petrol);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 999px;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .countdown-bar-cta:hover { opacity: 0.88; }
 
         /* ─────────────────────────────────────
            SECTION 1 — HERO
@@ -220,11 +251,11 @@
         }
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(520px, 1fr) minmax(520px, 1fr);
-            min-height: 80vh;
-            align-items: center;
-            gap: 4rem;
-            padding: 3rem 0;
+            grid-template-columns: 1.35fr 0.85fr;
+            min-height: auto;
+            align-items: stretch;
+            gap: 3rem;
+            padding: 1.5rem 0 2.75rem;
         }
         .hero-left-col { max-width: 100%; }
         @media (min-width: 861px) and (max-width: 1100px) {
@@ -232,13 +263,40 @@
             .hero-left-col { max-width: 100%; }
         }
         @media (max-width: 860px) {
-            .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 3rem 0 2rem; gap: 0; }
+            .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 2rem 0 2rem; gap: 1.5rem; }
             .hero-left-col { max-width: 100%; order: 2; }
-            .hero-right-col { order: 1; display: block; }
-            .hero-photo-wrap { max-width: 340px; margin: 0 auto; }
-            .hero-photo-wrap img { border-radius: var(--radius); width: 100%; }
+            .hero-right-col {
+                order: 1;
+                position: relative;
+                width: 100%;
+                height: 220px;
+                min-height: unset;
+                max-height: unset;
+                align-self: auto;
+                overflow: hidden;
+                border-radius: var(--radius);
+                flex-shrink: 0;
+            }
+            .hero-photo-small { display: none; }
+            .hero-photo-mid { display: none; }
+            .hero-photo-large {
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                width: 100%;
+                border-radius: var(--radius);
+            }
+            .hero-photo-large img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center center;
+            }
+            .hero-photo-badge { display: none; }
             .float-card { display: none; }
-            .photo-nameplate { border-radius: 0 0 var(--radius) var(--radius); }
+        }
+        @media (max-width: 480px) {
+            .hero-right-col { height: 180px; }
         }
         #hero .hero-tag {
             display: inline-flex;
@@ -258,7 +316,7 @@
         .hero-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; flex-shrink: 0; }
         #hero h1 {
             color: white;
-            font-size: clamp(1.88rem, 4.95vw, 3.13rem);
+            font-size: clamp(1.5rem, 3.96vw, 2.5rem);
             line-height: 1.08;
             letter-spacing: 0.01em;
             text-transform: none;
@@ -268,7 +326,6 @@
         #hero h1 em {
             color: var(--gold);
             font-style: normal;
-            display: block;
         }
         #hero .hero-sub {
             font-size: 1rem;
@@ -327,31 +384,115 @@
             margin-top: 0.4rem;
         }
 
-        /* Hero photo side */
+        /* Hero photo side — two-card layout */
         .hero-right-col {
             position: relative;
-            height: 86vh;
-            max-height: 780px;
-        }
-        .hero-photo-wrap {
-            width: 100%;
             height: 100%;
+            min-height: 280px;
+            max-height: 320px;
+            align-self: start;
+        }
+        /* Small portrait card — top left */
+        .hero-photo-small {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 42%;
+            height: 58%;
             border-radius: var(--radius);
             overflow: hidden;
-            position: relative;
+            z-index: 3;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
         }
-        .hero-photo-wrap img {
-            width: 100%;
-            height: 100%;
+        .hero-photo-small img {
+            width: 100%; height: 100%;
             object-fit: cover;
             object-position: top center;
         }
-        .hero-photo-wrap::after {
-            content: '';
+        /* Medium office card — top right */
+        .hero-photo-mid {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(6,21,29,0.15) 0%, transparent 60%);
+            top: 0;
+            right: 0;
+            width: 54%;
+            height: 46%;
             border-radius: var(--radius);
+            overflow: hidden;
+            z-index: 2;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        }
+        .hero-photo-mid img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        /* Large landscape card — bottom */
+        .hero-photo-large {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 52%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        }
+        .hero-photo-large img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center bottom;
+        }
+        .hero-photo-badge {
+            position: absolute;
+            top: 47%;
+            right: 4%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.55);
+            border-radius: 999px;
+            padding: 0.3rem 0.85rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: white;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.3);
+            z-index: 4;
+            white-space: nowrap;
+        }
+
+        /* Stats bar abaixo da hero */
+        .hero-stats-bar {
+            background: rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(213,171,57,0.15);
+            padding: 1.75rem 0;
+        }
+        .hero-stats-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .hsb-item { text-align: center; }
+        .hsb-num {
+            display: block;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .hsb-label {
+            display: block;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.3rem;
+            font-weight: 400;
         }
 
         /* Floating cards */
@@ -403,19 +544,22 @@
         /* ─────────────────────────────────────
            SECTION 3 — AMPLIFICAÇÃO
         ───────────────────────────────────── */
-        #amplificacao { background: var(--dark); border-top: 1px solid rgba(213,171,57,0.12); border-bottom: 1px solid rgba(213,171,57,0.12); }
-        #amplificacao h2 { color: var(--white); }
-        #amplificacao p  { color: rgba(255,255,255,0.88); }
-        #amplificacao .section-label {
-            background: rgba(213,171,57,0.15);
-            color: var(--gold);
-            border-color: rgba(213,171,57,0.35);
+        #amplificacao {
+            background-color: var(--dark);
+            background-image:
+                radial-gradient(ellipse 100% 80% at 100% 55%, rgba(1,91,127,0.14) 0%, transparent 100%),
+                radial-gradient(ellipse 70% 50% at 0% 20%, rgba(213,171,57,0.04) 0%, transparent 100%),
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+            background-size: auto, auto, 28px 28px;
+            padding: 4rem 0;
         }
+        #amplificacao h2 { color: var(--white); }
+        #amplificacao p  { color: rgba(255,255,255,0.75); }
         .amp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
+            gap: 3rem;
+            align-items: center;
             margin-top: 1.5rem;
         }
         @media (max-width: 720px) { .amp-grid { grid-template-columns: 1fr; } }
@@ -426,36 +570,38 @@
         .amp-list li {
             display: flex;
             gap: 0.75rem;
-            color: rgba(255,255,255,0.9);
-            font-size: 0.95rem;
+            color: rgba(255,255,255,0.78);
+            font-size: 0.92rem;
             font-weight: 300;
             margin-bottom: 0.85rem;
             line-height: 1.7;
         }
         .amp-list li span.arr { color: var(--gold); font-weight: 700; flex-shrink: 0; }
         .calc-box {
-            border: 1px solid rgba(213,171,57,0.3);
-            padding: 1.5rem;
-            margin: 1.75rem 0;
+            border: 1px solid rgba(213,171,57,0.25);
+            background: rgba(255,255,255,0.04);
+            padding: 1.75rem;
+            margin: 0;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         }
-        .calc-box .intro { color: rgba(255,255,255,0.9); font-weight: 400; margin-bottom: 1.5rem; }
+        .calc-box .intro { color: rgba(255,255,255,0.9); font-weight: 600; margin-bottom: 1.5rem; font-size: 0.9rem; }
         .calc-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
             gap: 1rem;
         }
         .calc-row:last-child { border-bottom: none; }
-        .calc-row .cl { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+        .calc-row .cl { font-size: 0.82rem; color: rgba(255,255,255,0.6); font-weight: 300; }
         .calc-row .cv { font-weight: 800; font-size: 1rem; color: var(--gold); text-align: right; }
         .trial-close {
             font-style: italic;
-            color: rgba(255,255,255,0.72);
-            font-size: 0.9rem;
-            margin-top: 1.75rem;
-            text-align: right;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.88rem;
+            margin-top: 1.5rem;
         }
 
         /* ─────────────────────────────────────
@@ -469,12 +615,47 @@
             max-width: 1150px;
             margin: 0 auto;
         }
+        .historia-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .historia-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: transparent;
+            border: 1.5px solid var(--gold-border);
+            border-radius: var(--radius-sm);
+            padding: 0.7rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--petrol);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .historia-toggle:hover {
+            background: rgba(1,91,127,0.06);
+            border-color: var(--gold);
+        }
+        .historia-toggle-icon {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            width: 1rem;
+            display: inline-block;
+            text-align: center;
+        }
+        .historia-conteudo {
+            margin-top: 1.5rem;
+        }
         .historia-grid {
             display: grid;
             grid-template-columns: 0.75fr 1fr;
             gap: 3rem;
             align-items: start;
-            margin-top: 1.25rem;
         }
         .historia-photo {
             width: 100%;
@@ -525,12 +706,157 @@
         }
 
         /* ─────────────────────────────────────
+           SECTION — PROCESSO
+        ───────────────────────────────────── */
+        #processo {
+            background-color: var(--dark);
+            background-image:
+                radial-gradient(ellipse 100% 80% at 0% 60%, rgba(1,91,127,0.14) 0%, transparent 100%),
+                radial-gradient(ellipse 70% 50% at 100% 20%, rgba(213,171,57,0.04) 0%, transparent 100%),
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+            background-size: auto, auto, 28px 28px;
+            padding: 5rem 0;
+        }
+        #processo h2 { color: var(--white); }
+        #processo .section-label { background: rgba(213,171,57,0.1); color: var(--gold); border-color: rgba(213,171,57,0.22); }
+        .processo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        @media (max-width: 860px) { .processo-grid { grid-template-columns: 1fr; } }
+
+        /* Mock card visual */
+        .proc-mock { position: relative; padding: 1rem 0.5rem; }
+        .proc-mock-badge {
+            position: absolute;
+            top: 0; right: 1rem;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 0.28rem 0.75rem;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            z-index: 2;
+        }
+        .proc-mock-card {
+            background: linear-gradient(145deg, #071420 0%, #06111d 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.28), 0 4px 16px rgba(0,0,0,0.14);
+            position: relative;
+            z-index: 1;
+        }
+        .proc-mock-header {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 1.25rem;
+        }
+        .proc-mock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+        .proc-mock-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-left: 0.35rem;
+        }
+        .proc-notif {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-left: 3px solid var(--gold);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.65rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .proc-notif:last-child { margin-bottom: 0; }
+        .proc-notif-icon {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(213,171,57,0.15);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.72rem; color: var(--gold); font-weight: 800;
+        }
+        .proc-notif-label { font-size: 0.74rem; font-weight: 700; color: var(--white); display: block; margin-bottom: 0.18rem; }
+        .proc-notif-sub { font-size: 0.63rem; color: rgba(255,255,255,0.45); display: block; font-weight: 300; line-height: 1.5; }
+
+        /* Timeline */
+        .proc-timeline { position: relative; }
+        .proc-timeline::before {
+            content: '';
+            position: absolute;
+            left: 17px; top: 18px; bottom: 18px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold) 0%, rgba(213,171,57,0.08) 100%);
+        }
+        .proc-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 1.4rem;
+            position: relative;
+        }
+        .proc-step:last-child { margin-bottom: 0; }
+        .proc-num {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--dark);
+            border: 2px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 800; color: var(--gold);
+            flex-shrink: 0; z-index: 1; position: relative;
+        }
+        .proc-step-text strong {
+            font-size: 0.87rem; font-weight: 700;
+            color: var(--white); display: block; margin-bottom: 0.15rem;
+            text-transform: none; letter-spacing: 0;
+        }
+        .proc-step-text span { font-size: 0.76rem; color: rgba(255,255,255,0.58); font-weight: 300; }
+        .proc-step.proc-fim { margin-top: 0.5rem; }
+        .proc-step.proc-fim .proc-num {
+            width: 40px; height: 40px;
+            background: var(--gold); color: var(--dark);
+            border-color: var(--gold); font-size: 1rem;
+        }
+        .proc-step.proc-fim .proc-step-text strong {
+            font-size: 0.92rem; color: var(--gold); font-style: italic;
+        }
+
+        /* ─────────────────────────────────────
            SECTION 5 — AUTORIDADE
         ───────────────────────────────────── */
-        #autoridade { background: var(--dark); }
+        #autoridade {
+            background-color: var(--dark);
+            background-image:
+                radial-gradient(ellipse 90% 70% at 50% 100%, rgba(1,91,127,0.13) 0%, transparent 100%),
+                radial-gradient(ellipse 60% 40% at 50% 0%, rgba(213,171,57,0.04) 0%, transparent 100%),
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+            background-size: auto, auto, 28px 28px;
+            padding: 3.5rem 0;
+        }
         #autoridade h2 { color: var(--white); }
         #autoridade p  { color: rgba(255,255,255,0.82); }
         #autoridade .section-label { background: rgba(213,171,57,0.1); color: var(--gold); border-color: rgba(213,171,57,0.22); }
+        .autoridade-card {
+            background: linear-gradient(145deg, #0d1e2a 0%, #0a1a24 100%);
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.07);
+            box-shadow:
+                0 24px 64px rgba(0,0,0,0.45),
+                0 6px 20px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+            padding: 3rem 3.5rem 2.5rem;
+        }
         .numeros-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 280px));
@@ -784,52 +1110,16 @@
         /* ─────────────────────────────────────
            SECTION 9 — OFERTA
         ───────────────────────────────────── */
-        #oferta { background: var(--dark-2); }
+        #oferta {
+            background-image:
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0),
+                linear-gradient(to bottom, #0e2d42 0%, #06151d 100%);
+            background-size: 28px 28px, auto;
+            padding: 5rem 0;
+        }
         #oferta h2 { color: var(--white); }
         #oferta p  { color: rgba(255,255,255,0.6); }
         #oferta .section-label { background: rgba(213,171,57,0.1); color: var(--gold); border-color: rgba(213,171,57,0.22); }
-        #oferta .nao-sabe { background: rgba(255,255,255,0.04); border-color: rgba(213,171,57,0.2); }
-        #oferta .nao-sabe h3 { color: var(--white); }
-        #oferta .nao-sabe p  { color: rgba(255,255,255,0.55); }
-
-        /* ── OVERRIDE: força cores escuras em todos os elementos dos cards de plano ── */
-        #oferta .plano p,
-        #oferta .plano p * {
-            color: #1a1a1a !important;
-            -webkit-text-fill-color: #1a1a1a !important;
-            opacity: 1 !important;
-        }
-        #oferta .plano li,
-        #oferta .plano li * {
-            color: #333333 !important;
-            -webkit-text-fill-color: #333333 !important;
-            opacity: 1 !important;
-        }
-        #oferta .plano .plano-nome {
-            color: var(--gold) !important;
-            -webkit-text-fill-color: var(--gold) !important;
-        }
-        #oferta .plano .plano-titulo {
-            color: var(--petrol) !important;
-            -webkit-text-fill-color: var(--petrol) !important;
-        }
-        #oferta .plano .preco-valor {
-            color: var(--petrol) !important;
-            -webkit-text-fill-color: var(--petrol) !important;
-        }
-        #oferta .plano .preco-mes,
-        #oferta .plano .preco-dia {
-            color: #555555 !important;
-            -webkit-text-fill-color: #555555 !important;
-        }
-        #oferta .plano .plano-preco-final::before {
-            color: var(--petrol) !important;
-            -webkit-text-fill-color: var(--petrol) !important;
-        }
-        #oferta .plano li::before {
-            color: var(--gold) !important;
-            -webkit-text-fill-color: var(--gold) !important;
-        }
         .planos-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -839,69 +1129,112 @@
         }
         @media (max-width: 960px) { .planos-grid { grid-template-columns: 1fr; } }
         .plano {
-            background: var(--white);
-            border: 1px solid rgba(255,255,255,0.12);
+            background: linear-gradient(145deg, #0d1e2a 0%, #0a1820 100%);
+            border: 1px solid rgba(255,255,255,0.08);
             padding: 2rem 1.75rem;
             position: relative;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+            border-radius: 24px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.15);
             transition: box-shadow 0.2s, transform 0.2s;
             display: flex;
             flex-direction: column;
         }
-        .plano:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.3); transform: translateY(-2px); }
-        .plano.star { border: 2px solid var(--gold); box-shadow: 0 4px 36px rgba(213,171,57,0.22); }
-        .plano.star:hover { box-shadow: 0 10px 50px rgba(213,171,57,0.3); transform: translateY(-3px); }
+        .plano:hover { box-shadow: 0 20px 56px rgba(0,0,0,0.4); transform: translateY(-3px); }
+        .plano.star {
+            background: linear-gradient(145deg, #132540 0%, #0f1e32 100%);
+            border: 2px solid rgba(213,171,57,0.5);
+            box-shadow: 0 16px 48px rgba(213,171,57,0.14), 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .plano.star:hover { box-shadow: 0 20px 56px rgba(213,171,57,0.22); transform: translateY(-4px); }
         .plano .plano-items { flex: 1; }
-        .plano > a.btn-primary, .plano > a.btn-outline { margin-top: auto; }
+        .plano > a.btn-primary, .plano > a.btn-outline, .plano > a.btn-plano-ghost, .plano > a.btn-plano-gold { margin-top: auto; }
+        .btn-plano-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: rgba(255,255,255,0.85);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.85rem 1.75rem;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            width: 100%;
+        }
+        .btn-plano-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+        .btn-plano-gold {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gold);
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.85rem 1.75rem;
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            width: 100%;
+        }
+        .btn-plano-gold:hover { background: rgb(228,183,55); border-color: rgb(228,183,55); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(213,171,57,0.3); }
         .plano-garantia {
             text-align: center;
-            font-size: 0.7rem;
-            color: var(--petrol) !important;
-            -webkit-text-fill-color: var(--petrol) !important;
-            font-weight: 600;
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.42);
+            font-weight: 400;
             margin-top: 0.75rem;
-            opacity: 0.75;
         }
         .plano-badge {
             position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            background: var(--gold); color: white;
+            background: var(--gold); color: var(--dark);
             font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
             padding: 0.38rem 1.3rem; white-space: nowrap;
             border-radius: var(--radius-pill);
         }
         .plano-nome { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
-        .plano-titulo { font-size: 1.3rem; font-weight: 700; color: var(--petrol); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.5rem; }
-        .plano-desc { font-size: 0.82rem; color: var(--dark); font-weight: 300; margin-bottom: 0.75rem; line-height: 1.5; }
+        .plano-titulo { font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .plano-desc { font-size: 0.82rem; color: rgba(255,255,255,0.65); font-weight: 300; margin-bottom: 0.75rem; line-height: 1.5; }
         .plano-preco {
             padding: 1.25rem 0;
-            border-top: 1px solid var(--gold-border);
-            border-bottom: 1px solid var(--gold-border);
+            border-top: 1px solid rgba(213,171,57,0.18);
+            border-bottom: 1px solid rgba(213,171,57,0.18);
             margin-bottom: 1.5rem;
         }
-        .plano-preco .de { font-size: 0.75rem; font-weight: 300; color: var(--gray); display: block; }
-        .plano-preco .valor { font-size: 2.4rem; font-weight: 800; color: var(--petrol); line-height: 1; }
+        .plano-preco .de { font-size: 0.75rem; font-weight: 300; color: rgba(255,255,255,0.4); display: block; }
+        .plano-preco .valor { font-size: 2.4rem; font-weight: 800; color: var(--gold); line-height: 1; }
         .plano-preco .valor sup { font-size: 1.1rem; font-weight: 700; vertical-align: super; }
         .plano-preco .valor sub { font-size: 1.1rem; font-weight: 400; vertical-align: baseline; }
-        .plano-preco .periodo { font-size: 0.78rem; font-weight: 300; color: var(--gray); }
+        .plano-preco .periodo { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.4); }
         .plano-preco .econ { font-size: 0.72rem; color: var(--gold); font-weight: 700; margin-top: 0.4rem; }
         .plano-items { list-style: none; margin: 0 0 1.5rem; }
         .plano-items li {
             display: flex; gap: 0.7rem; align-items: flex-start;
-            font-size: 0.83rem; color: var(--gray);
-            padding: 0.5rem 0; border-bottom: 1px solid rgba(64,64,64,0.06);
+            font-size: 0.83rem; color: rgba(255,255,255,0.72);
+            padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
             line-height: 1.5;
         }
         .plano-items li:last-child { border-bottom: none; }
         .plano-items li::before { content: "→"; color: var(--gold); font-weight: 700; flex-shrink: 0; }
         .plano-items .mkt { font-size: 0.68rem; color: rgba(64,64,64,0.5); display: block; }
         .plano-items .plano-preco-final {
-            background: var(--petrol-light);
+            background: rgba(1,91,127,0.15);
+            border: 1px solid rgba(1,91,127,0.25);
             border-radius: var(--radius-sm);
             margin-top: 1rem;
             padding: 1.1rem 1rem;
-            border-top: none;
-            color: var(--petrol);
+            border-top: 1px solid rgba(1,91,127,0.25);
+            color: var(--white);
             text-align: center;
             flex-direction: column;
             gap: 0;
@@ -912,8 +1245,7 @@
             font-size: 0.56rem;
             font-weight: 700;
             letter-spacing: 0.18em;
-            color: var(--petrol);
-            opacity: 0.55;
+            color: rgba(255,255,255,0.45);
             margin-bottom: 0.35rem;
         }
         .preco-linha {
@@ -923,22 +1255,21 @@
             gap: 0.2rem;
             line-height: 1.1;
         }
-        .preco-valor { font-size: 1.75rem; font-weight: 800; color: var(--petrol); }
-        .preco-mes { font-size: 0.82rem; font-weight: 300; color: var(--gray); }
+        .preco-valor { font-size: 1.75rem; font-weight: 800; color: var(--gold); }
+        .preco-mes { font-size: 0.82rem; font-weight: 300; color: rgba(255,255,255,0.5); }
         .plano.star .plano-items .plano-preco-final {
-            background: var(--gold-light);
-            border: 1px solid var(--gold-border);
+            background: rgba(213,171,57,0.1);
+            border: 1px solid rgba(213,171,57,0.3);
         }
         .plano.star .preco-valor { font-size: 1.45rem; }
         .preco-dia {
             display: block;
             font-size: 0.7rem;
             font-weight: 700;
-            color: var(--petrol);
+            color: rgba(255,255,255,0.5);
             letter-spacing: 0.06em;
             text-transform: uppercase;
             margin-top: 0.35rem;
-            opacity: 0.75;
         }
         .plano-stack {
             background: var(--petrol-light);
@@ -958,16 +1289,19 @@
         .plano-stack .se { font-size: 2rem; font-weight: 800; color: var(--petrol); line-height: 1.1; display: block; }
         .plano-stack .se-sub { font-size: 0.65rem; font-weight: 300; color: var(--gray); margin-top: 0.2rem; display: block; }
         .nao-sabe {
-            background: var(--white);
-            border: 1px solid var(--gold-border);
-            padding: 1.75rem;
-            text-align: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 1.25rem 2rem;
             margin-top: 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
-        .nao-sabe h3 { font-size: 1rem; margin-bottom: 0.75rem; }
-        .nao-sabe p  { font-size: 0.88rem; margin-bottom: 1.5rem; }
+        .nao-sabe h3 { font-size: 0.88rem; color: var(--white); margin-bottom: 0.2rem; }
+        .nao-sabe p  { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0; }
 
         /* ─────────────────────────────────────
            SECTION 10 — GARANTIA
@@ -1030,16 +1364,16 @@
         /* ─────────────────────────────────────
            SECTION 11 — FAQ
         ───────────────────────────────────── */
-        #faq { background: var(--white); padding-top: 0; }
+        #faq { background: var(--petrol); padding-top: 3rem; }
         .faq-divisor {
             text-align: center;
             padding: 4.5rem 0 2.5rem;
-            background: var(--white);
+            background: var(--petrol);
         }
         .faq-divisor hr {
             width: 80px;
             height: 2px;
-            background: rgba(64,64,64,0.15);
+            background: rgba(255,255,255,0.15);
             border: none;
             margin: 0 auto 1.25rem;
         }
@@ -1048,7 +1382,7 @@
             font-weight: 700;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: rgba(64,64,64,0.4);
+            color: rgba(255,255,255,0.5);
         }
         .faq-grid {
             display: grid;
@@ -1057,16 +1391,16 @@
             margin-top: 1.5rem;
         }
         @media (max-width: 720px) { .faq-grid { grid-template-columns: 1fr; } }
-        .faq-item { border-bottom: 1px solid rgba(64,64,64,0.08); }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
         .faq-btn {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
             padding: 1.4rem 0; background: none; border: none; cursor: pointer;
             font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
-            color: var(--petrol); letter-spacing: 0.02em; text-align: left; gap: 1rem;
+            color: var(--white); letter-spacing: 0.02em; text-align: left; gap: 1rem;
         }
         .faq-btn .ic { color: var(--gold); font-size: 1.3rem; font-weight: 700; flex-shrink: 0; transition: transform 0.2s; }
         .faq-btn.open .ic { transform: rotate(45deg); }
-        .faq-ans { display: none; padding: 0 0 1.4rem; font-size: 0.88rem; color: var(--gray); line-height: 1.8; }
+        .faq-ans { display: none; padding: 0 0 1.4rem; font-size: 0.88rem; color: rgba(255,255,255,0.72); line-height: 1.8; }
         .faq-ans.open { display: block; }
 
         /* ─────────────────────────────────────
@@ -1087,18 +1421,19 @@
             display: flex;
             align-items: flex-start;
             gap: 0.85rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(213,171,57,0.18);
-            border-radius: var(--radius);
-            padding: 1.1rem 1.25rem;
+            background: linear-gradient(145deg, #0d1e2a 0%, #0a1820 100%);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 1.25rem 1.4rem;
             flex: 1;
             min-width: 200px;
             max-width: 280px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
         }
         .ob-num {
-            width: 32px; height: 32px;
+            width: 34px; height: 34px;
             background: var(--gold);
-            color: white;
+            color: var(--dark);
             font-size: 0.85rem;
             font-weight: 800;
             border-radius: 50%;
@@ -1160,7 +1495,7 @@
             top: 0;
             z-index: 200;
             background: var(--dark);
-            border-bottom: 1px solid rgba(213,171,57,0.14);
+            border-bottom: none;
             padding: 0.9rem 0;
         }
         .nav-inner {
@@ -1198,13 +1533,16 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-shrink: 1;
+            min-width: 0;
         }
         .nav-logo-wrap {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         .nav-brand-desc {
-            font-size: 1rem;
+            font-size: 0.82rem;
             font-weight: 400;
             color: rgba(255,255,255,0.82);
             letter-spacing: 0.06em;
@@ -1212,9 +1550,11 @@
             white-space: nowrap;
             line-height: 1;
         }
+        @media (max-width: 900px) {
+            .nav-brand-desc { display: none; }
+        }
         @media (max-width: 600px) {
             .nav-cta { display: none; }
-            .nav-brand-desc { display: none; }
             .nav-logo-clip img { height: 36px; }
             #topnav { padding: 0.65rem 0; }
             .container-wide { padding: 0 1.2rem; }
@@ -1240,11 +1580,16 @@
             position: fixed; bottom: 2rem; right: 1.5rem; z-index: 990;
             width: 56px; height: 56px; background: #25D366;
             display: flex; align-items: center; justify-content: center;
-            text-decoration: none;
+            text-decoration: none; border-radius: 50%;
             box-shadow: 0 4px 18px rgba(37,211,102,0.4);
             transition: all 0.2s;
         }
         .wa-float:hover { transform: scale(1.08); background: #1fb855; }
+        @keyframes wa-pulse {
+            0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 28px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.15); }
+        }
+        .wa-float { animation: wa-pulse 2s ease-in-out infinite; }
 
         /* ─────────────────────────────────────
            STICKY MOBILE CTA
@@ -1432,9 +1777,41 @@
             .dream-box { padding: 1.75rem 1.25rem; }
             .depo-destaque { padding: 1.25rem; }
             .ps-block { padding: 1.5rem 0; }
-            .nao-sabe { padding: 1.75rem 1.25rem; }
             .plano { padding: 2rem 1.5rem; }
             .calc-box { padding: 1.5rem; }
+
+            /* Hero fotos */
+            .hero-right-col { min-height: 220px; max-height: 240px; }
+            .hero-photo-badge { font-size: 0.58rem; padding: 0.25rem 0.65rem; }
+
+            /* Stats bar */
+            .hsb-num { font-size: 1.7rem; }
+            .hsb-label { font-size: 0.68rem; }
+            .hero-stats-bar-inner { gap: 0.75rem; padding: 0 1rem; }
+
+            /* Como funciona */
+            #processo { padding: 3rem 0; }
+            .proc-mock { padding: 1.5rem 0 0; }
+            .proc-mock-card { padding: 1.25rem; }
+            .proc-mock-badge { font-size: 0.55rem; }
+            .proc-step-text strong { font-size: 0.82rem; }
+
+            /* O que muda */
+            #amplificacao { padding: 3rem 0; }
+
+            /* Por que a Openn */
+            .autoridade-card { padding: 2rem 1.5rem; border-radius: 20px; }
+
+            /* Planos */
+            #oferta { padding: 3rem 0; }
+            .onboarding-steps { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+            .ob-step { max-width: 100%; }
+            .ob-arrow { display: none; }
+            .nao-sabe { flex-direction: column; align-items: stretch; gap: 1rem; padding: 1.25rem; }
+            .nao-sabe a { width: 100% !important; text-align: center; }
+
+            /* FAQ */
+            .faq-btn { font-size: 0.82rem; }
         }
 
         /* ─────────────────────────────────────
@@ -1444,6 +1821,14 @@
             .btn-whatsapp { font-size: 0.8rem; padding: 1rem 1.25rem; gap: 0.5rem; }
             .preco-valor { font-size: 1.35rem; }
             .num-card .big { font-size: 2rem; }
+            .autoridade-card { padding: 1.5rem 1rem; border-radius: 16px; }
+            .hero-right-col { min-height: 180px; max-height: 200px; }
+            .hsb-num { font-size: 1.4rem; }
+            .proc-timeline::before { left: 13px; }
+            .proc-num { width: 28px; height: 28px; font-size: 0.62rem; }
+            .proc-step.proc-fim .proc-num { width: 32px; height: 32px; }
+            #hero h1 { font-size: clamp(1.3rem, 7vw, 1.8rem); }
+            .hero-sub { font-size: 0.88rem !important; }
             table.ad thead { display: none; }
             table.ad,
             table.ad tbody,
@@ -1477,13 +1862,7 @@
                     <img src="images/openn-logo.png" alt="Openn">
                 </div>
             </a>
-            <span class="nav-brand-desc">Consultoria Tributária e Financeira para Psicólogos</span>
         </div>
-        <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
-           target="_blank" class="nav-cta" style="display:inline-flex;align-items:center;gap:0.45rem;background:#25D366;color:#fff;font-weight:700;font-size:0.7rem;padding:0.6rem 1.5rem;border-radius:999px;text-decoration:none;letter-spacing:0.03em;white-space:nowrap;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            FALAR COM A OPENN PSI
-        </a>
     </div>
 </nav>
 
@@ -1493,10 +1872,6 @@
     <button id="cookie-ok">Aceitar</button>
 </div>
 
-<!-- ── AVISO BAR ── -->
-<div class="countdown-bar">
-    Consulta diagnóstica gratuita · Respondemos em até <strong>20 minutos</strong> nos dias úteis
-</div>
 
 <!-- ══════════════════════════════════════
      SEÇÃO 1 — HERO
@@ -1507,68 +1882,50 @@
 
             <!-- COLUNA ESQUERDA -->
             <div class="hero-left-col">
-                <div class="hero-tag">
-                    <span class="hero-dot"></span>
-                    Especialistas em psicólogos · Desde 2020
-                </div>
-
                 <h1>
-                    Você cuida dos<br>seus pacientes,<br>
-                    <em>a Openn cuida<br>do resto.</em>
+                    <em>Contabilidade e Consultoria Financeira</em><br>exclusivamente para psicólogos.
                 </h1>
 
                 <p class="hero-sub">
-                    Me chamo Joyce, uma das fundadoras da Openn Psi. Com uma equipe de especialistas, há 15 anos cuidamos da vida fiscal, tributária e financeira de psicólogos — para que você foque no que realmente importa: seus pacientes.
+                    Você cuida dos seus pacientes, a gente cuida da parte burocrática.
                 </p>
 
-                <ul class="hero-bullets">
-                    <li>Recibos e notas fiscais emitidos pela minha equipe</li>
-                    <li>Consultoria financeira do consultório com especialista dedicado</li>
-                    <li>Organização fiscal e tributária perante a Receita Federal</li>
-                </ul>
-
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-num">300+</span>
-                        <p class="stat-label">psicólogos atendidos</p>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num">15 anos</span>
-                        <p class="stat-label">no mercado</p>
-                    </div>
-                </div>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.75rem; font-weight: 400; letter-spacing: 0.03em; text-align: center; width: 100%;">
-                    Ao longo de 15 anos de carreira, Joyce atendeu mais de 3.000 clientes em diversas áreas antes de se especializar exclusivamente em psicólogos.
-                </p>
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20quero%20falar%20com%20um%20especialista%20da%20Openn"
+                   target="_blank" class="btn-primary" style="margin-top:0.5rem;font-size:0.62rem;padding:0.77rem 1.68rem;">
+                    Falar com um especialista →
+                </a>
             </div>
 
             <!-- COLUNA DIREITA -->
             <div class="hero-right-col">
-                <div class="hero-photo-wrap">
-                    <img src="images/joyce.jpg" alt="Joyce Araújo — Openn Business Solutions" loading="eager">
-                    <div class="photo-nameplate">
-                        <p class="pn-eyebrow">Sua especialista</p>
-                        <p class="pn-name">Joyce Araújo</p>
-                        <p class="pn-title">Contadora CRC GO 027331/O</p>
-                        <p class="pn-title">15 anos de atuação tributária</p>
-                    </div>
+                <!-- Foto pequena — retrato -->
+                <div class="hero-photo-small">
+                    <img src="images/hero-person.png" alt="Especialista Openn" loading="eager">
                 </div>
-
-                <!-- Card flutuante 1 -->
-                <div class="float-card float-card-1">
-                    <div class="fc-label"><span class="fc-dot-green"></span> Resposta garantida</div>
-                    <div class="fc-num">20 min</div>
-                    <div class="fc-desc">Tempo médio de atendimento</div>
+                <!-- Foto média — escritório -->
+                <div class="hero-photo-mid">
+                    <img src="images/hero-escritorio.png" alt="Escritório Openn" loading="eager">
                 </div>
-
-                <!-- Card flutuante 2 -->
-                <div class="float-card float-card-2">
-                    <div class="fc-label">Economia média no PJ</div>
-                    <div class="fc-num">50%</div>
-                    <div class="fc-desc">menos impostos por mês</div>
+                <!-- Foto grande — equipe -->
+                <div class="hero-photo-large">
+                    <img src="images/hero-equipe.png" alt="Equipe Openn" loading="eager">
+                </div>
+                <!-- Badge entre as fotos -->
+                <div class="hero-photo-badge">
+                    Nós somos <img src="images/openn-logo.png" alt="Openn" style="height:12px;width:auto;vertical-align:middle;margin-left:0.3rem;filter:brightness(0) invert(1);">
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Barra de números -->
+    <div class="hero-stats-bar">
+        <div class="hero-stats-bar-inner">
+            <div class="hsb-item"><span class="hsb-num">+300</span><span class="hsb-label">Psicólogos atendidos</span></div>
+            <div class="hsb-item"><span class="hsb-num">1,8 Milhão</span><span class="hsb-label">em impostos economizados</span></div>
+            <div class="hsb-item"><span class="hsb-num">15</span><span class="hsb-label">Anos de experiência</span></div>
+            <div class="hsb-item"><span class="hsb-num">100%</span><span class="hsb-label">Especializados em psicólogos</span></div>
         </div>
     </div>
 </section>
@@ -1610,21 +1967,99 @@
 <!-- ══════════════════════════════════════
      SEÇÃO 2 — PROBLEMA
 ══════════════════════════════════════ -->
-<section id="problema">
+
+<!-- ══════════════════════════════════════
+     SEÇÃO — PROCESSO
+══════════════════════════════════════ -->
+<section id="processo">
     <div class="container">
-        <div class="section-label">Você se identifica?</div>
+        <div class="section-label tc" style="display:block;width:fit-content;margin:0 auto 1rem;">Como funciona</div>
+        <h2 class="tc">Menos burocracia. Mais tempo para seus pacientes.</h2>
+        <div class="gold-line"></div>
 
-        <h2>Você sabe exatamente o que fazer quando um paciente pede recibo?</h2>
-        <div class="gold-line-left"></div>
+        <div class="processo-grid">
 
-        <div class="problema-card mt3">
-            <p>Ou bate aquela insegurança? Aquela sensação de <em>"vou resolver isso depois"</em> que vira... depois de novo?</p>
-        </div>
+            <!-- Card visual esquerdo -->
+            <div class="proc-mock">
+                <span class="proc-mock-badge">Sistema Openn</span>
+                <div class="proc-mock-card">
+                    <div class="proc-mock-header">
+                        <span class="proc-mock-dot"></span>
+                        <span class="proc-mock-dot" style="background:var(--petrol)"></span>
+                        <span class="proc-mock-dot" style="background:rgba(255,255,255,0.18)"></span>
+                        <span class="proc-mock-title">Atualizações em tempo real</span>
+                    </div>
+                    <div class="proc-notif">
+                        <div class="proc-notif-icon">✓</div>
+                        <div>
+                            <span class="proc-notif-label">Pagamento recebido e conciliado</span>
+                            <span class="proc-notif-sub">R$ 250,00 · PIX · 22/05/2026</span>
+                            <span class="proc-notif-sub">Conta bancária atualizada automaticamente</span>
+                        </div>
+                    </div>
+                    <div class="proc-notif">
+                        <div class="proc-notif-icon">✓</div>
+                        <div>
+                            <span class="proc-notif-label">Nota fiscal emitida</span>
+                            <span class="proc-notif-sub">Dra. Ana Costa · ana@email.com</span>
+                            <span class="proc-notif-sub">Sessão: 22/05/2026 · R$ 250,00</span>
+                        </div>
+                    </div>
+                    <div class="proc-notif" style="border-left-color:var(--petrol)">
+                        <div class="proc-notif-icon" style="background:rgba(1,91,127,0.18);color:var(--petrol)">✓</div>
+                        <div>
+                            <span class="proc-notif-label">Imposto gerado</span>
+                            <span class="proc-notif-sub">Competência 05/2026 · Vencimento: 30/05</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <p class="mt3">A faculdade de psicologia prepara você para cuidar de pessoas. Não para lidar com a Receita Federal — e isso não é culpa sua.</p>
+            <!-- Timeline direita -->
+            <div class="proc-timeline">
+                <div class="proc-step">
+                    <div class="proc-num">1</div>
+                    <div class="proc-step-text">
+                        <strong>Você realiza a sessão</strong>
+                        <span>Presencial ou online, como preferir.</span>
+                    </div>
+                </div>
+                <div class="proc-step">
+                    <div class="proc-num">2</div>
+                    <div class="proc-step-text">
+                        <strong>Seu paciente preenche um formulário digital</strong>
+                        <span>Uma vez só, em menos de 2 minutos.</span>
+                    </div>
+                </div>
+                <div class="proc-step">
+                    <div class="proc-num">3</div>
+                    <div class="proc-step-text">
+                        <strong>Emitimos a nota fiscal automaticamente</strong>
+                        <span>Seu paciente recebe no e-mail em até 48h.</span>
+                    </div>
+                </div>
+                <div class="proc-step">
+                    <div class="proc-num">4</div>
+                    <div class="proc-step-text">
+                        <strong>Pagamentos e recebimentos conciliados automaticamente</strong>
+                        <span>Sua conta integrada 100% ao nosso sistema.</span>
+                    </div>
+                </div>
+                <div class="proc-step">
+                    <div class="proc-num">5</div>
+                    <div class="proc-step-text">
+                        <strong>Na época do IR, tudo já está pronto</strong>
+                        <span>Entregamos organizado antes do prazo. Sem correria.</span>
+                    </div>
+                </div>
+                <div class="proc-step proc-fim">
+                    <div class="proc-num">★</div>
+                    <div class="proc-step-text">
+                        <strong>Você só cuida dos seus pacientes. O resto é com a gente.</strong>
+                    </div>
+                </div>
+            </div>
 
-        <div class="problema-card mt3">
-            <p><strong>O que a maioria ainda não sabe:</strong> desde 2022, a Receita Federal monitora automaticamente todos os recebimentos via Pix. Os dados dos seus pacientes são cruzados com os seus — mesmo que você nunca tenha feito nada de errado.</p>
         </div>
     </div>
 </section>
@@ -1637,23 +2072,21 @@
         <div class="section-label">O que muda quando você se organiza</div>
 
         <h2>Imagine começar a semana sabendo que está tudo certo.</h2>
-        <div class="gold-line-left" style="background: rgba(213,171,57,0.45);"></div>
+        <div class="gold-line-left"></div>
 
         <div class="amp-grid">
             <!-- COLUNA ESQUERDA -->
             <div>
-                <p class="mt2">Quando a parte fiscal está organizada, algo muda — não só nos documentos, mas na sua cabeça.</p>
-                <ul class="amp-list">
-                    <li><span class="arr">→</span> Paciente pede nota? Você responde com tranquilidade, sem precisar pesquisar nada.</li>
-                    <li><span class="arr">→</span> Época do IR? Sem surpresa. Sem correria. Tudo documentado e pronto.</li>
-                    <li><span class="arr">→</span> Você sabe, com certeza, que está pagando exatamente o que é justo — nem mais, nem menos.</li>
+                <ul class="amp-list mt2">
+                    <li><span class="arr">→</span> Paciente pede nota? Já enviamos para o e-mail dele.</li>
+                    <li><span class="arr">→</span> Época do IR? Tudo organizado antes do prazo, sem imposto a mais.</li>
+                    <li><span class="arr">→</span> Recibo de última hora? Já está resolvido.</li>
                 </ul>
-                <p style="color: rgba(255,255,255,0.75);">E se além disso você ainda pudesse <em style="color: var(--gold);">pagar menos imposto do que paga hoje</em>?</p>
-                <p class="trial-close mt2">Isso é o que a Openn entrega.</p>
+                <p class="trial-close">E o melhor: você pode ainda <em style="color:var(--gold);font-weight:700;">pagar menos imposto do que paga hoje.</em></p>
             </div>
 
             <!-- COLUNA DIREITA -->
-            <div class="calc-box" style="margin: 0;">
+            <div class="calc-box">
                 <p class="intro">Psicólogos com enquadramento correto economizam:</p>
                 <div class="calc-row">
                     <span class="cl">Economia ao migrar de PF para PJ</span>
@@ -1661,11 +2094,11 @@
                 </div>
                 <div class="calc-row">
                     <span class="cl">Consultório que fatura R$ 8.000/mês pode pagar</span>
-                    <span class="cv">até R$ 1.600 a mais/mês</span>
+                    <span class="cv">até R$ 750 a mais/mês</span>
                 </div>
                 <div class="calc-row">
                     <span class="cl">Em 12 meses, isso representa</span>
-                    <span class="cv">até R$ 19.200</span>
+                    <span class="cv">até R$ 9.000</span>
                 </div>
             </div>
         </div>
@@ -1675,195 +2108,49 @@
 <!-- ══════════════════════════════════════
      SEÇÃO 4 — HISTÓRIA
 ══════════════════════════════════════ -->
-<section id="historia">
-    <div class="container">
-        <div class="historia-wrap">
-            <div class="section-label">A história da Openn</div>
-
-            <div class="historia-grid">
-                <div class="historia-photo">
-                    <img src="images/joyce-historia.jpg" alt="Joyce Araújo — Fundadora da Openn Business Solutions">
-                </div>
-
-                <div class="historia-content">
-                    <h2 style="text-align: left;">A história da Openn não começou em um escritório contábil.</h2>
-                    <div class="gold-line-left" style="margin: 0.75rem 0 1rem;"></div>
-
-                    <p>Todos os psicólogos que consultei tinham algo em comum: quando sabiam que eu era contadora, a sessão virava consultoria tributária:</p>
-
-                    <div class="historia-quote">
-                        "Preciso abrir CNPJ?"<br>
-                        "Estou pagando imposto a mais?"<br>
-                        "Tenho medo da Receita, mas não sei nem do quê."
-                    </div>
-
-                    <p>Ficou claro que faltava alguém que falasse a língua do psicólogo. Em 2020 fundamos a Openn Psi com uma missão simples: <strong style="color: var(--petrol); font-weight: 700;">tirar a burocracia fiscal das mãos do psicólogo — de vez.</strong> Hoje, uma equipe de especialistas cuida de cada detalhe para que você não precise se preocupar com nada disso.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- ══════════════════════════════════════
      SEÇÃO 5 — AUTORIDADE
 ══════════════════════════════════════ -->
 <section id="autoridade">
     <div class="container">
-        <div class="section-label tc" style="display: block; width: fit-content; margin: 0 auto 2rem;">Por que a Openn</div>
+        <div class="autoridade-card">
+            <div class="section-label tc" style="display: block; width: fit-content; margin: 0 auto 2rem;">Por que a Openn</div>
 
-        <h2 class="tc">A Openn não é uma consultoria que<br>"também atende psicólogos".</h2>
-        <div class="gold-line"></div>
-        <p class="tc mt2">Uma equipe de especialistas dedicada exclusivamente a psicólogos — <strong style="color:var(--gold);font-weight:800;">e só a psicólogos.</strong></p>
+            <h2 class="tc">A Openn não é uma consultoria que<br>"também atende psicólogos".</h2>
+            <div class="gold-line"></div>
+            <p class="tc mt2">Uma equipe de especialistas dedicada exclusivamente a psicólogos — <strong style="color:var(--gold);font-weight:800;">e só a psicólogos.</strong></p>
 
-        <div class="numeros-grid">
-            <div class="num-card">
-                <span class="big"><span>15</span></span>
-                <p class="desc">Anos como<br>contadora</p>
-            </div>
-            <div class="num-card">
-                <span class="big"><span>5</span></span>
-                <p class="desc">Anos exclusivos<br>no nicho</p>
-            </div>
-            <div class="num-card">
-                <span class="big"><span>300</span>+</span>
-                <p class="desc">Psicólogos<br>atendidos</p>
-            </div>
-        </div>
-
-        <div class="pilares-grid">
-            <div class="pilar-card">
-                <span class="pilar-nome">Joyce Araújo</span>
-                <span class="pilar-tag">Contadora CRC GO 027331/O</span>
-                <span class="pilar-anos">15 anos de atuação tributária</span>
-                <p class="pilar-desc">Especialista em planejamento tributário, atendimento consultivo e gestão empresarial exclusivamente para psicólogos.</p>
-            </div>
-            <div class="pilar-card">
-                <span class="pilar-nome">André Said</span>
-                <span class="pilar-tag">Consultoria Financeira</span>
-                <span class="pilar-anos">20 anos de atuação em consultoria financeira</span>
-                <p class="pilar-desc">Especialista em gestão financeira e crescimento de negócios, com foco em ajudar psicólogos a cuidarem do dinheiro do consultório com clareza.</p>
-            </div>
-        </div>
-
-        <p class="pilares-frase">A maioria das contabilidades cuida dos documentos. <strong>A Openn cuida também do seu dinheiro.</strong></p>
-    </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     SEÇÃO 6 — TRANSFORMAÇÃO
-══════════════════════════════════════ -->
-<section id="transformacao">
-    <div class="container">
-        <div class="section-label">Como vai ser</div>
-
-        <h2>Imagine como seria a sua semana com a Openn ao seu lado.</h2>
-        <div class="gold-line-left"></div>
-
-        <div class="dream-box mt4">
-            <p>Um paciente te pede uma nota fiscal.<br>
-            Você responde: <em>"Claro, vou pedir para enviarem pra você."</em><br><br>
-            E é só isso. <strong>Sem pesquisa. Sem tutorial. Sem medo de errar.</strong><br><br>
-            No fim do mês, sua situação fiscal está organizada — sem você ter movido um dedo para isso.<br><br>
-            Na época do imposto de renda, nada de pânico. Tudo documentado, organizado e entregue.<br><br>
-            E o melhor: você sabe, com certeza, que está pagando exatamente o que é justo — nem mais, nem menos.</p>
-        </div>
-
-        <table class="ad">
-            <thead>
-                <tr>
-                    <th>ANTES da Openn</th>
-                    <th>DEPOIS da Openn</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Não sabe se está fazendo certo</td>
-                    <td>Tudo cuidado por especialistas</td>
-                </tr>
-                <tr>
-                    <td>Ansiedade quando pedem nota fiscal</td>
-                    <td>Responde com segurança e tranquilidade</td>
-                </tr>
-                <tr>
-                    <td>Insegurança na época do IR</td>
-                    <td>Declaração pronta, sem surpresa</td>
-                </tr>
-                <tr>
-                    <td>Dúvida sobre abrir CNPJ</td>
-                    <td>Decisão com assessoria especializada</td>
-                </tr>
-                <tr>
-                    <td>Pagando mais imposto do que deveria</td>
-                    <td>Só o imposto justo, nada além</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p class="tc mt4" style="font-size: 1rem; color: var(--petrol); font-weight: 400; font-style: italic;">Você consegue se imaginar assim?</p>
-    </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     SEÇÃO 7+8 — PARA QUEM + DEPOIMENTOS
-══════════════════════════════════════ -->
-<section id="para-quem">
-    <div class="container-wide">
-        <div class="pqd-wrap">
-        <div class="pqd-grid">
-
-            <!-- COLUNA ESQUERDA: Para quem é -->
-            <div class="pqd-left">
-                <div class="section-label">Identificação</div>
-                <h2>A Openn foi feita para você se...</h2>
-                <div class="gold-line-left"></div>
-
-                <ul class="ck-list yes" style="margin-top: 1rem;">
-                    <li>Você é psicóloga recém-formada e não sabe como emitir o primeiro recibo</li>
-                    <li>Você já atende pacientes mas nunca organizou sua situação fiscal</li>
-                    <li>Você tem convênio ou plano de saúde que exige nota fiscal com CNPJ</li>
-                    <li>Você tem CNPJ mas não tem certeza se o enquadramento está correto</li>
-                    <li>Você quer focar 100% nos seus pacientes e delegar a burocracia de vez</li>
-                    <li>Você recebe pelo Pix e nunca emitiu nenhum documento fiscal</li>
-                </ul>
-
-                <div class="pqd-no-box">
-                    <p class="pq-heading no">A Openn não é para você se...</p>
-                    <ul class="ck-list no">
-                        <li>Você já tem um contador especialista em psicólogos e está 100% satisfeita</li>
-                        <li>Você ainda não atende pacientes e não tem movimentação financeira como psicóloga</li>
-                        <li>Você busca apenas o menor preço, sem se importar com especialização no seu nicho</li>
-                    </ul>
+            <div class="numeros-grid">
+                <div class="num-card">
+                    <span class="big"><span>15</span></span>
+                    <p class="desc">Anos de<br>experiência</p>
+                </div>
+                <div class="num-card">
+                    <span class="big"><span>5</span></span>
+                    <p class="desc">Anos exclusivos<br>no nicho</p>
+                </div>
+                <div class="num-card">
+                    <span class="big"><span>300</span>+</span>
+                    <p class="desc">Psicólogos<br>atendidos</p>
                 </div>
             </div>
 
-            <!-- COLUNA DIREITA: Depoimentos -->
-            <div id="depoimentos" class="pqd-right">
-                <div class="section-label">O que dizem nossas clientes</div>
-                <h2>Histórias reais.<br>Resultados reais.</h2>
-                <div class="gold-line-left"></div>
-
-                <div class="pqd-depos">
-                    <!-- ROBERTA XAVIER -->
-                    <div class="depo-card">
-                        <img class="depo-img" src="images/dep-roberta.png" alt="Depoimento de Roberta Xavier" loading="lazy" style="width:100%;height:auto;display:block;">
-                        <div class="depo-caption">
-                            <span class="stars">★★★★★</span>
-                            <div>
-                                <p class="name">Roberta Xavier</p>
-                                <p class="loc">Psicóloga · via WhatsApp</p>
-                            </div>
-                        </div>
-                        <p class="depo-quote">Senti uma diferença absurda. Antes ficava insegura, achando que pagava imposto a mais. Hoje fico em paz — e o que mais me surpreende é a economia. Foi um alívio real.</p>
-                    </div>
+            <div class="pilares-grid">
+                <div class="pilar-card">
+                    <span class="pilar-nome">Joyce Araújo</span>
+                    <span class="pilar-tag">Contadora CRC GO 027331/O</span>
+                    <span class="pilar-anos">15 anos de atuação tributária</span>
+                    <p class="pilar-desc">Especialista em planejamento tributário, atendimento consultivo e gestão empresarial exclusivamente para psicólogos.</p>
                 </div>
-
-                <p class="pqd-social">
-                    <span class="num-petrol">300+</span> psicólogos já escolheram a Openn.
-                    <span style="color: var(--gold); font-weight: 700;">Quando vai ser a sua vez?</span>
-                </p>
+                <div class="pilar-card">
+                    <span class="pilar-nome">André Said</span>
+                    <span class="pilar-tag">Consultoria Financeira</span>
+                    <span class="pilar-anos">20 anos de atuação em consultoria financeira</span>
+                    <p class="pilar-desc">Especialista em gestão financeira e crescimento de negócios, com foco em ajudar psicólogos a cuidarem do dinheiro do consultório com clareza.</p>
+                </div>
             </div>
 
-        </div>
+            <p class="pilares-frase">Contabilidade, direcionamento financeiro e tecnologia, <strong>tudo num só lugar.</strong></p>
         </div>
     </div>
 </section>
@@ -1900,8 +2187,8 @@
             <div class="ob-step">
                 <div class="ob-num">3</div>
                 <div class="ob-text">
-                    <strong>Tudo em ordem em 24h</strong>
-                    <span>Sua situação fiscal começa a ser cuidada. Primeiro documento emitido em até 24 horas úteis.</span>
+                    <strong>Tudo pronto em 72h</strong>
+                    <span>Sua situação fiscal começa a ser cuidada. Primeiro documento emitido em até 72 horas úteis.</span>
                 </div>
             </div>
         </div>
@@ -1910,8 +2197,8 @@
 
             <!-- PLANO PF BÁSICO -->
             <div class="plano">
-                <div class="plano-nome">Para quem atua como</div>
-                <div class="plano-titulo">Pessoa Física</div>
+
+                <div class="plano-titulo">Pessoa Física Básico</div>
                 <p class="plano-desc">Organização fiscal essencial para psicólogas em início de carreira.</p>
 
                 <ul class="plano-items">
@@ -1925,17 +2212,17 @@
                 </ul>
 
                 <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20Plano%20PF%20B%C3%A1sico%20da%20Openn"
-                   target="_blank" class="btn-outline w100">
-                    QUERO O PLANO PF BÁSICO
+                   target="_blank" class="btn-plano-ghost">
+                    Começar com o PF Básico
                 </a>
-                <p class="plano-garantia">🛡️ 30 dias de garantia incondicional</p>
+                <p class="plano-garantia">30 dias de garantia incondicional</p>
             </div>
 
             <!-- PLANO PF COMPLETO -->
             <div class="plano star">
                 <div class="plano-badge">⭐ MAIS ESCOLHIDO</div>
-                <div class="plano-nome">Para quem atua como</div>
-                <div class="plano-titulo">PF Completo</div>
+
+                <div class="plano-titulo">Pessoa Física Plus</div>
                 <p class="plano-desc">Tudo do PF Básico + assessoria financeira pessoal para você crescer com segurança.</p>
 
                 <ul class="plano-items">
@@ -1950,15 +2237,15 @@
                 </ul>
 
                 <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20Plano%20PF%20Completo%20da%20Openn"
-                   target="_blank" class="btn-primary w100">
-                    QUERO O PLANO PF COMPLETO
+                   target="_blank" class="btn-plano-gold">
+                    Quero este plano
                 </a>
-                <p class="plano-garantia">🛡️ 30 dias de garantia incondicional</p>
+                <p class="plano-garantia">30 dias de garantia incondicional</p>
             </div>
 
             <!-- PLANO PJ -->
             <div class="plano">
-                <div class="plano-nome">Para quem atua como</div>
+
                 <div class="plano-titulo">Pessoa Jurídica</div>
                 <p class="plano-desc">Para psicólogas com CNPJ ou que precisam abrir. Economize até 50% em impostos.</p>
 
@@ -1975,72 +2262,23 @@
                 </ul>
 
                 <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20Plano%20PJ%20da%20Openn"
-                   target="_blank" class="btn-outline w100">
-                    QUERO O PLANO PJ
+                   target="_blank" class="btn-plano-ghost">
+                    Quero abrir meu CNPJ
                 </a>
-                <p class="plano-garantia">🛡️ 30 dias de garantia incondicional</p>
+                <p class="plano-garantia">30 dias de garantia incondicional</p>
             </div>
 
         </div>
 
         <!-- NÃO SABE QUAL -->
         <div class="nao-sabe">
-            <h3>Não sabe qual plano é o seu?</h3>
-            <p>Sem problema. Mande uma mensagem — em menos de 1 hora nossa equipe te diz qual faz mais sentido para a sua situação, sem nenhum compromisso.</p>
+            <div>
+                <h3>Não sabe qual plano é o seu?</h3>
+                <p>Nossa equipe te indica o ideal em menos de 1 hora, sem compromisso.</p>
+            </div>
             <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20N%C3%A3o%20sei%20qual%20plano%20escolher%2C%20pode%20me%20ajudar%3F"
-               target="_blank" class="btn-whatsapp">
-                <svg viewBox="0 0 24 24" fill="white" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                FALAR COM NOSSOS ESPECIALISTAS — É GRATUITO
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     SEÇÃO 10 — GARANTIA
-══════════════════════════════════════ -->
-<section id="garantia">
-    <div class="container">
-        <div class="tc">
-            <div class="section-label">Sem risco para você</div>
-            <h2 class="mt3">O risco é 100% nosso.</h2>
-            <div class="gold-line"></div>
-        </div>
-
-        <div class="garantia-layout">
-
-            <!-- COLUNA ESQUERDA: card da garantia -->
-            <div class="garantia-box">
-                <div class="g-label">Garantia Tranquilidade Total</div>
-                <div class="g-dias">30</div>
-                <p class="g-sub">dias de garantia incondicional</p>
-
-                <p class="g-body">
-                    Entre no plano. Conheça a equipe. Veja como funciona.<br><br>
-                    Se em 30 dias você sentir que não foi exatamente o que esperava — por qualquer motivo — devolvemos seu investimento integralmente. <strong>Sem perguntas. Sem formulário. Sem constrangimento.</strong><br><br>
-                    Você não arrisca nada. A Openn foi construída com esse compromisso desde o primeiro dia.
-                </p>
-                <div class="g-assinatura">— André Said, cofundador da Openn e Consultor financeiro</div>
-            </div>
-
-            <!-- COLUNA DIREITA: foto André Said -->
-            <div class="garantia-foto-col">
-                <div class="garantia-foto-card">
-                    <div class="garantia-foto">
-                        <img src="images/andre-said.jpg" alt="André Said — Cofundador da Openn Psi" loading="lazy">
-                    </div>
-                </div>
-                <p class="garantia-foto-nome">André Said</p>
-                <p class="garantia-foto-cargo">Co-fundador da Openn | Responsável pela consultoria financeira</p>
-                <p class="garantia-foto-frase">"Essa garantia existe porque nosso trabalho começa com diagnóstico, clareza e responsabilidade."</p>
-            </div>
-
-        </div>
-
-        <div class="tc" style="margin-top: 1.75rem;">
-            <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20quero%20conhecer%20os%20planos%20da%20Openn"
-               target="_blank" class="btn-primary">
-                QUERO COMEÇAR AGORA →
+               target="_blank" class="btn-plano-gold" style="width:auto;white-space:nowrap;flex-shrink:0;">
+                Falar com um especialista
             </a>
         </div>
     </div>
@@ -2049,10 +2287,6 @@
 <!-- ══════════════════════════════════════
      SEÇÃO 11 — FAQ
 ══════════════════════════════════════ -->
-<div class="faq-divisor">
-    <hr>
-    <span>Ainda com dúvidas?</span>
-</div>
 
 <section id="faq">
     <div class="container">
@@ -2068,7 +2302,7 @@
                     <div class="faq-ans">Desde 2022, a Receita Federal cruza automaticamente os dados de Pix com declarações de renda. O monitoramento acontece sem aviso prévio. Regularizar agora é a forma mais inteligente de proteger tudo que você já construiu.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-btn" onclick="faq(this)">"R$ 129,90 é um investimento alto para mim agora."<span class="ic">+</span></button>
+                    <button class="faq-btn" onclick="faq(this)">"O investimento é alto para mim agora."<span class="ic">+</span></button>
                     <div class="faq-ans">Com 5 pacientes por semana, você já tem renda suficiente para garantir sua regularização por menos de R$ 5 por dia. Menos do que um lanche — em troca de tranquilidade fiscal todos os meses.</div>
                 </div>
                 <div class="faq-item">
@@ -2098,6 +2332,9 @@
         </div>
     </div>
 </section>
+
+<script>
+</script>
 
 <!-- ── FOOTER ── -->
 <footer>
