@@ -82,7 +82,7 @@
             justify-content: space-between;
         }
         .nav-logo-clip { height: 30px; overflow: hidden; display: flex; align-items: center; }
-        .nav-logo-clip img { height: 100%; width: auto; object-fit: contain; }
+        .nav-logo-clip img { height: 100%; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
         .nav-back {
             color: var(--gold);
             text-decoration: none;
@@ -101,13 +101,13 @@
         /* HERO */
         #sim-hero {
             background: var(--dark);
-            padding: 2.8rem 0 3.2rem;
+            padding: 1.2rem 0 2rem;
             text-align: center;
             position: relative;
             z-index: 1;
         }
-        #sim-hero h1 { color: var(--white); }
-        #sim-hero p  { color: rgba(255,255,255,0.65); max-width: 500px; margin: 0.9rem auto 0; font-size: 0.9rem; }
+        #sim-hero h1 { color: var(--white); font-size: clamp(1.1rem, 3vw, 1.65rem); }
+        #sim-hero p  { color: rgba(255,255,255,0.65); max-width: 500px; margin: 0.9rem auto 0; font-size: 0.85rem; }
 
         /* SIMULATION BODY */
         #simulacao {
@@ -116,17 +116,64 @@
             z-index: 1;
         }
 
-        .sim-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
+        .form-wrap {
+            max-width: 560px;
+            margin: 0 auto;
         }
 
-        @media (max-width: 860px) {
-            .sim-grid { grid-template-columns: 1fr; }
-            .results-panel { position: static; }
+        #lead-gate { padding: 2.5rem 0 4rem; position: relative; z-index: 1; }
+        #simulacao  { padding: 2.5rem 0 4rem; position: relative; z-index: 1; }
+
+        .input-money input[type="text"],
+        .input-money input[type="tel"] {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.65rem 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--gray);
+            background: transparent;
+            min-width: 0;
         }
+
+        .btn-calcular.loading { opacity: 0.6; pointer-events: none; }
+
+        /* RESULTS SECTION */
+        #resultado {
+            display: none;
+            padding: 0 0 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        #resultado.visible { display: block; }
+
+        .resultado-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 720px) {
+            .resultado-grid { grid-template-columns: 1fr; }
+        }
+
+        .resultado-extras {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 720px) {
+            .resultado-extras { grid-template-columns: 1fr; }
+        }
+
+        .resultado-title {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+        .resultado-title h2 { color: var(--petrol); font-size: clamp(1rem, 3vw, 1.4rem); }
+        .resultado-title .gold-line { margin: 0.7rem auto; }
 
         /* FORM CARD */
         .form-card {
@@ -180,6 +227,84 @@
             color: var(--petrol);
             margin-bottom: 0.35rem;
         }
+        .label-with-tip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Tooltip */
+        .tip-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tip-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--petrol-light);
+            border: 1.5px solid rgba(1,91,127,0.3);
+            color: var(--petrol);
+            font-size: 0.62rem;
+            font-weight: 800;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            line-height: 1;
+            letter-spacing: 0;
+            text-transform: none;
+            transition: background 0.2s;
+        }
+        .tip-wrap:hover .tip-icon { background: rgba(1,91,127,0.15); }
+        .tip-box {
+            display: none;
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: rgba(255,255,255,0.85);
+            font-size: 0.68rem;
+            font-weight: 300;
+            letter-spacing: 0;
+            text-transform: none;
+            line-height: 1.6;
+            padding: 0.9rem 1rem;
+            border-radius: 10px;
+            width: 220px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+            z-index: 100;
+            white-space: normal;
+            pointer-events: none;
+        }
+        .tip-box strong {
+            display: block;
+            color: var(--gold);
+            font-size: 0.64rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .tip-box ul {
+            margin: 0.3rem 0 0.6rem 1rem;
+            padding: 0;
+        }
+        .tip-box ul li { margin-bottom: 0.15rem; }
+        .tip-box::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--dark);
+        }
+        .tip-wrap:hover .tip-box { display: block; }
 
         .input-money {
             display: flex;
@@ -367,6 +492,27 @@
         }
         .sim-cta p { font-size: 0.77rem; margin-bottom: 1.1rem; color: rgba(64,64,64,0.65); }
 
+        .btn-calcular {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            background: var(--petrol);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .btn-calcular:hover { background: rgb(1,110,154); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -408,7 +554,7 @@
             z-index: 1;
         }
         .footer-logo-clip { height: 26px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; }
-        .footer-logo-clip img { height: 100%; width: auto; object-fit: contain; }
+        .footer-logo-clip img { height: 100%; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
         .footer-links { display: flex; justify-content: center; gap: 1.4rem; flex-wrap: wrap; margin: 0.9rem 0; }
         .footer-links a { color: rgba(255,255,255,0.38); text-decoration: none; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
         .footer-links a:hover { color: var(--gold); }
@@ -442,18 +588,60 @@
 <section id="sim-hero">
     <div class="container" style="position:relative;z-index:1;">
         <div class="section-label">Simulação gratuita</div>
-        <h1>Quanto você paga de imposto sendo PF?</h1>
+        <h1>Você realmente precisa abrir um CNPJ?</h1>
         <div class="gold-line"></div>
-        <p>Preencha seus dados e veja, na hora, quanto você economizaria migrando para PJ com o Simples Nacional.</p>
+        <p>Preencha seu faturamento e despesas. Em segundos, você descobre se vale a pena — e quanto pode economizar.</p>
     </div>
 </section>
 
-<!-- MAIN -->
-<section id="simulacao">
+<!-- LEAD GATE -->
+<section id="lead-gate">
     <div class="container">
-        <div class="sim-grid">
+        <div class="form-wrap">
+            <div class="form-card">
+                <div style="text-align:center;margin-bottom:1.5rem;">
+                    <div class="section-label">Acesso gratuito</div>
+                    <h3 style="color:var(--petrol);margin-top:0.5rem;">Para ver sua simulação, precisamos de alguns dados</h3>
+                    <p style="font-size:0.78rem;margin-top:0.5rem;color:rgba(64,64,64,0.6);">Usamos apenas para entrar em contato, caso você queira saber mais.</p>
+                </div>
 
-            <!-- FORM -->
+                <div class="field-group">
+                    <label>Seu nome</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <input type="text" id="lead-nome" placeholder="Como você se chama?" autocomplete="given-name">
+                    </div>
+                </div>
+
+                <div class="field-group" style="margin-bottom:1.5rem;">
+                    <label>WhatsApp</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l1.45-1.45a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92v3z"/></svg>
+                        </span>
+                        <input type="tel" id="lead-telefone" placeholder="(00) 00000-0000" autocomplete="tel">
+                    </div>
+                </div>
+
+                <button class="btn-calcular" id="btn-lead" onclick="enviarLead()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                    Acessar simulação gratuita
+                </button>
+
+                <p style="font-size:0.60rem;color:rgba(64,64,64,0.35);text-align:center;margin-top:0.9rem;line-height:1.6;">
+                    Seus dados são protegidos e não serão compartilhados com terceiros.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FORM -->
+<section id="simulacao" style="display:none;">
+    <div class="container">
+        <div class="form-wrap">
             <div class="form-card">
 
                 <div class="form-section-title">Faturamento</div>
@@ -466,164 +654,140 @@
                 </div>
 
                 <div class="field-spacer"></div>
-                <div class="form-section-title">
-                    Despesas dedutíveis <span class="tag-dedutivel">reduzem o IRPF no PF</span>
-                </div>
 
                 <div class="field-group">
-                    <label>Aluguel do consultório</label>
+                    <label class="label-with-tip">
+                        Despesas dedutíveis
+                        <span class="tag-dedutivel">reduzem o IRPF no PF</span>
+                        <span class="tip-wrap">
+                            <span class="tip-icon">i</span>
+                            <span class="tip-box">
+                                <strong>O que entra aqui:</strong>
+                                <ul>
+                                    <li>Aluguel do consultório</li>
+                                    <li>Água e luz</li>
+                                    <li>Internet</li>
+                                    <li>Telefone (uso profissional)</li>
+                                    <li>Treinamentos e cursos</li>
+                                </ul>
+                                São despesas diretamente ligadas ao exercício da profissão e reconhecidas pela Receita Federal como dedutíveis no carnê-leão.
+                            </span>
+                        </span>
+                    </label>
                     <div class="input-money">
                         <span class="input-prefix">R$</span>
-                        <input type="number" id="aluguel" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Água e luz</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="agua_luz" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Internet</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="internet" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Telefone (uso profissional)</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="telefone" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Treinamentos e cursos</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="treinamentos" placeholder="0,00" min="0" step="10">
+                        <input type="number" id="deducoes" placeholder="0,00" min="0" step="10">
                     </div>
                 </div>
 
                 <div class="field-spacer"></div>
-                <div class="form-section-title">
-                    Outras despesas <span class="tag-nd">não dedutíveis</span>
-                </div>
 
                 <div class="field-group">
-                    <label>Reformas</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="reformas" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Investimentos em bens</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="investimentos" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Alimentação</label>
-                    <div class="input-money">
-                        <span class="input-prefix">R$</span>
-                        <input type="number" id="alimentacao" placeholder="0,00" min="0" step="10">
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>Outras despesas pessoais</label>
+                    <label class="label-with-tip">
+                        Outras despesas
+                        <span class="tag-nd">não dedutíveis</span>
+                        <span class="tip-wrap">
+                            <span class="tip-icon">i</span>
+                            <span class="tip-box">
+                                <strong>O que entra aqui:</strong>
+                                <ul>
+                                    <li>Reformas</li>
+                                    <li>Investimentos em bens</li>
+                                    <li>Alimentação</li>
+                                    <li>Outras despesas pessoais</li>
+                                </ul>
+                                Essas despesas não reduzem o imposto, mas ajudam a visualizar o total de saídas do mês.
+                            </span>
+                        </span>
+                    </label>
                     <div class="input-money">
                         <span class="input-prefix">R$</span>
                         <input type="number" id="outras" placeholder="0,00" min="0" step="10">
                     </div>
                 </div>
 
+                <div class="field-spacer"></div>
+                <button id="btn-calcular" class="btn-calcular" onclick="calcular()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+                    Calcular simulação
+                </button>
+
             </div><!-- /form-card -->
+        </div><!-- /form-wrap -->
+    </div>
+</section>
 
-            <!-- RESULTS -->
-            <div class="results-panel">
+<!-- RESULTADO -->
+<section id="resultado">
+    <div class="container">
+        <div class="resultado-title">
+            <h2>Seu demonstrativo tributário</h2>
+            <div class="gold-line"></div>
+        </div>
 
-                <div id="result-placeholder" class="result-placeholder">
-                    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M13 3h8m0 0v8m0-8l-11 11"/></svg>
-                    <p>Preencha o faturamento mensal<br>para ver a simulação.</p>
+        <div class="resultado-grid">
+            <!-- PF -->
+            <div class="result-card">
+                <div class="result-card-header">
+                    <div class="result-card-title">Pessoa Física</div>
+                    <span class="regime-tag regime-pf">Carnê-Leão</span>
                 </div>
+                <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pf-fat">—</span></div>
+                <div class="rline"><span class="rl">INSS (contrib. individual, 20%)</span><span class="rv neg" id="pf-inss">—</span></div>
+                <div class="rline"><span class="rl">Despesas dedutíveis</span><span class="rv neg" id="pf-deducoes">—</span></div>
+                <div class="rline"><span class="rl">Base de cálculo IRPF</span><span class="rv" id="pf-base">—</span></div>
+                <div class="rline"><span class="rl">IRPF (tabela progressiva)</span><span class="rv" id="pf-irpf">—</span></div>
+                <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pf-total">—</span></div>
+                <div class="result-net">
+                    <span class="rn-label">Renda líquida</span>
+                    <span class="rn-value" id="pf-liquido">—</span>
+                </div>
+            </div>
 
-                <div id="result-cards" class="result-cards">
+            <!-- PJ -->
+            <div class="result-card pj">
+                <div class="result-card-header">
+                    <div class="result-card-title">Pessoa Jurídica</div>
+                    <span class="regime-tag regime-pj">Simples Nacional — Anexo III</span>
+                </div>
+                <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pj-fat">—</span></div>
+                <div class="rline"><span class="rl" id="pj-das-label">DAS Simples Nacional</span><span class="rv neg" id="pj-das">—</span></div>
+                <div class="rline indent"><span class="rl">INSS sobre pro-labore (28% × 11%)</span><span class="rv neg" id="pj-inss">—</span></div>
+                <div class="rline indent"><span class="rl">IRRF sobre pro-labore</span><span class="rv" id="pj-irrf">—</span></div>
+                <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pj-total">—</span></div>
+                <div class="result-net">
+                    <span class="rn-label">Renda disponível</span>
+                    <span class="rn-value" id="pj-liquido">—</span>
+                </div>
+            </div>
+        </div><!-- /resultado-grid -->
 
-                    <!-- PF -->
-                    <div class="result-card">
-                        <div class="result-card-header">
-                            <div class="result-card-title">Pessoa Física</div>
-                            <span class="regime-tag regime-pf">Carnê-Leão</span>
-                        </div>
-                        <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pf-fat">—</span></div>
-                        <div class="rline"><span class="rl">INSS (contrib. individual, 20%)</span><span class="rv neg" id="pf-inss">—</span></div>
-                        <div class="rline"><span class="rl">Despesas dedutíveis</span><span class="rv neg" id="pf-deducoes">—</span></div>
-                        <div class="rline"><span class="rl">Base de cálculo IRPF</span><span class="rv" id="pf-base">—</span></div>
-                        <div class="rline"><span class="rl">IRPF (tabela progressiva)</span><span class="rv neg" id="pf-irpf">—</span></div>
-                        <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pf-total">—</span></div>
-                        <div class="result-net">
-                            <span class="rn-label">Renda líquida</span>
-                            <span class="rn-value" id="pf-liquido">—</span>
-                        </div>
-                    </div>
+        <div class="resultado-extras">
+            <!-- SAVINGS -->
+            <div class="savings-card">
+                <div class="savings-label">Economia estimada por mês</div>
+                <div class="savings-value" id="savings-monthly">—</div>
+                <div class="savings-period">no bolso a mais todo mês</div>
+                <div class="savings-annual">
+                    Isso representa <strong id="savings-annual">—</strong> a mais por ano<br>
+                    e uma redução de <strong id="savings-pct">—</strong> na carga tributária
+                </div>
+            </div>
 
-                    <!-- PJ -->
-                    <div class="result-card pj">
-                        <div class="result-card-header">
-                            <div class="result-card-title">Pessoa Jurídica</div>
-                            <span class="regime-tag regime-pj">Simples Nacional — Anexo III</span>
-                        </div>
-                        <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pj-fat">—</span></div>
-                        <div class="rline"><span class="rl" id="pj-das-label">DAS Simples Nacional</span><span class="rv neg" id="pj-das">—</span></div>
-                        <div class="rline indent"><span class="rl" id="pj-pl-label">INSS sobre pro-labore (28% × 11%)</span><span class="rv neg" id="pj-inss">—</span></div>
-                        <div class="rline indent"><span class="rl">IRRF sobre pro-labore</span><span class="rv" id="pj-irrf">—</span></div>
-                        <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pj-total">—</span></div>
-                        <div class="result-net">
-                            <span class="rn-label">Renda disponível</span>
-                            <span class="rn-value" id="pj-liquido">—</span>
-                        </div>
-                    </div>
+            <!-- CTA -->
+            <div class="sim-cta">
+                <p>Esta é uma estimativa. Para um plano personalizado e garantido, fale com a Openn.</p>
+                <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                    Quero economizar assim
+                </a>
+            </div>
+        </div><!-- /resultado-extras -->
 
-                    <!-- SAVINGS -->
-                    <div class="savings-card">
-                        <div class="savings-label">Economia estimada por mês</div>
-                        <div class="savings-value" id="savings-monthly">R$ 0</div>
-                        <div class="savings-period">no bolso a mais todo mês</div>
-                        <div class="savings-annual">
-                            Isso representa <strong id="savings-annual">R$ 0</strong> a mais por ano<br>
-                            e uma redução de <strong id="savings-pct">0%</strong> na carga tributária
-                        </div>
-                    </div>
-
-                    <!-- CTA -->
-                    <div class="sim-cta">
-                        <p>Esta é uma estimativa. Para um plano personalizado e garantido, fale com a Openn.</p>
-                        <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
-                            Quero economizar assim
-                        </a>
-                    </div>
-
-                </div><!-- /result-cards -->
-
-                <p class="disclaimer">
-                    Cálculo baseado na tabela IRPF 2024, INSS 2024/2025 e Simples Nacional Anexo III vigente.<br>
-                    Fator R simulado a 28% (pro-labore mínimo). Os valores são estimativas — não substituem consultoria personalizada.
-                </p>
-
-            </div><!-- /results-panel -->
-
-        </div><!-- /sim-grid -->
+        <p class="disclaimer">
+            Cálculo baseado na tabela IRPF 2024, INSS 2024/2025 e Simples Nacional Anexo III vigente.<br>
+            Fator R simulado a 28% (pro-labore mínimo). Os valores são estimativas — não substituem consultoria personalizada.
+        </p>
     </div>
 </section>
 
@@ -693,6 +857,59 @@
     window.addEventListener('resize', init);
 })();
 
+/* ── CONFIGURAÇÃO GOOGLE SHEETS ──────────────────────────────
+   1. Abra https://sheets.google.com e crie uma planilha chamada "Leads Simulação"
+   2. Vá em Extensões > Apps Script
+   3. Cole o código abaixo e salve:
+
+   function doPost(e) {
+     var dados = JSON.parse(e.postData.contents);
+     var planilha = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     planilha.appendRow([new Date(), dados.nome, dados.telefone, dados.origem]);
+     return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+
+   4. Clique em "Implantar > Nova implantação"
+   5. Tipo: App da Web | Executar como: Eu | Acesso: Qualquer pessoa
+   6. Copie a URL gerada e cole abaixo em SHEETS_URL
+──────────────────────────────────────────────────────────── */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz8RnNxgRTxbDE6VWjpGdOcCvx-d6cwx8pVAEtoJtuioRN6ggV2lESWlRndrPg76xdr/exec';
+
+function enviarLead() {
+    const nome     = document.getElementById('lead-nome').value.trim();
+    const telefone = document.getElementById('lead-telefone').value.trim();
+    const btn      = document.getElementById('btn-lead');
+
+    if (!nome) {
+        document.getElementById('lead-nome').focus();
+        return;
+    }
+    if (!telefone) {
+        document.getElementById('lead-telefone').focus();
+        return;
+    }
+
+    btn.classList.add('loading');
+    btn.textContent = 'Aguarde...';
+
+    const payload = { nome, telefone, origem: 'Simulação PF vs PJ' };
+
+    const url = SHEETS_URL
+        + '?nome='    + encodeURIComponent(nome)
+        + '&telefone='+ encodeURIComponent(telefone)
+        + '&origem='  + encodeURIComponent('Simulação PF vs PJ');
+
+    new Image().src = url;
+
+    setTimeout(() => {
+        document.getElementById('lead-gate').style.display = 'none';
+        const sim = document.getElementById('simulacao');
+        sim.style.display = 'block';
+        sim.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 800);
+}
+
 /* CALCULATION */
 (function(){
 
@@ -745,7 +962,7 @@
         const fat = v('faturamento');
 
         /* Deduções PF */
-        const ded = v('aluguel') + v('agua_luz') + v('internet') + v('telefone') + v('treinamentos');
+        const ded = v('deducoes');
 
         /* PF */
         const inssPF = Math.min(fat * 0.20, INSS_TETO * 0.20);
@@ -769,16 +986,18 @@
         const eco = totalPF - totalPJ;
         const ecoPct = totalPF > 0 ? (eco / totalPF) * 100 : 0;
 
-        /* Toggle visibility */
-        const placeholder = document.getElementById('result-placeholder');
-        const cards       = document.getElementById('result-cards');
+        /* Validação */
         if(fat <= 0){
-            placeholder.style.display = 'block';
-            cards.classList.remove('visible');
+            document.getElementById('faturamento').focus();
+            document.getElementById('faturamento').style.borderColor = '#c0392b';
+            setTimeout(() => document.getElementById('faturamento').style.borderColor = '', 1500);
             return;
         }
-        placeholder.style.display = 'none';
-        cards.classList.add('visible');
+
+        /* Mostrar seção resultado */
+        const secao = document.getElementById('resultado');
+        secao.classList.add('visible');
+        setTimeout(() => secao.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
 
         /* Fill PF */
         document.getElementById('pf-fat').textContent      = fmt(fat);
@@ -807,8 +1026,7 @@
         document.getElementById('savings-pct').textContent     = eco > 0 ? pct(ecoPct)    : '0%';
     }
 
-    document.querySelectorAll('input[type="number"]').forEach(el => el.addEventListener('input', calcular));
-    calcular();
+    window.calcular = calcular;
 
 })();
 </script>
