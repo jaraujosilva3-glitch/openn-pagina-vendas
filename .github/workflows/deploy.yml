@@ -14,7 +14,7 @@ jobs:
           ${{ secrets.SSH_PRIVATE_KEY }}
           EOF
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H 177.7.34.232 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 65002 -H 212.85.9.20 >> ~/.ssh/known_hosts
       - name: Deploy
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no root@177.7.34.232 "cd /var/www/html && git pull origin main"
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -p 65002 u863365274@212.85.9.20 "cd /home/u863365274/domains/opennpsi.com/public_html && git pull origin main"
