@@ -69,6 +69,29 @@
             border: none;
         }
 
+        @keyframes wave-drift {
+            0%   { transform: translateX(0) scaleY(1); }
+            50%  { transform: translateX(-5%) scaleY(1.04); }
+            100% { transform: translateX(0) scaleY(1); }
+        }
+        .waves-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .wave {
+            position: absolute;
+            width: 110%;
+            left: -5%;
+            bottom: 0;
+            fill: rgba(1,91,127,0.06);
+        }
+        .wave-1 { height: 45vh; animation: wave-drift 14s ease-in-out infinite; }
+        .wave-2 { height: 38vh; fill: rgba(213,171,57,0.03); animation: wave-drift 20s ease-in-out infinite reverse; }
+        .wave-3 { height: 30vh; animation: wave-drift 17s ease-in-out infinite 3s; }
+
         /* ─────────────────────────────────────
            RESET & BASE
         ───────────────────────────────────── */
@@ -82,6 +105,8 @@
             line-height: 1.75;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+        }
+        body {
         }
 
         /* ─────────────────────────────────────
@@ -249,7 +274,7 @@
             border-bottom: none;
             padding: 0;
             text-align: left;
-            overflow: hidden;
+            overflow: visible;
             position: relative;
         }
         .hero-grid {
@@ -260,7 +285,8 @@
             gap: 3rem;
             padding: 1.5rem 0 2.75rem;
         }
-        .hero-left-col { max-width: 100%; }
+        .hero-left-col { max-width: 100%; position: relative; z-index: 10; }
+        #hero h1, #hero p, #hero .hero-tag, #hero .hero-cta-group { text-shadow: 0 2px 16px rgba(6,21,29,0.85), 0 1px 4px rgba(6,21,29,0.9); }
         @media (min-width: 861px) and (max-width: 1100px) {
             .hero-grid { gap: 3rem; grid-template-columns: 1fr 1fr; }
             .hero-left-col { max-width: 100%; }
@@ -300,9 +326,6 @@
                 object-position: center 30% !important;
             }
             .float-card { display: none; }
-        }
-        @media (max-width: 480px) {
-            .hero-right-col { height: 200px; }
         }
         #hero .hero-tag {
             display: inline-flex;
@@ -391,19 +414,79 @@
         }
 
         /* Hero photo side — two-card layout */
+        .hero-slideshow {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            overflow: visible;
+        }
+        .hs-slide {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.7s ease, opacity 0.7s ease, filter 0.7s ease;
+            transform: translateX(115%) scale(0.75);
+            opacity: 0;
+            filter: brightness(0.4);
+            z-index: 1;
+        }
+        .hs-slide.prev {
+            transform: translateX(-72%) scale(0.75);
+            opacity: 0.75;
+            filter: brightness(0.45);
+            z-index: 1;
+        }
+        .hs-slide.active {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+            filter: brightness(1);
+            z-index: 2;
+        }
+        .hs-slide.next {
+            transform: translateX(72%) scale(0.75);
+            opacity: 0.75;
+            filter: brightness(0.45);
+            z-index: 1;
+        }
+        .hs-slide img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+        .hs-slide:first-child img { object-position: center 15%; }
+        .hs-slide:nth-child(3) img { object-position: center 50%; clip-path: inset(8% 0 0 0 round 12px); }
+        .hs-dots {
+            position: absolute;
+            bottom: 0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.4rem;
+            z-index: 6;
+        }
+        .hs-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            transition: background 0.3s;
+        }
+        .hs-dot.active { background: var(--gold); }
         .hero-right-col {
             position: relative;
             height: 100%;
             min-height: 280px;
             max-height: 320px;
             align-self: start;
+            transform: translateX(-22%) translateY(10%) scale(0.72);
+            transform-origin: top right;
         }
         /* Small portrait card — top left */
         .hero-photo-small {
             position: absolute;
-            top: 0;
+            top: -16%;
             left: 0;
-            width: 42%;
+            width: 36%;
             height: 58%;
             border-radius: var(--radius);
             overflow: hidden;
@@ -418,7 +501,7 @@
         /* Medium office card — top right */
         .hero-photo-mid {
             position: absolute;
-            top: 0;
+            top: 62%;
             right: 0;
             width: 54%;
             height: 46%;
@@ -435,25 +518,24 @@
         /* Large landscape card — bottom */
         .hero-photo-large {
             position: absolute;
-            bottom: 0;
+            bottom: -8%;
             left: 0;
             right: 0;
-            height: 52%;
             border-radius: var(--radius);
-            overflow: hidden;
+            overflow: visible;
             z-index: 1;
             box-shadow: 0 12px 40px rgba(0,0,0,0.35);
         }
         .hero-photo-large img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            object-position: center bottom;
+            width: 100%; height: auto;
+            display: block;
+            border-radius: var(--radius);
         }
         .hero-photo-badge {
             position: absolute;
-            top: 47%;
-            right: 4%;
-            transform: translateY(-50%);
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
             background: rgba(0,0,0,0.55);
             border-radius: 999px;
             padding: 0.3rem 0.85rem;
@@ -1121,7 +1203,7 @@
                 radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0),
                 linear-gradient(to bottom, #0e2d42 0%, #06151d 100%);
             background-size: 28px 28px, auto;
-            padding: 5rem 0;
+            padding: 5rem 0 2rem;
         }
         #oferta h2 { color: var(--white); }
         #oferta p  { color: rgba(255,255,255,0.6); }
@@ -1294,28 +1376,32 @@
         .plano-stack .se-label { font-size: 0.62rem; font-weight: 700; color: var(--petrol); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.6rem; display: block; }
         .plano-stack .se { font-size: 2rem; font-weight: 800; color: var(--petrol); line-height: 1.1; display: block; }
         .plano-stack .se-sub { font-size: 0.65rem; font-weight: 300; color: var(--gray); margin-top: 0.2rem; display: block; }
+        .cards-duplos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 720px) { .cards-duplos { grid-template-columns: 1fr; } }
         .nao-sabe {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.08);
-            padding: 1.25rem 2rem;
-            margin-top: 2rem;
             border-radius: 16px;
+            padding: 1.5rem 2rem;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1.5rem;
         }
-        .nao-sabe h3 { font-size: 0.88rem; color: var(--white); margin-bottom: 0.2rem; }
-        .nao-sabe p  { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0; }
+        .nao-sabe-body { display: flex; flex-direction: column; align-items: flex-start; }
+        .garantia-body { display: flex; flex-direction: column; align-items: flex-start; }
+        .nao-sabe-titulo { font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 800; color: var(--white); margin-bottom: 0.5rem; line-height: 1.25; }
+        .nao-sabe-texto { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.7; margin: 0; }
 
         /* ─────────────────────────────────────
            SECTION 10 — GARANTIA
         ───────────────────────────────────── */
-        #garantia { background: var(--white); }
-        #garantia h2 { color: var(--petrol); }
-        #garantia p  { color: var(--gray); }
-        #garantia .section-label { background: var(--gold-light); color: var(--gold); border-color: var(--gold-border); }
+        #garantia h2 { color: var(--white); }
+        #garantia p  { color: var(--white); }
 
         .garantia-layout {
             display: grid;
@@ -1365,6 +1451,62 @@
             .garantia-foto-card { max-width: 260px; margin: 0 auto; }
             .garantia-foto-col { order: -1; }
             .g-body, .g-assinatura { text-align: center; }
+        }
+
+        /* ─────────────────────────────────────
+           SECTION — GARANTIA
+        ───────────────────────────────────── */
+        .garantia-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            background: linear-gradient(135deg, #0d2235 0%, #091a28 100%);
+            border: 1px solid rgba(213,171,57,0.25);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 0 60px rgba(213,171,57,0.06), 0 20px 50px rgba(0,0,0,0.35);
+        }
+        .garantia-icon {
+            font-size: 3.5rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .garantia-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: rgba(213,171,57,0.1);
+            border: 1px solid rgba(213,171,57,0.4);
+            border-radius: 999px;
+            padding: 0.3rem 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+        .garantia-titulo {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: var(--white);
+            font-weight: 800;
+            margin-bottom: 1.1rem;
+            line-height: 1.25;
+        }
+        .garantia-texto {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--white);
+            line-height: 1.85;
+            margin-bottom: 0.85rem;
+        }
+        .garantia-texto strong { color: var(--white); font-weight: 700; }
+        .garantia-detalhe {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.7;
+        }
+        @media (max-width: 720px) {
+            .garantia-card { flex-direction: column; gap: 1rem; padding: 1.25rem; }
         }
 
         /* ─────────────────────────────────────
@@ -1917,21 +2059,16 @@
 
             <!-- COLUNA DIREITA -->
             <div class="hero-right-col">
-                <!-- Foto pequena — retrato -->
-                <div class="hero-photo-small">
-                    <img src="images/hero-person.png" alt="Especialista Openn" loading="eager">
-                </div>
-                <!-- Foto média — escritório -->
-                <div class="hero-photo-mid">
-                    <img src="images/hero-escritorio.png" alt="Escritório Openn" loading="eager">
-                </div>
-                <!-- Foto grande — equipe -->
-                <div class="hero-photo-large">
-                    <img src="images/hero-equipe.png" alt="Equipe Openn" loading="eager">
-                </div>
-                <!-- Badge entre as fotos -->
-                <div class="hero-photo-badge">
-                    Nós somos <img src="images/openn-logo.png" alt="Openn" style="height:12px;width:auto;vertical-align:middle;margin-left:0.3rem;filter:brightness(0) invert(1);">
+                <div class="hero-slideshow">
+                    <div class="hs-slide active">
+                        <img src="images/hero-person.png" alt="Especialista Openn">
+                    </div>
+                    <div class="hs-slide">
+                        <img src="images/hero-escritorio.png" alt="Escritório Openn">
+                    </div>
+                    <div class="hs-slide">
+                        <img src="images/hero-equipe.png" alt="Equipe Openn">
+                    </div>
                 </div>
             </div>
 
@@ -2288,16 +2425,41 @@
 
         </div>
 
-        <!-- NÃO SABE QUAL -->
-        <div class="nao-sabe">
-            <div>
-                <h3>Não sabe qual plano é o seu?</h3>
-                <p>Nossa equipe te indica o ideal em menos de 1 hora, sem compromisso.</p>
+        <!-- CARDS DUPLOS: NÃO SABE + GARANTIA -->
+        <div class="cards-duplos">
+            <div class="nao-sabe">
+                <div class="garantia-icon">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="rgba(213,171,57,0.1)" stroke="rgb(213,171,57)" stroke-width="1.5"/>
+                        <path d="M8 10.5C8 8.015 9.79 6 12 6s4 2.015 4 4.5" stroke="rgb(213,171,57)" stroke-width="1.5" stroke-linecap="round"/>
+                        <rect x="6" y="10" width="2.5" height="4" rx="1.25" fill="rgb(213,171,57)"/>
+                        <rect x="15.5" y="10" width="2.5" height="4" rx="1.25" fill="rgb(213,171,57)"/>
+                        <path d="M18 13.5c0 2-2.686 3.5-6 3.5m0 0v1.5m0 0h2m-2 0H10" stroke="rgb(213,171,57)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="nao-sabe-body">
+                    <div class="garantia-tag">Escolha seu plano</div>
+                    <h3 class="nao-sabe-titulo">Não sabe qual plano é o seu?</h3>
+                    <p class="nao-sabe-texto">Nossa equipe te indica o ideal em menos de 1 hora, sem compromisso.</p>
+                    <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20N%C3%A3o%20sei%20qual%20plano%20escolher%2C%20pode%20me%20ajudar%3F"
+                       target="_blank" class="btn-plano-gold" style="width:auto;white-space:nowrap;margin-top:1rem;display:inline-block;">
+                        Falar com um especialista
+                    </a>
+                </div>
             </div>
-            <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20N%C3%A3o%20sei%20qual%20plano%20escolher%2C%20pode%20me%20ajudar%3F"
-               target="_blank" class="btn-plano-gold" style="width:auto;white-space:nowrap;flex-shrink:0;">
-                Falar com um especialista
-            </a>
+            <div class="garantia-card">
+                <div class="garantia-icon">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z" fill="rgba(213,171,57,0.12)" stroke="rgb(213,171,57)" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M9 12l2 2 4-4" stroke="rgb(213,171,57)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="garantia-body">
+                    <div class="garantia-tag">Garantia incondicional</div>
+                    <h2 class="garantia-titulo">Teste sem risco. Se não gostar, devolvemos tudo.</h2>
+                    <p class="garantia-texto">Experimente por <strong>30 dias</strong>. Se não ficar satisfeita, devolvemos 100% do valor pago. Sem perguntas, sem burocracia.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -2388,6 +2550,56 @@
     </div>
 </footer>
 
+<!-- ── PARTICLES + WAVES ── -->
+<canvas id="particles-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+<script>
+(function(){
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles;
+    const COLORS = ['rgba(213,171,57,', 'rgba(255,255,255,'];
+    function init() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        particles = Array.from({length: 55}, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.5 + 0.5,
+            dx: (Math.random() - 0.5) * 0.3,
+            dy: (Math.random() - 0.5) * 0.3,
+            op: Math.random() * 0.12 + 0.03,
+            color: COLORS[Math.random() < 0.3 ? 0 : 1]
+        }));
+    }
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.color + p.op + ')';
+            ctx.fill();
+            p.x += p.dx; p.y += p.dy;
+            if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+            if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        });
+        requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', init);
+    init(); draw();
+})();
+</script>
+<div class="waves-bg" aria-hidden="true">
+    <svg class="wave wave-1" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,160 C360,260 1080,60 1440,160 L1440,320 L0,320 Z"/>
+    </svg>
+    <svg class="wave wave-2" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,200 C480,80 960,280 1440,200 L1440,320 L0,320 Z"/>
+    </svg>
+    <svg class="wave wave-3" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,120 C320,220 1120,20 1440,120 L1440,320 L0,320 Z"/>
+    </svg>
+</div>
+
 <!-- ── FLOATING WHATSAPP ── -->
 <a href="https://wa.me/5562996550808?text=Ol%C3%A1%2C%20Joyce!%20Quero%20conhecer%20os%20planos%20da%20Openn"
    target="_blank" class="wa-float" title="Falar com nossos especialistas no WhatsApp">
@@ -2408,6 +2620,14 @@
 
 <!-- ── SCRIPTS ── -->
 <script>
+    // ── HERO FOTOS LATERAIS ──
+    (function(){
+        const slides = document.querySelectorAll('.hs-slide');
+        slides[0].classList.add('active');
+        slides[1].classList.add('next');
+        slides[2].classList.add('prev');
+    })();
+
     // ── FAQ ACCORDION ──
     function faq(btn) {
         const ans = btn.nextElementSibling;
