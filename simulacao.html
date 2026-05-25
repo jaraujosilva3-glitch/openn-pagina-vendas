@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação Tributária — Openn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold:         rgb(213,171,57);
+            --gold-light:   rgba(213,171,57,0.10);
+            --gold-border:  rgba(213,171,57,0.28);
+            --petrol:       rgb(1,91,127);
+            --petrol-light: rgba(1,91,127,0.07);
+            --gray:         rgb(64,64,64);
+            --white:        #ffffff;
+            --warm:         #fafaf8;
+            --dark:         #06151d;
+            --radius:       18px;
+            --radius-sm:    10px;
+            --radius-pill:  100px;
+            --shadow-sm:    0 2px 14px rgba(1,91,127,0.07);
+            --shadow-gold:  0 4px 28px rgba(213,171,57,0.18);
+            --shadow-dark:  0 8px 40px rgba(0,0,0,0.3);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: var(--gray);
+            background: var(--warm);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--petrol);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        h1 { font-size: clamp(1.4rem, 4vw, 2.2rem); }
+        h2 { font-size: clamp(1rem, 3vw, 1.5rem); }
+        h3 { font-size: clamp(0.82rem, 2vw, 1rem); }
+        p  { font-weight: 300; color: var(--gray); line-height: 1.8; }
+
+        .container { width: min(100% - 40px, 1100px); margin: 0 auto; padding: 0 1.5rem; }
+        .gold-line  { width: 48px; height: 3px; background: var(--gold); margin: 0.8rem auto; }
+
+        .section-label {
+            display: inline-block;
+            background: var(--gold-light);
+            color: var(--gold);
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--gold-border);
+            margin-bottom: 0.9rem;
+            border-radius: var(--radius-pill);
+        }
+
+        /* NAV */
+        #topnav {
+            background: var(--dark);
+            padding: 0.85rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(213,171,57,0.12);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo-clip { height: 30px; overflow: hidden; display: flex; align-items: center; }
+        .nav-logo-clip img { height: 100%; width: auto; object-fit: contain; }
+        .nav-back {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .nav-back:hover { opacity: 1; }
+
+        /* HERO */
+        #sim-hero {
+            background: var(--dark);
+            padding: 2.8rem 0 3.2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        #sim-hero h1 { color: var(--white); }
+        #sim-hero p  { color: rgba(255,255,255,0.65); max-width: 500px; margin: 0.9rem auto 0; font-size: 0.9rem; }
+
+        /* SIMULATION BODY */
+        #simulacao {
+            padding: 2.8rem 0 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 860px) {
+            .sim-grid { grid-template-columns: 1fr; }
+            .results-panel { position: static; }
+        }
+
+        /* FORM CARD */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.85rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(1,91,127,0.08);
+        }
+
+        .form-section-title {
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.20em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gold-border);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tag-dedutivel, .tag-nd {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+        }
+        .tag-dedutivel {
+            background: rgba(1,91,127,0.08);
+            color: var(--petrol);
+            border: 1px solid rgba(1,91,127,0.18);
+        }
+        .tag-nd {
+            background: rgba(64,64,64,0.05);
+            color: rgba(64,64,64,0.45);
+            border: 1px solid rgba(64,64,64,0.12);
+        }
+
+        .field-group { margin-bottom: 0.95rem; }
+        .field-group label {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--petrol);
+            margin-bottom: 0.35rem;
+        }
+
+        .input-money {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .input-money:focus-within { border-color: var(--petrol); }
+
+        .input-prefix {
+            background: var(--petrol-light);
+            padding: 0.65rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--petrol);
+            flex-shrink: 0;
+            border-right: 1.5px solid rgba(1,91,127,0.12);
+        }
+        .input-money input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.65rem 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--gray);
+            background: transparent;
+            min-width: 0;
+        }
+
+        .field-spacer { height: 1.2rem; }
+
+        /* RESULTS */
+        .results-panel { position: sticky; top: 76px; }
+
+        .result-placeholder {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 2px dashed rgba(1,91,127,0.12);
+        }
+        .result-placeholder svg { opacity: 0.18; margin-bottom: 1rem; display: block; margin-left: auto; margin-right: auto; }
+        .result-placeholder p { color: rgba(64,64,64,0.38); font-size: 0.8rem; }
+
+        .result-cards { display: none; flex-direction: column; gap: 1rem; }
+        .result-cards.visible { display: flex; }
+
+        .result-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(1,91,127,0.08);
+        }
+        .result-card.pj {
+            border-color: var(--gold-border);
+            background: linear-gradient(135deg, #fff 55%, rgba(213,171,57,0.035));
+        }
+
+        .result-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.1rem;
+        }
+        .result-card-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--petrol);
+        }
+        .result-card.pj .result-card-title { color: var(--gold); }
+
+        .regime-tag {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.22rem 0.65rem;
+            border-radius: 999px;
+        }
+        .regime-pf { background: rgba(1,91,127,0.08); color: var(--petrol); border: 1px solid rgba(1,91,127,0.2); }
+        .regime-pj { background: rgba(213,171,57,0.12); color: var(--gold); border: 1px solid rgba(213,171,57,0.28); }
+
+        .rline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.38rem 0;
+            font-size: 0.76rem;
+            border-bottom: 1px solid rgba(1,91,127,0.04);
+        }
+        .rline:last-of-type { border-bottom: none; }
+        .rline .rl { color: rgba(64,64,64,0.65); font-weight: 300; }
+        .rline .rv { font-weight: 700; color: var(--gray); }
+        .rline .rv.neg { color: #b03030; }
+        .rline .rv.isento { color: #2e7d32; font-size: 0.7rem; }
+
+        .rline.subtotal {
+            margin-top: 0.6rem;
+            padding-top: 0.65rem;
+            border-top: 1.5px solid rgba(1,91,127,0.1);
+            border-bottom: none;
+        }
+        .rline.subtotal .rl { font-weight: 700; color: var(--petrol); font-size: 0.78rem; }
+        .rline.subtotal .rv { font-size: 0.95rem; color: var(--petrol); }
+        .result-card.pj .rline.subtotal .rl { color: var(--gold); }
+        .result-card.pj .rline.subtotal .rv { color: var(--gold); }
+
+        .rline.indent { padding-left: 1rem; }
+        .rline.indent .rl { font-size: 0.72rem; opacity: 0.8; }
+
+        .result-net {
+            margin-top: 0.85rem;
+            padding: 0.8rem 1rem;
+            background: var(--petrol-light);
+            border-radius: var(--radius-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .result-card.pj .result-net { background: rgba(213,171,57,0.07); }
+        .result-net .rn-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--petrol);
+        }
+        .result-card.pj .result-net .rn-label { color: var(--gold); }
+        .result-net .rn-value {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--petrol);
+        }
+        .result-card.pj .result-net .rn-value { color: var(--gold); }
+
+        /* SAVINGS */
+        .savings-card {
+            background: linear-gradient(135deg, var(--petrol) 0%, #014a69 100%);
+            border-radius: var(--radius);
+            padding: 1.6rem;
+            text-align: center;
+            color: white;
+            box-shadow: var(--shadow-dark);
+        }
+        .savings-label {
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.65;
+            margin-bottom: 0.4rem;
+        }
+        .savings-value {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: -0.02em;
+        }
+        .savings-period { font-size: 0.68rem; opacity: 0.55; margin-top: 0.15rem; }
+        .savings-annual {
+            margin-top: 0.9rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.13);
+            font-size: 0.78rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        .savings-annual strong { color: var(--gold); font-weight: 800; }
+
+        /* CTA */
+        .sim-cta {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(1,91,127,0.08);
+            box-shadow: var(--shadow-sm);
+        }
+        .sim-cta p { font-size: 0.77rem; margin-bottom: 1.1rem; color: rgba(64,64,64,0.65); }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.80rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.95rem 1.8rem;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            width: 100%;
+        }
+        .btn-primary:hover { background: rgb(228,183,55); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+
+        .disclaimer {
+            font-size: 0.60rem;
+            color: rgba(64,64,64,0.32);
+            text-align: center;
+            padding: 1.5rem 0 0;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.45);
+            padding: 2.2rem 0;
+            text-align: center;
+            font-size: 0.72rem;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-logo-clip { height: 26px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; }
+        .footer-logo-clip img { height: 100%; width: auto; object-fit: contain; }
+        .footer-links { display: flex; justify-content: center; gap: 1.4rem; flex-wrap: wrap; margin: 0.9rem 0; }
+        .footer-links a { color: rgba(255,255,255,0.38); text-decoration: none; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--gold); }
+
+        /* WAVES */
+        @keyframes wave-drift {
+            0%   { transform: translateX(0) scaleY(1); }
+            50%  { transform: translateX(-5%) scaleY(1.04); }
+            100% { transform: translateX(0) scaleY(1); }
+        }
+        .waves-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .wave { position: absolute; width: 110%; left: -5%; bottom: 0; fill: rgba(1,91,127,0.05); }
+        .wave-1 { height: 45vh; animation: wave-drift 14s ease-in-out infinite; }
+        .wave-2 { height: 38vh; fill: rgba(213,171,57,0.025); animation: wave-drift 20s ease-in-out infinite reverse; }
+        .wave-3 { height: 30vh; animation: wave-drift 17s ease-in-out infinite 3s; }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+    <div class="container nav-inner">
+        <div class="nav-logo-clip">
+            <img src="images/openn-logo.png" alt="Openn">
+        </div>
+        <a href="index.html" class="nav-back">← Voltar ao site</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="sim-hero">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-label">Simulação gratuita</div>
+        <h1>Quanto você paga de imposto sendo PF?</h1>
+        <div class="gold-line"></div>
+        <p>Preencha seus dados e veja, na hora, quanto você economizaria migrando para PJ com o Simples Nacional.</p>
+    </div>
+</section>
+
+<!-- MAIN -->
+<section id="simulacao">
+    <div class="container">
+        <div class="sim-grid">
+
+            <!-- FORM -->
+            <div class="form-card">
+
+                <div class="form-section-title">Faturamento</div>
+                <div class="field-group">
+                    <label>Faturamento mensal bruto</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="faturamento" placeholder="0,00" min="0" step="100">
+                    </div>
+                </div>
+
+                <div class="field-spacer"></div>
+                <div class="form-section-title">
+                    Despesas dedutíveis <span class="tag-dedutivel">reduzem o IRPF no PF</span>
+                </div>
+
+                <div class="field-group">
+                    <label>Aluguel do consultório</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="aluguel" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Água e luz</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="agua_luz" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Internet</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="internet" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Telefone (uso profissional)</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="telefone" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Treinamentos e cursos</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="treinamentos" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-spacer"></div>
+                <div class="form-section-title">
+                    Outras despesas <span class="tag-nd">não dedutíveis</span>
+                </div>
+
+                <div class="field-group">
+                    <label>Reformas</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="reformas" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Investimentos em bens</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="investimentos" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Alimentação</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="alimentacao" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Outras despesas pessoais</label>
+                    <div class="input-money">
+                        <span class="input-prefix">R$</span>
+                        <input type="number" id="outras" placeholder="0,00" min="0" step="10">
+                    </div>
+                </div>
+
+            </div><!-- /form-card -->
+
+            <!-- RESULTS -->
+            <div class="results-panel">
+
+                <div id="result-placeholder" class="result-placeholder">
+                    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M13 3h8m0 0v8m0-8l-11 11"/></svg>
+                    <p>Preencha o faturamento mensal<br>para ver a simulação.</p>
+                </div>
+
+                <div id="result-cards" class="result-cards">
+
+                    <!-- PF -->
+                    <div class="result-card">
+                        <div class="result-card-header">
+                            <div class="result-card-title">Pessoa Física</div>
+                            <span class="regime-tag regime-pf">Carnê-Leão</span>
+                        </div>
+                        <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pf-fat">—</span></div>
+                        <div class="rline"><span class="rl">INSS (contrib. individual, 20%)</span><span class="rv neg" id="pf-inss">—</span></div>
+                        <div class="rline"><span class="rl">Despesas dedutíveis</span><span class="rv neg" id="pf-deducoes">—</span></div>
+                        <div class="rline"><span class="rl">Base de cálculo IRPF</span><span class="rv" id="pf-base">—</span></div>
+                        <div class="rline"><span class="rl">IRPF (tabela progressiva)</span><span class="rv neg" id="pf-irpf">—</span></div>
+                        <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pf-total">—</span></div>
+                        <div class="result-net">
+                            <span class="rn-label">Renda líquida</span>
+                            <span class="rn-value" id="pf-liquido">—</span>
+                        </div>
+                    </div>
+
+                    <!-- PJ -->
+                    <div class="result-card pj">
+                        <div class="result-card-header">
+                            <div class="result-card-title">Pessoa Jurídica</div>
+                            <span class="regime-tag regime-pj">Simples Nacional — Anexo III</span>
+                        </div>
+                        <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pj-fat">—</span></div>
+                        <div class="rline"><span class="rl" id="pj-das-label">DAS Simples Nacional</span><span class="rv neg" id="pj-das">—</span></div>
+                        <div class="rline indent"><span class="rl" id="pj-pl-label">INSS sobre pro-labore (28% × 11%)</span><span class="rv neg" id="pj-inss">—</span></div>
+                        <div class="rline indent"><span class="rl">IRRF sobre pro-labore</span><span class="rv" id="pj-irrf">—</span></div>
+                        <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pj-total">—</span></div>
+                        <div class="result-net">
+                            <span class="rn-label">Renda disponível</span>
+                            <span class="rn-value" id="pj-liquido">—</span>
+                        </div>
+                    </div>
+
+                    <!-- SAVINGS -->
+                    <div class="savings-card">
+                        <div class="savings-label">Economia estimada por mês</div>
+                        <div class="savings-value" id="savings-monthly">R$ 0</div>
+                        <div class="savings-period">no bolso a mais todo mês</div>
+                        <div class="savings-annual">
+                            Isso representa <strong id="savings-annual">R$ 0</strong> a mais por ano<br>
+                            e uma redução de <strong id="savings-pct">0%</strong> na carga tributária
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="sim-cta">
+                        <p>Esta é uma estimativa. Para um plano personalizado e garantido, fale com a Openn.</p>
+                        <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                            Quero economizar assim
+                        </a>
+                    </div>
+
+                </div><!-- /result-cards -->
+
+                <p class="disclaimer">
+                    Cálculo baseado na tabela IRPF 2024, INSS 2024/2025 e Simples Nacional Anexo III vigente.<br>
+                    Fator R simulado a 28% (pro-labore mínimo). Os valores são estimativas — não substituem consultoria personalizada.
+                </p>
+
+            </div><!-- /results-panel -->
+
+        </div><!-- /sim-grid -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-logo-clip">
+            <img src="images/openn-logo.png" alt="Openn">
+        </div>
+        <p>Consultoria Tributária e Financeira para Psicólogos</p>
+        <div class="footer-links">
+            <a href="index.html">← Voltar ao site</a>
+            <a href="https://instagram.com/openn.psi" target="_blank">@openn.psi</a>
+            <a href="https://wa.me/5562996550808" target="_blank">WhatsApp</a>
+        </div>
+        <p style="font-size:0.63rem;margin-top:1.4rem;opacity:0.28;">© 2026 Openn · Todos os direitos reservados</p>
+    </div>
+</footer>
+
+<!-- WAVES -->
+<div class="waves-bg">
+    <svg class="wave wave-1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,192L48,181C96,171,192,149,288,155C384,160,480,192,576,187C672,181,768,139,864,139C960,139,1056,181,1152,187C1248,192,1344,160,1392,144L1440,128L1440,320L0,320Z"/>
+    </svg>
+    <svg class="wave wave-2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,256L60,240C120,224,240,192,360,181C480,171,600,181,720,197C840,213,960,235,1080,229C1200,224,1320,192,1380,176L1440,160L1440,320L0,320Z"/>
+    </svg>
+    <svg class="wave wave-3" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,288L80,272C160,256,320,224,480,213C640,203,800,213,960,208C1120,203,1280,181,1360,171L1440,160L1440,320L0,320Z"/>
+    </svg>
+</div>
+
+<!-- PARTICLES -->
+<canvas id="particles-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
+<script>
+/* PARTICLES */
+(function(){
+    const c = document.getElementById('particles-canvas');
+    const ctx = c.getContext('2d');
+    let W, H, P;
+    const COLS = ['rgba(213,171,57,','rgba(255,255,255,'];
+    function init(){
+        W = c.width = window.innerWidth;
+        H = c.height = window.innerHeight;
+        P = Array.from({length:40}, () => ({
+            x: Math.random()*W, y: Math.random()*H,
+            r: Math.random()*1.6+0.4,
+            dx: (Math.random()-0.5)*0.16,
+            dy: -Math.random()*0.2-0.04,
+            col: COLS[Math.random()<0.3?0:1],
+            op: Math.random()*0.09+0.02
+        }));
+    }
+    function draw(){
+        ctx.clearRect(0,0,W,H);
+        P.forEach(p=>{
+            ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+            ctx.fillStyle = p.col+p.op+')'; ctx.fill();
+            p.x+=p.dx; p.y+=p.dy;
+            if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
+            if(p.x<-5)p.x=W+5; if(p.x>W+5)p.x=-5;
+        });
+        requestAnimationFrame(draw);
+    }
+    init(); draw();
+    window.addEventListener('resize', init);
+})();
+
+/* CALCULATION */
+(function(){
+
+    /* Tabela IRPF mensal 2024 */
+    const IRPF = [
+        { ate: 2259.20, aliq: 0,     ded: 0      },
+        { ate: 2826.65, aliq: 0.075, ded: 169.44 },
+        { ate: 3751.05, aliq: 0.150, ded: 381.44 },
+        { ate: 4664.68, aliq: 0.225, ded: 662.77 },
+        { ate: Infinity,aliq: 0.275, ded: 896.00 }
+    ];
+
+    /* Simples Nacional Anexo III (RBT12) */
+    const SIMPLES = [
+        { ate: 180000,   nom: 0.060, ded: 0       },
+        { ate: 360000,   nom: 0.112, ded: 9360    },
+        { ate: 720000,   nom: 0.135, ded: 17640   },
+        { ate: 1800000,  nom: 0.160, ded: 35640   },
+        { ate: 3600000,  nom: 0.210, ded: 125640  },
+        { ate: Infinity, nom: 0.330, ded: 648000  }
+    ];
+
+    const INSS_TETO = 7786.02;
+
+    function calcIRPF(base){
+        if(base <= 0) return 0;
+        for(const f of IRPF){
+            if(base <= f.ate) return Math.max(0, base * f.aliq - f.ded);
+        }
+        return 0;
+    }
+
+    function calcSimples(rbt12){
+        for(const f of SIMPLES){
+            if(rbt12 <= f.ate){
+                const ef = rbt12 > 0 ? (rbt12 * f.nom - f.ded) / rbt12 : f.nom;
+                return { ef, pct: (ef*100).toFixed(2)+'%' };
+            }
+        }
+        return { ef: 0.33, pct: '33%' };
+    }
+
+    function v(id){ return parseFloat(document.getElementById(id).value)||0; }
+
+    function fmt(n){ return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function fmtN(n){ return '- R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function pct(n){ return n.toFixed(0)+'%'; }
+
+    function calcular(){
+        const fat = v('faturamento');
+
+        /* Deduções PF */
+        const ded = v('aluguel') + v('agua_luz') + v('internet') + v('telefone') + v('treinamentos');
+
+        /* PF */
+        const inssPF = Math.min(fat * 0.20, INSS_TETO * 0.20);
+        const basePF  = Math.max(0, fat - inssPF - ded);
+        const irpf    = calcIRPF(basePF);
+        const totalPF = inssPF + irpf;
+        const liqPF   = fat - totalPF;
+
+        /* PJ */
+        const rbt12     = fat * 12;
+        const sim       = calcSimples(rbt12);
+        const das       = fat * sim.ef;
+        const proLabore = fat * 0.28;
+        const inssProL  = Math.min(proLabore * 0.11, INSS_TETO * 0.11);
+        const baseIRRF  = Math.max(0, proLabore - inssProL);
+        const irrf      = calcIRPF(baseIRRF);
+        const totalPJ   = das + inssProL + irrf;
+        const liqPJ     = fat - totalPJ;
+
+        /* Savings */
+        const eco = totalPF - totalPJ;
+        const ecoPct = totalPF > 0 ? (eco / totalPF) * 100 : 0;
+
+        /* Toggle visibility */
+        const placeholder = document.getElementById('result-placeholder');
+        const cards       = document.getElementById('result-cards');
+        if(fat <= 0){
+            placeholder.style.display = 'block';
+            cards.classList.remove('visible');
+            return;
+        }
+        placeholder.style.display = 'none';
+        cards.classList.add('visible');
+
+        /* Fill PF */
+        document.getElementById('pf-fat').textContent      = fmt(fat);
+        document.getElementById('pf-inss').textContent     = fmtN(inssPF);
+        document.getElementById('pf-deducoes').textContent = ded > 0 ? fmtN(ded) : 'R$ 0,00';
+        document.getElementById('pf-base').textContent     = fmt(basePF);
+        document.getElementById('pf-irpf').textContent     = irpf > 0 ? fmtN(irpf) : 'Isento';
+        document.getElementById('pf-irpf').className       = 'rv' + (irpf > 0 ? ' neg' : ' isento');
+        document.getElementById('pf-total').textContent    = fmt(totalPF);
+        document.getElementById('pf-liquido').textContent  = fmt(liqPF);
+
+        /* Fill PJ */
+        document.getElementById('pj-fat').textContent     = fmt(fat);
+        document.getElementById('pj-das-label').textContent = 'DAS Simples Nacional ('+sim.pct+')';
+        document.getElementById('pj-das').textContent     = fmtN(das);
+        document.getElementById('pj-pl-label').textContent = 'INSS sobre pro-labore (28% × 11%)';
+        document.getElementById('pj-inss').textContent    = fmtN(inssProL);
+        document.getElementById('pj-irrf').textContent    = irrf > 0 ? fmtN(irrf) : 'Isento';
+        document.getElementById('pj-irrf').className      = 'rv' + (irrf > 0 ? ' neg' : ' isento');
+        document.getElementById('pj-total').textContent   = fmt(totalPJ);
+        document.getElementById('pj-liquido').textContent = fmt(liqPJ);
+
+        /* Fill savings */
+        document.getElementById('savings-monthly').textContent = eco > 0 ? fmt(eco)       : fmt(0);
+        document.getElementById('savings-annual').textContent  = eco > 0 ? fmt(eco * 12)  : fmt(0);
+        document.getElementById('savings-pct').textContent     = eco > 0 ? pct(ecoPct)    : '0%';
+    }
+
+    document.querySelectorAll('input[type="number"]').forEach(el => el.addEventListener('input', calcular));
+    calcular();
+
+})();
+</script>
+</body>
+</html>
