@@ -684,6 +684,80 @@
             font-style: italic;
         }
 
+        /* ── MOBILE < 480px ── */
+        @media (max-width: 480px) {
+
+            /* Container */
+            .container {
+                width: 100%;
+                padding: 0 0.75rem;
+            }
+
+            /* Step indicator */
+            .step-indicator {
+                padding: 0.5rem 0.5rem;
+                gap: 0.25rem;
+            }
+            .step-item { gap: 0.1rem; }
+            .step-dot { width: 22px; height: 22px; font-size: 0.55rem; }
+            .step-label { font-size: 0.44rem; max-width: 38px; text-align: center; line-height: 1.2; }
+            .step-line { width: 20px; margin-bottom: 12px; }
+
+            /* Aviso isenção */
+            .isencao-alert { padding: 0.9rem 1rem; gap: 0.6rem; }
+            .isencao-alert svg { width: 14px; height: 14px; }
+            .isencao-alert-body { font-size: 0.75rem; }
+
+            /* Aviso alta renda */
+            .alta-renda-card {
+                padding: 1.25rem 1rem;
+                gap: 0.75rem;
+                flex-direction: column;
+            }
+            .alta-renda-icon svg { width: 26px; height: 26px; }
+            .alta-renda-card h3 { font-size: 0.82rem; }
+            .alta-renda-card p { font-size: 0.75rem; }
+            .alta-renda-card .btn-primary { width: 100%; font-size: 0.7rem; padding: 0.7rem 1.2rem; }
+
+            /* Resultado grid */
+            .resultado-grid { gap: 1rem; }
+            .resultado-extras { gap: 1rem; }
+            .result-card { padding: 1rem; }
+            .rline { font-size: 0.7rem; padding: 0.28rem 0; }
+            .result-net { padding: 0.6rem 0.75rem; }
+            .result-net .rn-value { font-size: 0.92rem; }
+            .carga-pct { font-size: 0.58rem; }
+
+            /* Savings card */
+            .savings-card { padding: 1.25rem; }
+            .savings-label { font-size: 0.55rem; }
+            .savings-value { font-size: clamp(1.4rem, 10vw, 2rem); }
+            .savings-annual { font-size: 0.72rem; }
+
+            /* CTA card */
+            .sim-cta { padding: 1rem; }
+            .sim-cta p { font-size: 0.7rem; }
+
+            /* Form card */
+            .form-card { padding: 1.25rem; }
+            .form-section-title { font-size: 0.56rem; margin-bottom: 0.75rem; }
+            .field-group { margin-bottom: 0.75rem; }
+            .field-group label { font-size: 0.63rem; }
+            .input-money input[type="text"],
+            .input-money input[type="tel"],
+            .input-money input { padding: 0.65rem 0.75rem; font-size: 0.8rem; }
+            .input-prefix { padding: 0.65rem 0.6rem; font-size: 0.74rem; }
+
+            /* Botão calcular */
+            .btn-calcular { padding: 0.85rem 1.5rem; font-size: 0.78rem; min-height: 44px; }
+
+            /* Botão voltar */
+            .btn-back { font-size: 0.6rem; }
+
+            /* Resultado título */
+            .resultado-title h2 { font-size: 0.95rem; }
+        }
+
         .disclaimer {
             font-size: 0.60rem;
             color: rgba(64,64,64,0.32);
