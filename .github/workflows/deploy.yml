@@ -7,14 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          cat << 'EOF' > ~/.ssh/deploy_key
-          ${{ secrets.SSH_PRIVATE_KEY }}
-          EOF
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p 65002 -H 212.85.9.20 >> ~/.ssh/known_hosts
-      - name: Deploy
-        run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -p 65002 u863365274@212.85.9.20 "cd /home/u863365274/domains/opennpsi.com/public_html && git pull origin main"
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 212.85.9.20
+          username: u863365274
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 65002
+          script: cd /home/u863365274/domains/opennpsi.com/public_html && git pull origin main
