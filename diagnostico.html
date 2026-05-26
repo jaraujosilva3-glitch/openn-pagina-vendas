@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostico Financeiro — Openn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold:         rgb(213,171,57);
+            --gold-light:   rgba(213,171,57,0.10);
+            --gold-border:  rgba(213,171,57,0.28);
+            --petrol:       rgb(1,91,127);
+            --petrol-light: rgba(1,91,127,0.07);
+            --gray:         rgb(64,64,64);
+            --white:        #ffffff;
+            --warm:         #fafaf8;
+            --dark:         #06151d;
+            --radius:       18px;
+            --radius-sm:    10px;
+            --radius-pill:  100px;
+            --shadow-sm:    0 2px 14px rgba(1,91,127,0.07);
+            --shadow-gold:  0 4px 28px rgba(213,171,57,0.18);
+            --shadow-dark:  0 8px 40px rgba(0,0,0,0.3);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: var(--gray);
+            background: var(--warm);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--petrol);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        h1 { font-size: clamp(1.4rem, 4vw, 2.2rem); }
+        h2 { font-size: clamp(1rem, 3vw, 1.5rem); }
+        h3 { font-size: clamp(0.82rem, 2vw, 1rem); }
+        p  { font-weight: 300; color: var(--gray); line-height: 1.8; }
+
+        .container { width: min(100% - 40px, 1100px); margin: 0 auto; padding: 0 1.5rem; }
+        .gold-line  { width: 48px; height: 3px; background: var(--gold); margin: 0.8rem auto; }
+
+        .section-label {
+            display: inline-block;
+            background: var(--gold-light);
+            color: var(--gold);
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--gold-border);
+            margin-bottom: 0.9rem;
+            border-radius: var(--radius-pill);
+        }
+
+        /* NAV */
+        #topnav {
+            background: var(--dark);
+            padding: 0.85rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(213,171,57,0.12);
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo-clip { height: 30px; overflow: hidden; display: flex; align-items: center; }
+        .nav-logo-clip img { height: 100%; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
+        .nav-back {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .nav-back:hover { opacity: 1; }
+
+        /* HERO */
+        #diag-hero {
+            background: var(--dark);
+            padding: 1.2rem 0 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        #diag-hero h1 { color: var(--white); font-size: clamp(1.1rem, 3vw, 1.65rem); }
+        #diag-hero p  { color: rgba(255,255,255,0.65); max-width: 500px; margin: 0.9rem auto 0; font-size: 0.85rem; }
+
+        /* STEP INDICATOR */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--dark);
+            border-bottom: 1px solid rgba(213,171,57,0.08);
+            position: sticky;
+            top: 56px;
+            z-index: 100;
+        }
+        .step-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+        .step-dot {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            border: 1.5px solid rgba(255,255,255,0.14);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.6rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease;
+        }
+        .step-dot.active  { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+        .step-dot.done    { background: rgba(213,171,57,0.18); border-color: rgba(213,171,57,0.45); color: var(--gold); cursor: pointer; }
+        .step-dot.done:hover { background: rgba(213,171,57,0.32); }
+        .step-label {
+            font-size: 0.52rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: rgba(255,255,255,0.2);
+            transition: color 0.4s ease; white-space: nowrap;
+        }
+        .step-item:has(.active) .step-label { color: var(--gold); }
+        .step-item:has(.done)   .step-label { color: rgba(213,171,57,0.55); }
+        .step-line {
+            width: 28px; height: 1.5px;
+            background: rgba(255,255,255,0.08);
+            margin-bottom: 16px;
+            transition: background 0.4s ease;
+        }
+        .step-line.done { background: rgba(213,171,57,0.4); }
+
+        /* SCENE TRANSITIONS */
+        @keyframes slideInRight  { from { opacity:0; transform:translateX(32px);  } to { opacity:1; transform:translateX(0); } }
+        @keyframes slideOutLeft  { from { opacity:1; transform:translateX(0);     } to { opacity:0; transform:translateX(-32px); } }
+        @keyframes slideInLeft   { from { opacity:0; transform:translateX(-32px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes slideOutRight { from { opacity:1; transform:translateX(0);     } to { opacity:0; transform:translateX(32px); } }
+        .scene-enter      { animation: slideInRight  0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-exit       { animation: slideOutLeft  0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-enter-back { animation: slideInLeft   0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-exit-back  { animation: slideOutRight 0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+        /* SECTIONS */
+        .diag-section { padding: 2.5rem 0 4rem; position: relative; z-index: 1; }
+        .form-wrap { max-width: 560px; margin: 0 auto; }
+
+        /* FORM CARD */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.85rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(1,91,127,0.08);
+        }
+        .form-section-title {
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.20em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gold-border);
+        }
+        .field-group { margin-bottom: 0.95rem; }
+        .field-group label {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--petrol);
+            margin-bottom: 0.35rem;
+        }
+        .input-money {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .input-money:focus-within { border-color: var(--petrol); }
+        .input-prefix {
+            background: var(--petrol-light);
+            padding: 0.65rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--petrol);
+            flex-shrink: 0;
+            border-right: 1.5px solid rgba(1,91,127,0.12);
+        }
+        .input-money input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.65rem 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--gray);
+            background: transparent;
+            min-width: 0;
+        }
+
+        /* BUTTONS */
+        .btn-calcular {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            background: var(--petrol);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .btn-calcular:hover { background: rgb(1,110,154); transform: translateY(-2px); }
+        .btn-calcular.loading { opacity: 0.6; pointer-events: none; }
+        .btn-calcular.gold { background: var(--gold); color: var(--dark); }
+        .btn-calcular.gold:hover { background: rgb(228,183,55); }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.80rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.95rem 1.8rem;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            width: 100%;
+        }
+        .btn-primary:hover { background: rgb(228,183,55); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+
+        .btn-back {
+            background: none;
+            border: none;
+            color: rgba(64,64,64,0.42);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0;
+            margin-bottom: 1rem;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--petrol); }
+
+        .btn-outline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: none;
+            color: var(--gray);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            margin-top: 0.75rem;
+        }
+        .btn-outline:hover { border-color: var(--petrol); color: var(--petrol); }
+
+        /* WIZARD FORM ELEMENTS */
+        .wiz-grp { margin-bottom: 1.2rem; }
+        .wiz-grp:last-child { margin-bottom: 0; }
+        .wiz-lbl {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--petrol);
+            margin-bottom: 0.55rem;
+        }
+        .wiz-err { font-size: 0.68rem; color: #c0392b; margin-top: 0.35rem; display: none; }
+
+        .wiz-big-wrap {
+            display: flex; align-items: center; gap: 0.6rem;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem;
+            transition: border-color 0.2s;
+        }
+        .wiz-big-wrap:focus-within { border-color: var(--petrol); }
+        .wiz-big-sym { font-size: 1rem; font-weight: 700; color: var(--gold); }
+        .wiz-big-inp {
+            border: none; border-bottom: 2px solid #e8e5dc;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem; font-weight: 800; color: var(--dark);
+            padding: 4px 0; outline: none; width: 100%;
+            transition: border-color 0.2s;
+        }
+        .wiz-big-inp:focus { border-bottom-color: var(--gold); }
+        .wiz-big-inp::placeholder { color: #ccc; font-weight: 300; font-size: 1.2rem; }
+
+        .wiz-radio-stack { display: flex; flex-direction: column; gap: 0.5rem; }
+        .wiz-rl {
+            display: flex; align-items: center; gap: 0.65rem;
+            font-size: 0.82rem; font-weight: 400; color: var(--gray);
+            cursor: pointer;
+            padding: 0.65rem 0.9rem;
+            border: 1.5px solid rgba(1,91,127,0.12);
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+        }
+        .wiz-rl:hover { border-color: var(--gold-border); background: var(--gold-light); }
+        .wiz-rl input { width: 15px; height: 15px; accent-color: var(--gold); flex-shrink: 0; }
+
+        .wiz-chk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.5rem; }
+        .wiz-chk {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.76rem; font-weight: 400; color: var(--gray);
+            cursor: pointer;
+            padding: 0.55rem 0.75rem;
+            border: 1.5px solid rgba(1,91,127,0.12);
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+        }
+        .wiz-chk:hover { border-color: var(--gold); background: var(--gold-light); }
+        .wiz-chk input { width: 15px; height: 15px; accent-color: var(--gold); flex-shrink: 0; }
+
+        .wiz-sel {
+            width: 100%; padding: 0.7rem 0.9rem;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-sm);
+            background: var(--warm);
+            font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: var(--dark);
+            outline: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23d5ab39' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 12px center;
+            cursor: pointer;
+        }
+        .wiz-sel:focus { border-color: var(--gold); }
+
+        /* EXPENSES */
+        .exp-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(1,91,127,0.05);
+        }
+        .exp-row:last-of-type { border-bottom: none; }
+        .exp-row-lbl { font-size: 0.82rem; font-weight: 600; color: var(--dark); }
+        .exp-iw { display: flex; align-items: center; gap: 4px; min-width: 130px; justify-content: flex-end; }
+        .exp-iw > span { font-size: 0.7rem; font-weight: 700; color: var(--gold); }
+        .exp-inp {
+            border: none; border-bottom: 1px solid rgba(1,91,127,0.18);
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem; font-weight: 600; color: var(--dark);
+            padding: 2px 0; outline: none; width: 90px; text-align: right;
+            transition: border-color 0.15s;
+        }
+        .exp-inp:focus { border-bottom-color: var(--gold); }
+        .exp-inp::placeholder { color: #ddd; font-weight: 300; }
+        .exp-total-bar {
+            background: var(--dark); border-radius: var(--radius-sm);
+            padding: 0.9rem 1.25rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 1rem;
+        }
+        .exp-total-bar span:first-child { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #aaa; }
+        .exp-total-bar span:last-child { font-size: 1.2rem; font-weight: 800; color: var(--gold); }
+
+        /* PILL BUTTONS */
+        .pill-grp { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+        .wpill {
+            padding: 0.55rem 1rem;
+            border: 1.5px solid rgba(1,91,127,0.18);
+            border-radius: var(--radius-pill);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.76rem; font-weight: 600; color: var(--gray);
+            background: white; cursor: pointer; transition: all 0.15s;
+        }
+        .wpill:hover { border-color: var(--gold); }
+        .wpill.wpill-on { background: var(--petrol); color: white; border-color: var(--petrol); }
+
+        /* RESULT SECTION */
+        .diag-score {
+            background: var(--dark);
+            border-radius: var(--radius);
+            padding: 2rem 1.75rem;
+            margin-bottom: 1.1rem;
+            border: 1px solid rgba(213,171,57,0.14);
+        }
+        .diag-blk {
+            background: white;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(1,91,127,0.08);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 0.9rem;
+        }
+        .diag-blk-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+        .diag-blk-ttl { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--dark); }
+        .dtag { font-size: 0.56rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.7rem; border-radius: 12px; }
+        .dtag-ok    { background: #e8f5e9; color: #2e7d32; }
+        .dtag-warn  { background: #fff8e1; color: #e65100; }
+        .dtag-alert { background: #fce4ec; color: #c62828; }
+        .diag-blk p { font-size: 0.82rem; font-weight: 300; color: var(--gray); line-height: 1.8; margin-bottom: 0.65rem; }
+        .diag-blk ul { list-style: none; padding: 0; margin: 0; }
+        .diag-blk ul li { font-size: 0.75rem; color: var(--gray); padding: 0.25rem 0 0.25rem 1rem; position: relative; line-height: 1.6; }
+        .diag-blk ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+        .diag-act {
+            background: var(--dark);
+            border-radius: var(--radius);
+            padding: 1.6rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .diag-act h3 { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--gold); margin-bottom: 1.1rem; }
+        .diag-act-item { display: flex; gap: 0.9rem; margin-bottom: 1.1rem; align-items: flex-start; }
+        .diag-act-item:last-child { margin-bottom: 0; }
+        .diag-act-n { font-size: 1.9rem; font-weight: 800; -webkit-text-stroke: 1.5px var(--gold); color: transparent; min-width: 38px; line-height: 1; flex-shrink: 0; }
+        .diag-act-c strong { display: block; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: white; margin-bottom: 0.2rem; }
+        .diag-act-c span { font-size: 0.75rem; font-weight: 300; color: #aaa; line-height: 1.6; }
+        .diag-act-tag { display: inline-block; font-size: 0.56rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.65rem; border-radius: 10px; background: rgba(213,171,57,0.2); color: var(--gold); margin-top: 0.35rem; }
+
+        .diag-bar-item { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.5rem; }
+        .diag-bar-lbl { font-size: 0.7rem; font-weight: 600; color: var(--gray); min-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .diag-bar-tr { flex: 1; height: 7px; background: #f0ede5; border-radius: 4px; overflow: hidden; }
+        .diag-bar-fl { height: 100%; border-radius: 4px; background: var(--gold); transition: width 0.6s ease; }
+        .diag-bar-pct { font-size: 0.7rem; font-weight: 700; color: var(--gray); min-width: 38px; text-align: right; }
+
+        .highlight {
+            background: var(--gold-light);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-size: 0.82rem; font-weight: 600; color: var(--dark); line-height: 1.6;
+        }
+
+        .cta-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(1,91,127,0.08);
+            box-shadow: var(--shadow-sm);
+            margin-top: 1rem;
+        }
+        .cta-card p { font-size: 0.77rem; margin-bottom: 1.1rem; color: rgba(64,64,64,0.65); }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.45);
+            padding: 2.2rem 0;
+            text-align: center;
+            font-size: 0.72rem;
+            position: relative; z-index: 1;
+        }
+        .footer-logo-clip { height: 26px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; }
+        .footer-logo-clip img { height: 100%; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
+        .footer-links { display: flex; justify-content: center; gap: 1.4rem; flex-wrap: wrap; margin: 0.9rem 0; }
+        .footer-links a { color: rgba(255,255,255,0.38); text-decoration: none; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--gold); }
+
+        /* WAVES */
+        @keyframes wave-drift {
+            0%   { transform: translateX(0) scaleY(1); }
+            50%  { transform: translateX(-5%) scaleY(1.04); }
+            100% { transform: translateX(0) scaleY(1); }
+        }
+        .waves-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .wave { position: absolute; width: 110%; left: -5%; bottom: 0; fill: rgba(1,91,127,0.05); }
+        .wave-1 { height: 45vh; animation: wave-drift 14s ease-in-out infinite; }
+        .wave-2 { height: 38vh; fill: rgba(213,171,57,0.025); animation: wave-drift 20s ease-in-out infinite reverse; }
+        .wave-3 { height: 30vh; animation: wave-drift 17s ease-in-out infinite 3s; }
+
+        .disclaimer {
+            font-size: 0.60rem;
+            color: rgba(64,64,64,0.32);
+            text-align: center;
+            padding: 1.5rem 0 0;
+            line-height: 1.7;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            /* grid INSS/Recibos vira coluna unica */
+            .diag-section [style*="grid-template-columns:1fr 1fr"] {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+            /* resultado: gauge + score empilham */
+            .diag-score [style*="display:flex"] { flex-direction: column; align-items: flex-start; gap: 16px; }
+            /* pills ficam em linha e quebram */
+            .pill-grp { flex-wrap: wrap; }
+            .wpill { font-size: 0.72rem; padding: 0.5rem 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { width: 100%; padding: 0 0.75rem; }
+            .step-indicator { padding: 0.5rem; gap: 0.2rem; }
+            .step-dot { width: 22px; height: 22px; font-size: 0.55rem; }
+            .step-label { font-size: 0.42rem; max-width: 34px; text-align: center; line-height: 1.2; }
+            .step-line { width: 14px; margin-bottom: 12px; }
+            .form-card { padding: 1.1rem; }
+            .btn-calcular { font-size: 0.78rem; padding: 0.85rem 1.5rem; }
+            .wiz-chk-grid { grid-template-columns: 1fr 1fr; }
+            .wiz-big-inp { font-size: 1.1rem; }
+            .form-wrap { padding: 0; }
+            /* secao label menor no hero */
+            .section-label { font-size: 0.52rem; padding: 0.3rem 0.75rem; }
+            /* blocos de resultado */
+            .diag-blk { padding: 1rem 1rem; }
+            .diag-act { padding: 1.2rem 1rem; }
+            .diag-act-n { font-size: 1.4rem; min-width: 28px; }
+            .diag-bar-lbl { min-width: 80px; font-size: 0.65rem; }
+        }
+
+        @media print {
+            #topnav, .step-indicator, #lead-gate, #ws1, #ws2, #ws3, #ws4, #ws5, .waves-bg, footer { display: none !important; }
+            body { background: #fff !important; }
+            #ws6 { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+    <div class="container nav-inner">
+        <div class="nav-logo-clip">
+            <img src="images/openn-logo.png" alt="Openn">
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <a href="simulacao.html" class="nav-back">Simulador PF/PJ</a>
+            <a href="index.html" class="nav-back">&#8592; Voltar ao site</a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="diag-hero">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-label">2 minutos para conhecer sua saude financeira</div>
+        <h1>Diagnostico Financeiro</h1>
+        <div class="gold-line"></div>
+        <p>Apenas 2 passos rapidos para descobrir como esta sua saude financeira.</p>
+    </div>
+</section>
+
+<!-- STEP INDICATOR -->
+<div class="step-indicator">
+    <div class="step-item">
+        <div class="step-dot active" id="dot-1" onclick="dotClick(1)">1</div>
+        <span class="step-label">Acesso</span>
+    </div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step-item">
+        <div class="step-dot" id="dot-2" onclick="dotClick(2)">2</div>
+        <span class="step-label">Renda</span>
+    </div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step-item">
+        <div class="step-dot" id="dot-3" onclick="dotClick(3)">3</div>
+        <span class="step-label">Situacao</span>
+    </div>
+    <div class="step-line" id="line-3"></div>
+    <div class="step-item">
+        <div class="step-dot" id="dot-4" onclick="dotClick(4)">4</div>
+        <span class="step-label">Resultado</span>
+    </div>
+</div>
+
+<!-- ── SCENE 1: ACESSO ── -->
+<section id="scene-acesso" class="diag-section">
+    <div class="container">
+        <div class="form-wrap">
+            <div class="form-card">
+                <div style="text-align:center;margin-bottom:1.5rem;">
+                    <div class="section-label">Acesso gratuito</div>
+                    <h3 style="color:var(--petrol);margin-top:0.5rem;">Para ver seu diagnostico, precisamos de alguns dados</h3>
+                    <p style="font-size:0.78rem;margin-top:0.5rem;color:rgba(64,64,64,0.6);">Usamos apenas para entrar em contato, caso voce queira saber mais.</p>
+                </div>
+
+                <div class="field-group">
+                    <label>Seu nome</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <input type="text" id="lead-nome" placeholder="Nome e sobrenome" autocomplete="name" oninput="this.value=this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g,'')">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>E-mail</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+                        </span>
+                        <input type="email" id="lead-email" placeholder="seu@email.com" autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="field-group" style="margin-bottom:1.5rem;">
+                    <label>WhatsApp</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l1.45-1.45a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92v3z"/></svg>
+                        </span>
+                        <input type="tel" id="lead-telefone" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="15" oninput="mascaraTel(this)">
+                    </div>
+                </div>
+
+                <button class="btn-calcular" id="btn-acesso" onclick="enviarLead()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                    Iniciar meu diagnostico
+                </button>
+                <p style="font-size:0.60rem;color:rgba(64,64,64,0.35);text-align:center;margin-top:0.9rem;line-height:1.6;">Seus dados sao protegidos e nao serao compartilhados.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SCENE 2: RENDA ── -->
+<section id="scene-renda" class="diag-section" style="display:none;">
+    <div class="container">
+        <button class="btn-back" onclick="goBack('scene-renda','scene-acesso',1)">&#8592; Voltar</button>
+        <div class="form-wrap">
+            <div class="form-card">
+                <div class="form-section-title">Renda e Despesas</div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Qual e sua renda mensal media?</label>
+                    <div class="wiz-big-wrap">
+                        <span class="wiz-big-sym">R$</span>
+                        <input type="text" id="wiz-renda" class="wiz-big-inp" placeholder="0,00" inputmode="decimal" oninput="this.value=this.value.replace(/[^0-9.,]/g,'')" onblur="wFmt(this)">
+                    </div>
+                    <span class="wiz-err" id="err-renda">Informe sua renda para continuar.</span>
+                </div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Ha quanto tempo voce atua como psicologa(o)?</label>
+                    <select id="wiz-tempo" class="wiz-sel">
+                        <option value="">Selecione...</option>
+                        <option value="lt1">Menos de 1 ano</option>
+                        <option value="1-3">1 a 3 anos</option>
+                        <option value="3-5">3 a 5 anos</option>
+                        <option value="gt5">Mais de 5 anos</option>
+                    </select>
+                </div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Qual e sua faixa de despesas mensais?</label>
+                    <div class="pill-grp" id="pg-faixa-desp">
+                        <button class="wpill" onclick="wPick('pg-faixa-desp','ate2k',this)">Ate R$ 2.000</button>
+                        <button class="wpill" onclick="wPick('pg-faixa-desp','2k-4k',this)">R$ 2k a R$ 4k</button>
+                        <button class="wpill" onclick="wPick('pg-faixa-desp','4k-7k',this)">R$ 4k a R$ 7k</button>
+                        <button class="wpill" onclick="wPick('pg-faixa-desp','gt7k',this)">Acima de R$ 7k</button>
+                    </div>
+                    <span class="wiz-err" id="err-faixa">Selecione sua faixa de despesas.</span>
+                </div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Sua renda varia muito entre os meses?</label>
+                    <div class="pill-grp" id="pg-variacao">
+                        <button class="wpill" onclick="wPick('pg-variacao','muito',this)">Sim, bastante</button>
+                        <button class="wpill" onclick="wPick('pg-variacao','pouco',this)">Um pouco</button>
+                        <button class="wpill" onclick="wPick('pg-variacao','estavel',this)">Nao, e estavel</button>
+                    </div>
+                </div>
+
+                <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:0.5rem;">
+                    <button class="btn-calcular" onclick="avancarRenda()">Proximo passo &#8594;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SCENE 3: SITUACAO ── -->
+<section id="scene-situacao" class="diag-section" style="display:none;">
+    <div class="container">
+        <button class="btn-back" onclick="goBack('scene-situacao','scene-renda',2)">&#8592; Voltar</button>
+        <div class="form-wrap">
+            <div class="form-card">
+
+                <!-- bloco 1: formalizacao -->
+                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Formalizacao e impostos</div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Como voce recebe pelos seus servicos?</label>
+                    <div class="wiz-radio-stack">
+                        <label class="wiz-rl"><input type="radio" name="wform" value="nenhum"> Sem formalizacao</label>
+                        <label class="wiz-rl"><input type="radio" name="wform" value="cpf"> Pessoa fisica (CPF / recibo)</label>
+                        <label class="wiz-rl"><input type="radio" name="wform" value="cnpj-simples"> CNPJ — Simples Nacional</label>
+                        <label class="wiz-rl"><input type="radio" name="wform" value="cnpj-lp"> CNPJ — Lucro Presumido</label>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;">
+                    <div>
+                        <label class="wiz-lbl">Contribui ao INSS?</label>
+                        <div class="pill-grp" id="pg-inss" style="flex-direction:column;">
+                            <button class="wpill" onclick="wPick('pg-inss','sim-reg',this)">Sim, regularmente</button>
+                            <button class="wpill" onclick="wPick('pg-inss','sim-irreg',this)">As vezes</button>
+                            <button class="wpill" onclick="wPick('pg-inss','nao',this)">Nao contribuo</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="wiz-lbl">Emite recibos ou NF?</label>
+                        <div class="pill-grp" id="pg-recibos" style="flex-direction:column;">
+                            <button class="wpill" onclick="wPick('pg-recibos','sempre',this)">Sempre</button>
+                            <button class="wpill" onclick="wPick('pg-recibos','maioria',this)">As vezes</button>
+                            <button class="wpill" onclick="wPick('pg-recibos','nunca',this)">Nunca</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- divisor -->
+                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin:1.4rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Organizacao financeira</div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Tem conta bancaria separada para a clinica?</label>
+                    <div class="pill-grp" id="pg-conta">
+                        <button class="wpill" onclick="wPick('pg-conta','sim',this)">Sim, separada</button>
+                        <button class="wpill" onclick="wPick('pg-conta','org',this)">Estou organizando</button>
+                        <button class="wpill" onclick="wPick('pg-conta','mesma',this)">Uso a mesma conta</button>
+                    </div>
+                </div>
+
+                <div class="wiz-grp">
+                    <label class="wiz-lbl">Como controla seus recebimentos?</label>
+                    <div class="pill-grp" id="pg-controle">
+                        <button class="wpill" onclick="wPick('pg-controle','software',this)">Sistema / app</button>
+                        <button class="wpill" onclick="wPick('pg-controle','planilha',this)">Planilha</button>
+                        <button class="wpill" onclick="wPick('pg-controle','anotacoes',this)">Anotacoes simples</button>
+                        <button class="wpill" onclick="wPick('pg-controle','nao',this)">Nao controlo</button>
+                    </div>
+                </div>
+
+                <div class="wiz-grp" style="margin-bottom:0;">
+                    <label class="wiz-lbl">Quanto tem de reserva de emergencia?</label>
+                    <div class="pill-grp" id="pg-reserva">
+                        <button class="wpill" onclick="wPick('pg-reserva','gt6m',this)">Mais de 6 meses</button>
+                        <button class="wpill" onclick="wPick('pg-reserva','3-6m',this)">3 a 6 meses</button>
+                        <button class="wpill" onclick="wPick('pg-reserva','ate3m',this)">Menos de 3 meses</button>
+                        <button class="wpill" onclick="wPick('pg-reserva','nao',this)">Nao tenho</button>
+                    </div>
+                </div>
+
+                <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:1.25rem;">
+                    <button class="btn-calcular gold" onclick="gerarDiagnostico()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                        Ver meu diagnostico
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SCENE 4: RESULTADO ── -->
+<section id="scene-resultado" class="diag-section" style="display:none;">
+    <div class="container">
+        <button class="btn-back" onclick="goBack('scene-resultado','scene-situacao',3)">&#8592; Voltar</button>
+        <div class="form-wrap" style="max-width:680px;">
+            <div id="diag-result-html"></div>
+            <div class="cta-card">
+                <p>Este diagnostico e baseado nas suas respostas. Para uma analise tributaria completa e personalizada, fale com a Openn.</p>
+                <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+                    Quero uma assessoria especializada
+                </a>
+                <button class="btn-outline" onclick="reiniciar()">Refazer o diagnostico</button>
+            </div>
+            <p class="disclaimer">Diagnostico elaborado com base nas informacoes fornecidas e nos principios da Openn. Nao substitui orientacao contabil ou tributaria personalizada.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-logo-clip">
+            <img src="images/openn-logo.png" alt="Openn">
+        </div>
+        <p>Consultoria Financeira e Contabil para Psicologos</p>
+        <div class="footer-links">
+            <a href="index.html">&#8592; Voltar ao site</a>
+            <a href="simulacao.html">Simulador PF/PJ</a>
+            <a href="https://instagram.com/openn.psi" target="_blank">@openn.psi</a>
+            <a href="https://wa.me/5562996550808" target="_blank">WhatsApp</a>
+        </div>
+        <p style="font-size:0.63rem;margin-top:1.4rem;opacity:0.28;">© 2026 Openn · Todos os direitos reservados</p>
+    </div>
+</footer>
+
+<!-- WAVES -->
+<div class="waves-bg">
+    <svg class="wave wave-1" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,192L48,181C96,171,192,149,288,155C384,160,480,192,576,187C672,181,768,139,864,139C960,139,1056,181,1152,187C1248,192,1344,160,1392,144L1440,128L1440,320L0,320Z"/></svg>
+    <svg class="wave wave-2" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,256L60,240C120,224,240,192,360,181C480,171,600,181,720,197C840,213,960,235,1080,229C1200,224,1320,192,1380,176L1440,160L1440,320L0,320Z"/></svg>
+    <svg class="wave wave-3" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,288L80,272C160,256,320,224,480,213C640,203,800,213,960,208C1120,203,1280,181,1360,171L1440,160L1440,320L0,320Z"/></svg>
+</div>
+<canvas id="particles-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
+<script>
+/* PARTICLES */
+(function(){
+    var c = document.getElementById('particles-canvas');
+    var ctx = c.getContext('2d');
+    var W, H, P;
+    var COLS = ['rgba(213,171,57,','rgba(255,255,255,'];
+    function init(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; P=Array.from({length:40},function(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.4,dx:(Math.random()-0.5)*0.16,dy:-Math.random()*0.2-0.04,col:COLS[Math.random()<0.3?0:1],op:Math.random()*0.09+0.02};}); }
+    function draw(){ ctx.clearRect(0,0,W,H); P.forEach(function(p){ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.col+p.op+')'; ctx.fill(); p.x+=p.dx; p.y+=p.dy; if(p.y<-5){p.y=H+5;p.x=Math.random()*W;} if(p.x<-5)p.x=W+5; if(p.x>W+5)p.x=-5; }); requestAnimationFrame(draw); }
+    init(); draw(); window.addEventListener('resize',init);
+})();
+
+/* ── DADOS ── */
+var WD = { renda:0, tempo:'', variacao:'', faixaDesp:'', formalizacao:'', inss:'', recibos:'', contaSep:'', controle:'', reserva:'' };
+
+/* ── STEP INDICATOR ── */
+var TOTAL_STEPS = 4;
+var currentStep = 1;
+var sceneMap = ['','scene-acesso','scene-renda','scene-situacao','scene-resultado'];
+
+function updateSteps(n) {
+    currentStep = n;
+    for (var i=1;i<=TOTAL_STEPS;i++) { var d=document.getElementById('dot-'+i); d.classList.toggle('active',i===n); d.classList.toggle('done',i<n); }
+    for (var j=1;j<TOTAL_STEPS;j++) { document.getElementById('line-'+j).classList.toggle('done',j<n); }
+}
+
+function dotClick(n) {
+    var dot=document.getElementById('dot-'+n);
+    if(!dot.classList.contains('done')) return;
+    if(n===currentStep) return;
+    var fromId=sceneMap[currentStep], toId=sceneMap[n];
+    if(n<currentStep) goBack(fromId,toId,n); else goToScene(fromId,toId,n);
+}
+
+function goToScene(fromId,toId,stepNum) {
+    var from=document.getElementById(fromId), to=document.getElementById(toId);
+    from.classList.add('scene-exit');
+    setTimeout(function(){ from.style.display='none'; from.classList.remove('scene-exit'); to.style.display='block'; to.classList.add('scene-enter'); setTimeout(function(){ to.classList.remove('scene-enter'); },500); updateSteps(stepNum); window.scrollTo({top:document.querySelector('.step-indicator').offsetTop-56,behavior:'smooth'}); },380);
+}
+
+function goBack(fromId,toId,stepNum) {
+    var from=document.getElementById(fromId), to=document.getElementById(toId);
+    from.classList.add('scene-exit-back');
+    setTimeout(function(){ from.style.display='none'; from.classList.remove('scene-exit-back'); to.style.display='block'; to.classList.add('scene-enter-back'); setTimeout(function(){ to.classList.remove('scene-enter-back'); },500); updateSteps(stepNum); window.scrollTo({top:document.querySelector('.step-indicator').offsetTop-56,behavior:'smooth'}); },380);
+}
+
+/* ── LEAD ── */
+function mascaraTel(el) { var v=el.value.replace(/\D/g,'').slice(0,11); if(v.length<=10) v=v.replace(/^(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3'); else v=v.replace(/^(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3'); el.value=v; }
+
+function marcarErro(id,msg) {
+    var el=document.getElementById(id); el.style.borderColor='#c0392b';
+    var par=(el.closest('.input-money')||el.parentElement).parentElement;
+    var err=par.querySelector('.field-error');
+    if(!err){err=document.createElement('span');err.className='field-error';err.style.cssText='font-size:0.65rem;color:#c0392b;margin-top:0.3rem;display:block;';par.appendChild(err);}
+    err.textContent=msg; el.focus();
+}
+function limparErros() { ['lead-nome','lead-email','lead-telefone'].forEach(function(id){ var el=document.getElementById(id); if(el){el.style.borderColor='';var par=(el.closest('.input-money')||el.parentElement).parentElement;var e=par.querySelector('.field-error');if(e)e.remove();} }); }
+
+function enviarLead() {
+    var nome=document.getElementById('lead-nome').value.trim();
+    var email=document.getElementById('lead-email').value.trim();
+    var tel=document.getElementById('lead-telefone').value.trim();
+    limparErros();
+    if(!nome||nome.split(/\s+/).filter(function(p){return p.length>1;}).length<2){marcarErro('lead-nome','Informe seu nome e sobrenome.');return;}
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){marcarErro('lead-email','Informe um e-mail valido.');return;}
+    if(tel.replace(/\D/g,'').length<10){marcarErro('lead-telefone','Informe seu WhatsApp com DDD.');return;}
+    var btn=document.getElementById('btn-acesso'); btn.classList.add('loading'); btn.textContent='Aguarde...';
+    var SHEETS_URL='https://script.google.com/macros/s/AKfycbz8RnNxgRTxbDE6VWjpGdOcCvx-d6cwx8pVAEtoJtuioRN6ggV2lESWlRndrPg76xdr/exec';
+    new Image().src=SHEETS_URL+'?nome='+encodeURIComponent(nome)+'&email='+encodeURIComponent(email)+'&telefone='+encodeURIComponent(tel);
+    fetch('https://joycehas.app.n8n.cloud/webhook/diagnostico-leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:nome,email:email,fone:tel,ts:Date.now()})}).catch(function(){});
+    setTimeout(function(){goToScene('scene-acesso','scene-renda',2);},600);
+}
+
+/* ── HELPERS ── */
+function wFmt(inp){var p=wParse(inp.value);if(!isNaN(p)&&p>=0)inp.value=p>0?fBR(p):'';}
+function wParse(s){if(!s)return NaN;s=s.replace(/[R$\s]/g,'');if(s.indexOf(',')>-1)s=s.replace(/\./g,'').replace(',','.');return parseFloat(s);}
+function fBR(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function wPick(grpId,val,btn){document.querySelectorAll('#'+grpId+' .wpill').forEach(function(b){b.classList.remove('wpill-on');delete b.dataset.val;});btn.classList.add('wpill-on');btn.dataset.val=val;}
+function pickVal(grpId){var s=document.querySelector('#'+grpId+' .wpill-on');return s?s.dataset.val:'';}
+
+/* ── NAVEGACAO ── */
+function avancarRenda() {
+    var r=wParse(document.getElementById('wiz-renda').value);
+    var errR=document.getElementById('err-renda');
+    if(!r||r<=0){errR.style.display='block';document.getElementById('wiz-renda').focus();return;}
+    errR.style.display='none';
+    var faixa=pickVal('pg-faixa-desp');
+    var errF=document.getElementById('err-faixa');
+    if(!faixa){errF.style.display='block';return;}
+    errF.style.display='none';
+    WD.renda=r;
+    WD.tempo=document.getElementById('wiz-tempo').value;
+    WD.variacao=pickVal('pg-variacao');
+    WD.faixaDesp=faixa;
+    goToScene('scene-renda','scene-situacao',3);
+}
+
+function gerarDiagnostico() {
+    WD.formalizacao=document.querySelector('[name="wform"]:checked')?document.querySelector('[name="wform"]:checked').value:'';
+    WD.inss=pickVal('pg-inss');
+    WD.recibos=pickVal('pg-recibos');
+    WD.contaSep=pickVal('pg-conta');
+    WD.controle=pickVal('pg-controle');
+    WD.reserva=pickVal('pg-reserva');
+    var sit=document.getElementById('scene-situacao');
+    var res=document.getElementById('scene-resultado');
+    sit.style.display='none';
+    res.style.display='block';
+    res.classList.add('scene-enter');
+    setTimeout(function(){ res.classList.remove('scene-enter'); },500);
+    updateSteps(4);
+    window.scrollTo({top:0,behavior:'smooth'});
+    setTimeout(function(){ renderDiagnostico(); },120);
+}
+
+/* ── ENGINE ── */
+function estimarDesp() {
+    var map={'ate2k':1500,'2k-4k':3000,'4k-7k':5500,'gt7k':8000};
+    return map[WD.faixaDesp]||0;
+}
+
+function wCalcScore() {
+    var s=0;
+    if(WD.contaSep==='sim') s+=18;
+    if(WD.recibos==='sempre'||WD.recibos==='maioria') s+=14;
+    if(WD.inss==='sim-reg') s+=14;
+    if(WD.reserva==='gt6m') s+=25; else if(WD.reserva==='3-6m') s+=16; else if(WD.reserva==='ate3m') s+=6;
+    if(WD.controle==='planilha'||WD.controle==='software') s+=14;
+    if(WD.formalizacao==='cnpj-simples'||WD.formalizacao==='cnpj-lp') s+=11;
+    var d=estimarDesp();
+    if(WD.renda>0&&d>0&&d<WD.renda*0.75) s+=9;
+    return Math.min(100,s);
+}
+
+function wScoreInfo(sc) {
+    if(sc<40) return{txt:'Atencao: sua base financeira precisa de estrutura',cor:'#ef5350'};
+    if(sc<65) return{txt:'Em construcao: voce tem potencial, mas ha lacunas importantes',cor:'#ffa726'};
+    if(sc<85) return{txt:'Bom caminho: sua gestao esta se consolidando',cor:'#42a5f5'};
+    return{txt:'Saude financeira solida: voce esta no caminho certo',cor:'#66bb6a'};
+}
+
+function wGaugeSVG(){var r=72,sw=13,cx=100,cy=100,C=2*Math.PI*r,HALF=Math.PI*r,segs=[{pct:0.39,c:'#b85450'},{pct:0.25,c:'#c28a3e'},{pct:0.20,c:'#4d8fa6'},{pct:0.16,c:'#4e9068'}],s='';s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="'+sw+'" stroke-dasharray="'+HALF.toFixed(2)+','+(C-HALF).toFixed(2)+'" stroke-dashoffset="'+(-HALF).toFixed(2)+'" stroke-linecap="butt"/>';var acc=0;segs.forEach(function(seg){var len=(HALF*seg.pct).toFixed(2),off=(-HALF-acc).toFixed(2);s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+seg.c+'" stroke-width="'+sw+'" stroke-dasharray="'+len+','+(C-parseFloat(len)).toFixed(2)+'" stroke-dashoffset="'+off+'" stroke-linecap="butt"/>';acc+=HALF*seg.pct;});[40,65,85].forEach(function(b){var ar=((b/100)*180-180)*Math.PI/180,ri=r-sw/2-1,ro=r+sw/2+1;s+='<line x1="'+(cx+ri*Math.cos(ar)).toFixed(1)+'" y1="'+(cy+ri*Math.sin(ar)).toFixed(1)+'" x2="'+(cx+ro*Math.cos(ar)).toFixed(1)+'" y2="'+(cy+ro*Math.sin(ar)).toFixed(1)+'" stroke="rgba(13,27,42,0.85)" stroke-width="2"/>';});s+='<line id="gauge-needle" x1="'+cx+'" y1="'+cy+'" x2="'+(cx+58)+'" y2="'+cy+'" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-180,'+cx+','+cy+')"/>';s+='<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="rgba(255,255,255,0.1)" stroke="white" stroke-width="1.5"/><circle cx="'+cx+'" cy="'+cy+'" r="2.5" fill="white"/>';return'<svg viewBox="0 0 200 106" style="width:200px;max-width:100%;display:block;" xmlns="http://www.w3.org/2000/svg">'+s+'</svg>';}
+
+function animarGauge(sc){var target=(sc/100*180)-180,start=-180,dur=1000,t0=null;function ease(t){return 1-(1-t)*(1-t)*(1-t);}function tick(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),a=start+(target-start)*ease(p),n=document.getElementById('gauge-needle');if(n)n.setAttribute('transform','rotate('+a.toFixed(2)+',100,100)');if(p<1)requestAnimationFrame(tick);}requestAnimationFrame(function(){requestAnimationFrame(tick);});}
+
+function blkOrcamento(){
+    var r=WD.renda,d=estimarDesp();
+    if(!r||!d) return '';
+    var pct=d/r*100;
+    var tagCls,tagLbl,msg;
+    if(pct>85){tagCls='dtag-alert';tagLbl='Atencao';msg='Suas despesas estimadas representam cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Sobra pouco para reservas e imprevistos.';}
+    else if(pct>65){tagCls='dtag-warn';tagLbl='Oportunidade';msg='Suas despesas consomem cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Ha espaco para otimizacao.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce tem aproximadamente <strong>'+(100-pct).toFixed(0)+'%</strong> da renda disponivel apos as despesas. Direcione esse excedente para reservas e investimentos.';}
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Proporcao do Orcamento</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul><li>Proporcao ideal: 40% essenciais, 20% conforto, 15% lazer, 25% investimentos.</li>'+(d>r?'<li>Suas despesas superam sua renda. Prioridade: reduzir custos imediatamente.</li>':'')+'</ul></div>';
+}
+
+function blkReserva(){
+    var tagCls,tagLbl,msg,recs=[];
+    if(WD.reserva==='gt6m'){tagCls='dtag-ok';tagLbl='Reserva completa';msg='Parabens — voce ja atingiu a meta ideal de reserva (mais de 6 meses de despesas). Direcione o excedente para investimentos de longo prazo.';}
+    else if(WD.reserva==='3-6m'){tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce tem entre 3 e 6 meses de despesas reservados — acima da meta minima. Continue construindo ate atingir 12 meses.';}
+    else if(WD.reserva==='ate3m'){tagCls='dtag-warn';tagLbl='Em construcao';msg='Voce tem menos de 3 meses de reserva. A meta minima e 6 meses. Continue poupando com regularidade.';}
+    else{tagCls='dtag-alert';tagLbl='Atencao';msg='Voce ainda nao tem reserva de emergencia formada. Esta e a primeira prioridade antes de qualquer investimento.';}
+    recs.push('Guarde a reserva em Tesouro Selic ou CDB com liquidez diaria.');
+    recs.push('Meta minima: 6 meses de despesas. Meta ideal: 12 meses.');
+    if(WD.poupanca==='nao') recs.push('Mesmo poupando um valor pequeno todo mes, o habito faz diferenca. Comece com o que for possivel.');
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Reserva de Emergencia</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+}
+
+function blkFormalizacao(){
+    var f=WD.formalizacao,i=WD.inss;
+    var tagCls,tagLbl,msg,recs=[];
+    if(f==='nenhum'){tagCls='dtag-alert';tagLbl='Atencao urgente';msg='Voce ainda nao possui formalizacao. Atuar sem emitir documentos fiscais expoe voce a riscos tributarios.';}
+    else if(f==='cpf'){tagCls='dtag-warn';tagLbl='Regularizar';msg='Voce atua como Pessoa Fisica. O Carne-Leao e obrigatorio. Verifique se esta recolhendo corretamente e usando todas as deducoes permitidas.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce possui CNPJ — uma grande vantagem fiscal. Verifique se o Fator R esta acima de 28% para garantir a menor aliquota (Anexo III, 6%).';}
+    if(i==='nao') recs.push('Voce nao esta contribuindo para o INSS. Sem contribuicao, perde direito a auxilio-doenca, maternidade e aposentadoria.');
+    else if(i==='sim-irreg') recs.push('Regularize suas contribuicoes ao INSS. Periodos sem contribuicao afetam o calculo de beneficios futuros.');
+    if(f==='nenhum'||f==='cpf') recs.push('Simule a migracao para CNPJ: psicologos que faturam acima de R$8.000/mes economizam 30% a 50% em impostos.');
+    else recs.push('Mantenha o pro-labore em 28% do faturamento para garantir o Fator R favoravel no Simples Nacional.');
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Formalizacao e Impostos</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+}
+
+function blkControle(){
+    var pts=0;
+    if(WD.recibos==='sempre'||WD.recibos==='maioria') pts++;
+    if(WD.contaSep==='sim') pts++;
+    if(WD.controle==='planilha'||WD.controle==='software') pts++;
+    var tagCls=pts>=3?'dtag-ok':pts>=2?'dtag-warn':'dtag-alert';
+    var tagLbl=pts>=3?'Bem encaminhado':pts>=2?'Oportunidade':'Atencao';
+    var msg='Seu controle operacional '+(pts>=3?'esta bem estruturado.':pts>=2?'tem pontos positivos, mas ainda ha espaco para melhorar.':'precisa de atencao. Controlar entradas e saidas e a base de toda gestao financeira saudavel.');
+    var recs=[];
+    if(WD.contaSep!=='sim') recs.push('Abra uma conta bancaria exclusiva para a clinica. Banco digital e gratuito e facilita tudo.');
+    if(WD.controle==='nao'||WD.controle==='anotacoes') recs.push('Implemente uma planilha ou app de controle de recebimentos.');
+    if(WD.recibos==='nunca') recs.push('Emita recibo ou nota fiscal para todos os atendimentos — isso protege voce fiscalmente.');
+    if(!recs.length) recs.push('Continue com as boas praticas! Revise seus controles a cada trimestre.');
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Controle da Clinica</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+}
+
+function wGenActions(){
+    var actions=[],d=WD;
+    if(d.formalizacao==='nenhum') actions.push({t:'Regularize sua situacao fiscal',d:'Busque orientacao especializada para entender se CPF ou CNPJ e o melhor caminho para o seu caso.',prazo:'Esta semana'});
+    if(d.reserva==='nao') actions.push({t:'Construa sua reserva de emergencia',d:'Defina um valor mensal para guardar e automatize a transferencia. Comece com o que for possivel.',prazo:'Este mes'});
+    if(d.inss==='nao') actions.push({t:'Regularize sua contribuicao ao INSS',d:'Contribuicao ao INSS garante protecao em caso de doenca, maternidade e aposentadoria.',prazo:'Este mes'});
+    if(d.contaSep!=='sim') actions.push({t:'Abra uma conta exclusiva para a clinica',d:'Separar financas pessoais das profissionais e o passo mais importante para ter clareza financeira.',prazo:'Esta semana'});
+    if(d.controle==='nao') actions.push({t:'Implemente controle de recebimentos',d:'Crie uma planilha simples para registrar todos os pagamentos. Esse controle e a base de qualquer gestao.',prazo:'Esta semana'});
+    if((d.formalizacao==='cpf'||d.formalizacao==='nenhum')&&WD.renda>8000) actions.push({t:'Simule a migracao para CNPJ',d:'Com seu faturamento, a abertura de CNPJ pode representar economia de 30% a 50% em impostos.',prazo:'Proximos 3 meses'});
+    if(!actions.length) actions.push({t:'Mantenha e evolua seus controles',d:'Sua situacao ja esta bem estruturada. Foque em aumentar a reserva e revisar anualmente seu planejamento.',prazo:'Proximos 3 meses'});
+    actions=actions.slice(0,3);
+    var html='<div class="diag-act"><h3>Seus 3 Proximos Passos</h3>';
+    actions.forEach(function(a,i){html+='<div class="diag-act-item"><div class="diag-act-n">0'+(i+1)+'</div><div class="diag-act-c"><strong>'+a.t+'</strong><span>'+a.d+'</span><br><span class="diag-act-tag">'+a.prazo+'</span></div></div>';});
+    html+='</div>';
+    return html;
+}
+
+function renderDiagnostico(){
+    var sc=wCalcScore(),info=wScoreInfo(sc);
+    var parts=info.txt.split(':');
+    var statusHtml=parts.length>1?'<span style="color:#FFC223;font-weight:800;">'+parts[0]+'</span><span style="color:rgba(255,255,255,0.72);">:'+parts.slice(1).join(':')+'</span>':'<span style="color:rgba(255,255,255,0.72);">'+info.txt+'</span>';
+    var legend='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;"><span style="font-size:8px;color:rgba(184,84,80,0.8);font-weight:600;">Critico</span><span style="font-size:8px;color:rgba(194,138,62,0.8);font-weight:600;">Alerta</span><span style="font-size:8px;color:rgba(77,143,166,0.8);font-weight:600;">Bom</span><span style="font-size:8px;color:rgba(78,144,104,0.8);font-weight:600;">Otimo</span></div>';
+    var html='<div class="diag-score"><div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;"><div style="flex:0 0 auto;">'+wGaugeSVG()+'</div><div style="flex:1;min-width:140px;"><div style="font-size:56px;font-weight:800;color:#FFC223;line-height:1;text-shadow:0 0 22px rgba(255,194,35,0.32);">'+sc+'</div><div style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.28);margin:8px 0 12px;text-transform:uppercase;font-weight:600;">pontuacao de saude financeira</div><div style="font-size:12px;font-weight:600;line-height:1.5;">'+statusHtml+'</div>'+legend+'</div></div></div>';
+    html+=blkOrcamento();
+    html+=blkReserva();
+    html+=blkFormalizacao();
+    html+=blkControle();
+    html+=wGenActions();
+    document.getElementById('diag-result-html').innerHTML=html;
+    setTimeout(function(){ animarGauge(sc); }, 450);
+}
+
+function reiniciar(){
+    WD={renda:0,tempo:'',variacao:'',faixaDesp:'',formalizacao:'',inss:'',recibos:'',contaSep:'',controle:'',reserva:''};
+    document.getElementById('wiz-renda').value='';
+    document.getElementById('wiz-tempo').value='';
+    document.querySelectorAll('[name="wform"]').forEach(function(r){r.checked=false;});
+    document.querySelectorAll('.wpill').forEach(function(p){p.classList.remove('wpill-on');delete p.dataset.val;});
+    document.getElementById('diag-result-html').innerHTML='';
+    document.getElementById('err-renda').style.display='none';
+    document.getElementById('err-faixa').style.display='none';
+    goBack('scene-resultado','scene-renda',2);
+}
+</script>
+</body>
+</html>

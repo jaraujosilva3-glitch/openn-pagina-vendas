@@ -1689,7 +1689,10 @@
             50%       { box-shadow: 0 0 0 6px rgba(213,171,57,0); border-color: var(--gold); }
         }
         .nav-sim-btn { animation: nav-pulse 2s ease-in-out infinite; }
-        @media (max-width: 480px) { .nav-sim-btn svg { display: none; } }
+        @media (max-width: 480px) {
+            .nav-sim-btn svg { display: none; }
+            .nav-sim-btn { font-size: 0.6rem; padding: 0.45rem 0.75rem; letter-spacing: 0.08em; }
+        }
         .nav-logo-wrap {
             display: inline-flex;
             flex-direction: column;
@@ -2093,10 +2096,16 @@
                 </div>
             </a>
         </div>
-        <a href="simulacao.html" class="nav-sim-btn">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M13 3h8m0 0v8m0-8l-11 11"/></svg>
-            PF ou CNPJ?
-        </a>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+            <a href="diagnostico.html" class="nav-sim-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                Teste financeiro
+            </a>
+            <a href="simulacao.html" class="nav-sim-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M13 3h8m0 0v8m0-8l-11 11"/></svg>
+                PF ou CNPJ?
+            </a>
+        </div>
     </div>
 </nav>
 
@@ -2169,7 +2178,7 @@
             <div class="diag-left">
                 <div class="diag-badge">
                     <span class="diag-dot"></span>
-                    Gratuito por tempo limitado
+                    2 minutos para conhecer sua saude financeira
                 </div>
                 <h3>Diagnóstico financeiro <em>gratuito</em><br>para psicólogos</h3>
                 <p>Responda 5 minutos de perguntas e receba um PDF com seu diagnóstico financeiro completo + próximos passos personalizados.</p>
