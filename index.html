@@ -1820,120 +1820,6 @@
         }
 
         /* ─────────────────────────────────────
-           DIAGNÓSTICO GRATUITO
-        ───────────────────────────────────── */
-        #diagnostico {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
-            border-top: 3px solid var(--gold);
-            border-bottom: 3px solid var(--gold);
-            padding: 2.5rem 0;
-        }
-        .diag-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .diag-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(213,171,57,0.15);
-            border: 1px solid rgba(213,171,57,0.35);
-            color: var(--gold);
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            padding: 0.35rem 0.9rem;
-            border-radius: var(--radius-pill);
-            margin-bottom: 0.75rem;
-        }
-        .diag-badge .diag-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s infinite; }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .diag-left { flex: 1; min-width: 260px; }
-        .diag-left h3 {
-            font-size: clamp(1rem, 2.5vw, 1.35rem);
-            font-weight: 700;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            line-height: 1.3;
-            margin-bottom: 0.5rem;
-        }
-        .diag-left h3 em { color: var(--gold); font-style: normal; }
-        .diag-left p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.72);
-            font-weight: 300;
-            line-height: 1.6;
-            margin: 0;
-        }
-        .diag-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
-            flex-shrink: 0;
-        }
-        .diag-timer-label {
-            font-size: 0.58rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-        }
-        .diag-timer {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: 0.05em;
-            font-variant-numeric: tabular-nums;
-            line-height: 1;
-        }
-        .diag-timer-sub {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-        }
-        .diag-right { flex-shrink: 0; text-align: center; }
-        .btn-diag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: var(--gold);
-            color: var(--dark);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.82rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 1rem 2rem;
-            border-radius: var(--radius-pill);
-            transition: all 0.22s ease;
-            white-space: nowrap;
-        }
-        .btn-diag:hover { background: rgb(228,183,55); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(213,171,57,0.4); }
-        .diag-right small {
-            display: block;
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.4);
-            margin-top: 0.5rem;
-            letter-spacing: 0.04em;
-        }
-        #diagnostico.expirado { display: none; }
-
-        @media (max-width: 768px) {
-            .diag-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-            .diag-center { align-items: flex-start; }
-            .diag-right { width: 100%; }
-            .btn-diag { width: 100%; justify-content: center; }
-        }
-
-        /* ─────────────────────────────────────
            UTILITIES
         ───────────────────────────────────── */
         .tc  { text-align: center; }
@@ -2168,39 +2054,6 @@
     </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     DIAGNÓSTICO FINANCEIRO GRATUITO
-══════════════════════════════════════ -->
-<section id="diagnostico">
-    <div class="container-wide">
-        <div class="diag-inner">
-
-            <div class="diag-left">
-                <div class="diag-badge">
-                    <span class="diag-dot"></span>
-                    2 minutos para conhecer sua saude financeira
-                </div>
-                <h3>Diagnóstico financeiro <em>gratuito</em><br>para psicólogos</h3>
-                <p>Responda 5 minutos de perguntas e receba um PDF com seu diagnóstico financeiro completo + próximos passos personalizados.</p>
-            </div>
-
-            <div class="diag-center">
-                <span class="diag-timer-label">Esta oferta expira em</span>
-                <span class="diag-timer" id="diag-countdown">24:00:00</span>
-                <span class="diag-timer-sub">horas · minutos · segundos</span>
-            </div>
-
-            <div class="diag-right">
-                <a href="https://openndhub.com/" target="_blank" class="btn-diag">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
-                    QUERO MEU DIAGNÓSTICO
-                </a>
-                <small>Sem compromisso · 100% gratuito</small>
-            </div>
-
-        </div>
-    </div>
-</section>
 
 <!-- ══════════════════════════════════════
      SEÇÃO 2 — PROBLEMA
@@ -2738,39 +2591,6 @@
         tick(); setInterval(tick, 1000);
     }
 
-    // ── DIAGNÓSTICO COUNTDOWN (24h por visitante) ──
-    (function() {
-        const KEY = 'openn_diag_start';
-        const LIMIT = 24 * 60 * 60 * 1000; // 24h em ms
-        const el = document.getElementById('diag-countdown');
-        const sec = document.getElementById('diagnostico');
-        if (!el || !sec) return;
-
-        let start = localStorage.getItem(KEY);
-        if (!start) {
-            start = Date.now();
-            localStorage.setItem(KEY, start);
-        } else {
-            start = parseInt(start);
-        }
-
-        function tickDiag() {
-            const remaining = LIMIT - (Date.now() - start);
-            if (remaining <= 0) {
-                sec.classList.add('expirado');
-                return;
-            }
-            const h = Math.floor(remaining / 36e5);
-            const m = Math.floor((remaining % 36e5) / 6e4);
-            const s = Math.floor((remaining % 6e4) / 1e3);
-            el.textContent =
-                String(h).padStart(2,'0') + ':' +
-                String(m).padStart(2,'0') + ':' +
-                String(s).padStart(2,'0');
-        }
-        tickDiag();
-        setInterval(tickDiag, 1000);
-    })();
 
     // ── COOKIE BANNER ──
     const banner = document.getElementById('cookie');
