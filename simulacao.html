@@ -147,7 +147,6 @@
             position: relative;
             z-index: 1;
         }
-        #resultado.visible { display: block; }
 
         .resultado-grid {
             display: grid;
@@ -535,6 +534,156 @@
         }
         .btn-primary:hover { background: rgb(228,183,55); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
 
+        .carga-pct {
+            font-size: 0.62rem;
+            color: rgba(64,64,64,0.38);
+            font-weight: 400;
+            text-align: right;
+            padding: 0.18rem 0 0.45rem;
+            letter-spacing: 0.03em;
+        }
+        .result-card.pj .carga-pct { color: rgba(64,64,64,0.38); }
+
+        /* ── STEP INDICATOR ── */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--dark);
+            border-bottom: 1px solid rgba(213,171,57,0.08);
+            position: sticky;
+            top: 56px;
+            z-index: 100;
+        }
+        .step-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+        .step-dot {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            border: 1.5px solid rgba(255,255,255,0.14);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.6rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease;
+        }
+        .step-dot.active  { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+        .step-dot.done    { background: rgba(213,171,57,0.18); border-color: rgba(213,171,57,0.45); color: var(--gold); cursor: pointer; }
+        .step-dot.done:hover { background: rgba(213,171,57,0.32); }
+        .step-label {
+            font-size: 0.52rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: rgba(255,255,255,0.2);
+            transition: color 0.4s ease; white-space: nowrap;
+        }
+        .step-item:has(.active)  .step-label { color: var(--gold); }
+        .step-item:has(.done)    .step-label { color: rgba(213,171,57,0.55); }
+        .step-line {
+            width: 40px; height: 1.5px;
+            background: rgba(255,255,255,0.08);
+            margin-bottom: 16px;
+            transition: background 0.4s ease;
+        }
+        .step-line.done { background: rgba(213,171,57,0.4); }
+
+        /* ── SCENE TRANSITIONS ── */
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(32px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutLeft {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(-32px); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-32px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(32px); }
+        }
+        .scene-enter      { animation: slideInRight  0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-exit       { animation: slideOutLeft  0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-enter-back { animation: slideInLeft   0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .scene-exit-back  { animation: slideOutRight 0.42s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+        .btn-back {
+            background: none;
+            border: none;
+            color: rgba(64,64,64,0.42);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0;
+            margin-bottom: 1rem;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--petrol); }
+
+        /* ── ALERTA ISENCAO ── */
+        .isencao-alert {
+            background: rgba(213,171,57,0.06);
+            border: 1px solid rgba(213,171,57,0.3);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--radius-sm);
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .isencao-alert svg { flex-shrink: 0; margin-top: 0.1rem; }
+        .isencao-alert-body { font-size: 0.82rem; color: var(--gray); line-height: 1.7; }
+        .isencao-alert-body strong { color: var(--petrol); font-weight: 700; }
+
+        /* ── ALTA RENDA ALERT ── */
+        .alta-renda-card {
+            background: linear-gradient(135deg, var(--petrol) 0%, #014a69 100%);
+            border-radius: var(--radius);
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            box-shadow: var(--shadow-dark);
+        }
+        .alta-renda-icon {
+            font-size: 2rem;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .alta-renda-card h3 {
+            color: var(--gold);
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            text-transform: none;
+            letter-spacing: 0;
+            margin-bottom: 0.5rem;
+        }
+        .alta-renda-card p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.83rem;
+            line-height: 1.7;
+            margin-bottom: 1.1rem;
+        }
+        .alta-renda-card .btn-primary {
+            width: auto;
+            font-size: 0.75rem;
+            padding: 0.75rem 1.5rem;
+        }
+        .alta-renda-aviso {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
         .disclaimer {
             font-size: 0.60rem;
             color: rgba(64,64,64,0.32);
@@ -590,9 +739,27 @@
         <div class="section-label">Simulação gratuita</div>
         <h1>Você realmente precisa abrir um CNPJ?</h1>
         <div class="gold-line"></div>
-        <p>Preencha seu faturamento e despesas. Em segundos, você descobre se vale a pena — e quanto pode economizar.</p>
+        <p>Coloque seus números e descubra, em segundos, se o CNPJ faz sentido para o seu consultório.</p>
     </div>
 </section>
+
+<!-- STEP INDICATOR -->
+<div class="step-indicator">
+    <div class="step-item">
+        <div class="step-dot active" id="dot-1" onclick="dotClick(1)">1</div>
+        <span class="step-label">Seus dados</span>
+    </div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step-item">
+        <div class="step-dot" id="dot-2" onclick="dotClick(2)">2</div>
+        <span class="step-label">Faturamento</span>
+    </div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step-item">
+        <div class="step-dot" id="dot-3" onclick="dotClick(3)">3</div>
+        <span class="step-label">Resultado</span>
+    </div>
+</div>
 
 <!-- LEAD GATE -->
 <section id="lead-gate">
@@ -651,6 +818,7 @@
 <!-- FORM -->
 <section id="simulacao" style="display:none;">
     <div class="container">
+        <button class="btn-back" onclick="goBack('simulacao', 'lead-gate', 1)">← Voltar</button>
         <div class="form-wrap">
             <div class="form-card">
 
@@ -730,9 +898,38 @@
 <!-- RESULTADO -->
 <section id="resultado">
     <div class="container">
+        <button class="btn-back" onclick="goBack('resultado', 'simulacao', 2)">← Voltar</button>
         <div class="resultado-title">
             <h2>Seu demonstrativo tributário</h2>
             <div class="gold-line"></div>
+        </div>
+
+        <!-- ALERTA ISENCAO -->
+        <div id="isencao-alert" class="isencao-alert" style="display:none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(213,171,57)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div class="isencao-alert-body">
+                <strong>Isento de imposto não significa isento de emitir documentos.</strong>
+                Mesmo sem pagar IRPF, você ainda precisa emitir recibos ou notas fiscais para cada atendimento. Seus pacientes utilizam esses documentos para deduzir as consultas no IRPF deles, e você é obrigada a fornecê-los.
+            </div>
+        </div>
+
+        <!-- AVISO ALTA RENDA -->
+        <div id="alta-renda-alert" class="alta-renda-card" style="display:none;">
+            <div class="alta-renda-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgb(213,171,57)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            </div>
+            <div>
+                <h3>Para faturamentos acima de R$ 35.000, a análise precisa ser personalizada</h3>
+                <p>Nesse nível de renda, o enquadramento tributário ideal vai além da comparação PF x PJ. Fatores como tipo de atendimento, convênios, regime de lucro e planejamento de longo prazo fazem toda a diferença. A Openn pode identificar o caminho mais vantajoso para o seu caso específico.</p>
+                <a href="https://wa.me/5562996550808?text=Ol%C3%A1!%20Gostaria%20de%20uma%20consulta%20especializada%20sobre%20enquadramento%20tribut%C3%A1rio" target="_blank" class="btn-primary">Falar com um especialista</a>
+                <p class="alta-renda-aviso">Os valores abaixo são uma estimativa. Para sua faixa de renda, recomendamos uma análise completa.</p>
+            </div>
         </div>
 
         <div class="resultado-grid">
@@ -747,6 +944,7 @@
                 <div class="rline"><span class="rl">Base de cálculo IRPF</span><span class="rv" id="pf-base">—</span></div>
                 <div class="rline"><span class="rl">IRPF (tabela progressiva)</span><span class="rv" id="pf-irpf">—</span></div>
                 <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pf-total">—</span></div>
+                <div class="carga-pct" id="pf-carga"></div>
                 <div class="result-net">
                     <span class="rn-label">Renda líquida</span>
                     <span class="rn-value" id="pf-liquido">—</span>
@@ -762,10 +960,12 @@
                 <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pj-fat">—</span></div>
                 <div class="rline"><span class="rl" id="pj-das-label">DAS Simples Nacional</span><span class="rv neg" id="pj-das">—</span></div>
                 <div class="rline"><span class="rl" id="pj-prolabore-label">Pro-labore (28% da receita)</span><span class="rv" id="pj-prolabore">—</span></div>
+                <div class="rline indent"><span class="rl">INSS sobre pro-labore</span><span class="rv neg" id="pj-inss">—</span></div>
                 <div class="rline indent"><span class="rl">IRRF sobre pro-labore</span><span class="rv" id="pj-irrf">—</span></div>
                 <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pj-total">—</span></div>
+                <div class="carga-pct" id="pj-carga"></div>
                 <div class="result-net">
-                    <span class="rn-label">Renda disponível</span>
+                    <span class="rn-label">Renda líquida</span>
                     <span class="rn-value" id="pj-liquido">—</span>
                 </div>
             </div>
@@ -787,13 +987,13 @@
                 <p>Esta é uma estimativa. Para um plano personalizado e garantido, fale com a Openn.</p>
                 <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
-                    Quero economizar assim
+                    Quero economizar agora
                 </a>
             </div>
         </div><!-- /resultado-extras -->
 
         <p class="disclaimer">
-            Cálculo baseado na tabela IRPF 2024, INSS 2024/2025 e Simples Nacional Anexo III vigente.<br>
+            Cálculo baseado na tabela IRPF vigente, INSS 2025 e Simples Nacional Anexo III vigente.<br>
             Fator R simulado a 28% (pro-labore mínimo). Os valores são estimativas — não substituem consultoria personalizada.
         </p>
     </div>
@@ -958,18 +1158,13 @@ function enviarLead() {
 
     new Image().src = url;
 
-    setTimeout(() => {
-        document.getElementById('lead-gate').style.display = 'none';
-        const sim = document.getElementById('simulacao');
-        sim.style.display = 'block';
-        sim.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 800);
+    setTimeout(() => goToScene('lead-gate', 'simulacao', 2), 800);
 }
 
 /* CALCULATION */
 (function(){
 
-    /* Tabela IRPF mensal 2024 */
+    /* Tabela IRPF mensal */
     const IRPF = [
         { ate: 2259.20, aliq: 0,     ded: 0      },
         { ate: 2826.65, aliq: 0.075, ded: 169.44 },
@@ -988,7 +1183,25 @@ function enviarLead() {
         { ate: Infinity, nom: 0.330, ded: 648000  }
     ];
 
-    const INSS_TETO = 7786.02;
+    /* Tabela INSS progressiva 2024/2025 */
+    const INSS_FAIXAS = [
+        { ate: 1621.00, aliq: 0.075 },
+        { ate: 2902.84, aliq: 0.09  },
+        { ate: 4354.27, aliq: 0.12  },
+        { ate: 8475.55, aliq: 0.14  }
+    ];
+
+    function calcINSS(base) {
+        if (base <= 0) return 0;
+        const sal = Math.min(base, 8475.55);
+        let inss = 0, ant = 0;
+        for (const f of INSS_FAIXAS) {
+            if (sal <= ant) break;
+            inss += (Math.min(sal, f.ate) - ant) * f.aliq;
+            ant = f.ate;
+        }
+        return inss;
+    }
 
     function calcIRPF(base){
         if(base <= 0) return 0;
@@ -1022,7 +1235,7 @@ function enviarLead() {
 
         /* PF */
         const basePF  = Math.max(0, fat - ded);
-        const irpf    = calcIRPF(basePF);
+        const irpf    = fat <= 5000 ? 0 : calcIRPF(basePF);
         const totalPF = irpf;
         const liqPF   = fat - totalPF;
 
@@ -1031,9 +1244,10 @@ function enviarLead() {
         const sim       = calcSimples(rbt12);
         const das       = fat * sim.ef;
         const proLabore = fat * 0.28;
-        const baseIRRF  = Math.max(0, proLabore);
-        const irrf      = calcIRPF(baseIRRF);
-        const totalPJ   = das + irrf;
+        const baseIRRF      = Math.max(0, proLabore);
+        const irrf          = (proLabore <= 5000 || fat <= 5000) ? 0 : calcIRPF(baseIRRF);
+        const inssProLabore = calcINSS(proLabore);
+        const totalPJ       = das + irrf + inssProLabore;
         const liqPJ     = fat - totalPJ;
 
         /* Savings */
@@ -1048,20 +1262,24 @@ function enviarLead() {
             return;
         }
 
+        /* Aviso isenção */
+        document.getElementById('isencao-alert').style.display = fat <= 5000 ? 'flex' : 'none';
+
+        /* Aviso alta renda */
+        document.getElementById('alta-renda-alert').style.display = fat > 35000 ? 'flex' : 'none';
+
         /* Mostrar seção resultado */
-        const secao = document.getElementById('resultado');
-        secao.classList.add('visible');
-        setTimeout(() => secao.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+        goToScene('simulacao', 'resultado', 3);
 
         /* Fill PF */
         document.getElementById('pf-fat').textContent      = fmt(fat);
-        document.getElementById('pf-inss').textContent     = fmtN(inssPF);
         document.getElementById('pf-deducoes').textContent = fmtN(ded);
         document.getElementById('pf-deducoes').className   = ded > 0 ? 'rv neg' : 'rv';
         document.getElementById('pf-base').textContent     = fmt(basePF);
         document.getElementById('pf-irpf').textContent     = irpf > 0 ? fmtN(irpf) : 'Isento';
         document.getElementById('pf-irpf').className       = 'rv' + (irpf > 0 ? ' neg' : ' isento');
         document.getElementById('pf-total').textContent    = fmt(totalPF);
+        document.getElementById('pf-carga').textContent    = 'carga tributária: ' + (totalPF/fat*100).toFixed(1) + '% do faturamento';
         document.getElementById('pf-liquido').textContent  = fmt(liqPF);
 
         /* Fill PJ */
@@ -1070,9 +1288,11 @@ function enviarLead() {
         document.getElementById('pj-das').textContent             = fmtN(das);
         document.getElementById('pj-prolabore-label').textContent = 'Pro-labore (28%)';
         document.getElementById('pj-prolabore').textContent       = fmt(proLabore);
+        document.getElementById('pj-inss').textContent            = fmtN(inssProLabore);
         document.getElementById('pj-irrf').textContent            = irrf > 0 ? fmtN(irrf) : 'Isento';
         document.getElementById('pj-irrf').className              = 'rv' + (irrf > 0 ? ' neg' : ' isento');
         document.getElementById('pj-total').textContent           = fmt(totalPJ);
+        document.getElementById('pj-carga').textContent           = 'carga tributária: ' + (totalPJ/fat*100).toFixed(1) + '% do faturamento';
         document.getElementById('pj-liquido').textContent         = fmt(liqPJ);
 
         /* Fill savings */
@@ -1107,6 +1327,70 @@ function enviarLead() {
     window.calcular = calcular;
 
 })();
+
+/* ── SCENE TRANSITIONS ── */
+let currentScene = 1;
+const sceneMap = ['', 'lead-gate', 'simulacao', 'resultado'];
+
+function updateSteps(n) {
+    currentScene = n;
+    for (let i = 1; i <= 3; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.toggle('active', i === n);
+        dot.classList.toggle('done', i < n);
+    }
+    for (let i = 1; i <= 2; i++) {
+        document.getElementById('line-' + i).classList.toggle('done', i < n);
+    }
+}
+
+function dotClick(n) {
+    const dot = document.getElementById('dot-' + n);
+    if (!dot.classList.contains('done')) return;
+    if (n === currentScene) return;
+    const fromId = sceneMap[currentScene];
+    const toId   = sceneMap[n];
+    if (n < currentScene) {
+        goBack(fromId, toId, n);
+    } else {
+        goToScene(fromId, toId, n);
+    }
+}
+
+function goToScene(fromId, toId, stepNum) {
+    const from = document.getElementById(fromId);
+    const to   = document.getElementById(toId);
+
+    from.classList.add('scene-exit');
+    setTimeout(() => {
+        from.style.display = 'none';
+        from.classList.remove('scene-exit');
+        to.style.display = 'block';
+        to.classList.add('scene-enter');
+        setTimeout(() => to.classList.remove('scene-enter'), 500);
+        updateSteps(stepNum);
+        window.scrollTo({ top: document.querySelector('.step-indicator').offsetTop - 56, behavior: 'smooth' });
+    }, 380);
+}
+
+window.goToScene = goToScene;
+
+function goBack(fromId, toId, stepNum) {
+    const from = document.getElementById(fromId);
+    const to   = document.getElementById(toId);
+
+    from.classList.add('scene-exit-back');
+    setTimeout(() => {
+        from.style.display = 'none';
+        from.classList.remove('scene-exit-back');
+        to.style.display = 'block';
+        to.classList.add('scene-enter-back');
+        setTimeout(() => to.classList.remove('scene-enter-back'), 500);
+        updateSteps(stepNum);
+        window.scrollTo({ top: document.querySelector('.step-indicator').offsetTop - 56, behavior: 'smooth' });
+    }, 380);
+}
+window.goBack = goBack;
 </script>
 </body>
 </html>
