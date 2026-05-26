@@ -1665,6 +1665,31 @@
             justify-content: space-between;
             gap: 1rem;
         }
+        .nav-sim-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: transparent;
+            color: var(--gold);
+            border: 1.5px solid rgba(213,171,57,0.4);
+            border-radius: var(--radius-pill);
+            padding: 0.45rem 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .nav-sim-btn:hover { background: rgba(213,171,57,0.1); border-color: var(--gold); }
+        @keyframes nav-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(213,171,57,0.5); border-color: rgba(213,171,57,0.4); }
+            50%       { box-shadow: 0 0 0 6px rgba(213,171,57,0); border-color: var(--gold); }
+        }
+        .nav-sim-btn { animation: nav-pulse 2s ease-in-out infinite; }
+        @media (max-width: 480px) { .nav-sim-btn svg { display: none; } }
         .nav-logo-wrap {
             display: inline-flex;
             flex-direction: column;
@@ -2025,6 +2050,10 @@
                 </div>
             </a>
         </div>
+        <a href="simulacao.html" class="nav-sim-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M13 3h8m0 0v8m0-8l-11 11"/></svg>
+            Descubra se você precisa ser PJ
+        </a>
     </div>
 </nav>
 

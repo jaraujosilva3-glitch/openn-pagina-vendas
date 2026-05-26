@@ -611,7 +611,17 @@
                         <span class="input-prefix">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         </span>
-                        <input type="text" id="lead-nome" placeholder="Como você se chama?" autocomplete="given-name">
+                        <input type="text" id="lead-nome" placeholder="Nome e sobrenome" autocomplete="name">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>E-mail</label>
+                    <div class="input-money">
+                        <span class="input-prefix">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+                        </span>
+                        <input type="email" id="lead-email" placeholder="seu@email.com" autocomplete="email">
                     </div>
                 </div>
 
@@ -621,7 +631,7 @@
                         <span class="input-prefix">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l1.45-1.45a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92v3z"/></svg>
                         </span>
-                        <input type="tel" id="lead-telefone" placeholder="(00) 00000-0000" autocomplete="tel">
+                        <input type="tel" id="lead-telefone" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="15" oninput="mascaraTel(this)">
                     </div>
                 </div>
 
@@ -733,7 +743,6 @@
                     <span class="regime-tag regime-pf">Carnê-Leão</span>
                 </div>
                 <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pf-fat">—</span></div>
-                <div class="rline"><span class="rl">INSS (contrib. individual, 20%)</span><span class="rv neg" id="pf-inss">—</span></div>
                 <div class="rline"><span class="rl">Despesas dedutíveis</span><span class="rv neg" id="pf-deducoes">—</span></div>
                 <div class="rline"><span class="rl">Base de cálculo IRPF</span><span class="rv" id="pf-base">—</span></div>
                 <div class="rline"><span class="rl">IRPF (tabela progressiva)</span><span class="rv" id="pf-irpf">—</span></div>
@@ -752,7 +761,7 @@
                 </div>
                 <div class="rline"><span class="rl">Faturamento bruto</span><span class="rv" id="pj-fat">—</span></div>
                 <div class="rline"><span class="rl" id="pj-das-label">DAS Simples Nacional</span><span class="rv neg" id="pj-das">—</span></div>
-                <div class="rline indent"><span class="rl">INSS sobre pro-labore (28% × 11%)</span><span class="rv neg" id="pj-inss">—</span></div>
+                <div class="rline"><span class="rl" id="pj-prolabore-label">Pro-labore (28% da receita)</span><span class="rv" id="pj-prolabore">—</span></div>
                 <div class="rline indent"><span class="rl">IRRF sobre pro-labore</span><span class="rv" id="pj-irrf">—</span></div>
                 <div class="rline subtotal"><span class="rl">Total de impostos</span><span class="rv" id="pj-total">—</span></div>
                 <div class="result-net">
@@ -764,13 +773,12 @@
 
         <div class="resultado-extras">
             <!-- SAVINGS -->
-            <div class="savings-card">
-                <div class="savings-label">Economia estimada por mês</div>
+            <div class="savings-card" id="savings-card">
+                <div class="savings-label" id="savings-label">Comparativo tributário</div>
                 <div class="savings-value" id="savings-monthly">—</div>
-                <div class="savings-period">no bolso a mais todo mês</div>
+                <div class="savings-period" id="savings-period">—</div>
                 <div class="savings-annual">
-                    Isso representa <strong id="savings-annual">—</strong> a mais por ano<br>
-                    e uma redução de <strong id="savings-pct">—</strong> na carga tributária
+                    <span id="savings-annual-text">—</span>
                 </div>
             </div>
 
@@ -876,17 +884,64 @@
 ──────────────────────────────────────────────────────────── */
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz8RnNxgRTxbDE6VWjpGdOcCvx-d6cwx8pVAEtoJtuioRN6ggV2lESWlRndrPg76xdr/exec';
 
+function mascaraTel(el) {
+    let v = el.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 10) {
+        v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+        v = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    el.value = v;
+}
+
+function telValido(tel) {
+    const digits = tel.replace(/\D/g, '');
+    return digits.length === 10 || digits.length === 11;
+}
+
+function marcarErro(id, msg) {
+    const el = document.getElementById(id);
+    el.style.borderColor = '#c0392b';
+    let err = el.parentElement.parentElement.querySelector('.field-error');
+    if (!err) {
+        err = document.createElement('span');
+        err.className = 'field-error';
+        err.style.cssText = 'font-size:0.65rem;color:#c0392b;margin-top:0.3rem;display:block;';
+        el.parentElement.parentElement.appendChild(err);
+    }
+    err.textContent = msg;
+    el.focus();
+}
+
+function limparErro(id) {
+    const el = document.getElementById(id);
+    el.style.borderColor = '';
+    const err = el.parentElement.parentElement.querySelector('.field-error');
+    if (err) err.remove();
+}
+
 function enviarLead() {
     const nome     = document.getElementById('lead-nome').value.trim();
     const telefone = document.getElementById('lead-telefone').value.trim();
     const btn      = document.getElementById('btn-lead');
 
-    if (!nome) {
-        document.getElementById('lead-nome').focus();
+    const email    = document.getElementById('lead-email').value.trim();
+
+    limparErro('lead-nome');
+    limparErro('lead-email');
+    limparErro('lead-telefone');
+
+    const nomePartes = nome.split(/\s+/).filter(p => p.length > 1);
+    if (!nome || nomePartes.length < 2) {
+        marcarErro('lead-nome', 'Informe seu nome e sobrenome.');
         return;
     }
-    if (!telefone) {
-        document.getElementById('lead-telefone').focus();
+    if (!email || !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        marcarErro('lead-email', 'Informe um e-mail válido. Ex: nome@email.com');
+        return;
+    }
+    if (!telefone || !telValido(telefone)) {
+        marcarErro('lead-telefone', 'Informe um WhatsApp válido com DDD. Ex: (62) 99999-9999');
         return;
     }
 
@@ -897,6 +952,7 @@ function enviarLead() {
 
     const url = SHEETS_URL
         + '?nome='    + encodeURIComponent(nome)
+        + '&email='   + encodeURIComponent(email)
         + '&telefone='+ encodeURIComponent(telefone)
         + '&origem='  + encodeURIComponent('Simulação PF vs PJ');
 
@@ -965,10 +1021,9 @@ function enviarLead() {
         const ded = v('deducoes');
 
         /* PF */
-        const inssPF = Math.min(fat * 0.20, INSS_TETO * 0.20);
-        const basePF  = Math.max(0, fat - inssPF - ded);
+        const basePF  = Math.max(0, fat - ded);
         const irpf    = calcIRPF(basePF);
-        const totalPF = inssPF + irpf;
+        const totalPF = irpf;
         const liqPF   = fat - totalPF;
 
         /* PJ */
@@ -976,10 +1031,9 @@ function enviarLead() {
         const sim       = calcSimples(rbt12);
         const das       = fat * sim.ef;
         const proLabore = fat * 0.28;
-        const inssProL  = Math.min(proLabore * 0.11, INSS_TETO * 0.11);
-        const baseIRRF  = Math.max(0, proLabore - inssProL);
+        const baseIRRF  = Math.max(0, proLabore);
         const irrf      = calcIRPF(baseIRRF);
-        const totalPJ   = das + inssProL + irrf;
+        const totalPJ   = das + irrf;
         const liqPJ     = fat - totalPJ;
 
         /* Savings */
@@ -1002,7 +1056,8 @@ function enviarLead() {
         /* Fill PF */
         document.getElementById('pf-fat').textContent      = fmt(fat);
         document.getElementById('pf-inss').textContent     = fmtN(inssPF);
-        document.getElementById('pf-deducoes').textContent = ded > 0 ? fmtN(ded) : 'R$ 0,00';
+        document.getElementById('pf-deducoes').textContent = fmtN(ded);
+        document.getElementById('pf-deducoes').className   = ded > 0 ? 'rv neg' : 'rv';
         document.getElementById('pf-base').textContent     = fmt(basePF);
         document.getElementById('pf-irpf').textContent     = irpf > 0 ? fmtN(irpf) : 'Isento';
         document.getElementById('pf-irpf').className       = 'rv' + (irpf > 0 ? ' neg' : ' isento');
@@ -1010,20 +1065,43 @@ function enviarLead() {
         document.getElementById('pf-liquido').textContent  = fmt(liqPF);
 
         /* Fill PJ */
-        document.getElementById('pj-fat').textContent     = fmt(fat);
-        document.getElementById('pj-das-label').textContent = 'DAS Simples Nacional ('+sim.pct+')';
-        document.getElementById('pj-das').textContent     = fmtN(das);
-        document.getElementById('pj-pl-label').textContent = 'INSS sobre pro-labore (28% × 11%)';
-        document.getElementById('pj-inss').textContent    = fmtN(inssProL);
-        document.getElementById('pj-irrf').textContent    = irrf > 0 ? fmtN(irrf) : 'Isento';
-        document.getElementById('pj-irrf').className      = 'rv' + (irrf > 0 ? ' neg' : ' isento');
-        document.getElementById('pj-total').textContent   = fmt(totalPJ);
-        document.getElementById('pj-liquido').textContent = fmt(liqPJ);
+        document.getElementById('pj-fat').textContent            = fmt(fat);
+        document.getElementById('pj-das-label').textContent       = 'DAS Simples Nacional ('+sim.pct+')';
+        document.getElementById('pj-das').textContent             = fmtN(das);
+        document.getElementById('pj-prolabore-label').textContent = 'Pro-labore (28%)';
+        document.getElementById('pj-prolabore').textContent       = fmt(proLabore);
+        document.getElementById('pj-irrf').textContent            = irrf > 0 ? fmtN(irrf) : 'Isento';
+        document.getElementById('pj-irrf').className              = 'rv' + (irrf > 0 ? ' neg' : ' isento');
+        document.getElementById('pj-total').textContent           = fmt(totalPJ);
+        document.getElementById('pj-liquido').textContent         = fmt(liqPJ);
 
         /* Fill savings */
-        document.getElementById('savings-monthly').textContent = eco > 0 ? fmt(eco)       : fmt(0);
-        document.getElementById('savings-annual').textContent  = eco > 0 ? fmt(eco * 12)  : fmt(0);
-        document.getElementById('savings-pct').textContent     = eco > 0 ? pct(ecoPct)    : '0%';
+        const card = document.getElementById('savings-card');
+        if (eco > 0) {
+            card.style.background = 'linear-gradient(135deg, var(--petrol) 0%, #014a69 100%)';
+            document.getElementById('savings-label').textContent   = 'Economia estimada por mês';
+            document.getElementById('savings-monthly').textContent = fmt(eco);
+            document.getElementById('savings-period').textContent  = 'no bolso a mais todo mês sendo PJ';
+            document.getElementById('savings-annual-text').innerHTML =
+                'Isso representa <strong style="color:var(--gold)">' + fmt(eco * 12) + '</strong> a mais por ano<br>' +
+                'e uma redução de <strong style="color:var(--gold)">' + pct(ecoPct) + '</strong> na carga tributária';
+        } else if (eco < 0) {
+            card.style.background = 'linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%)';
+            document.getElementById('savings-label').textContent   = 'Comparativo tributário';
+            document.getElementById('savings-monthly').textContent = fmt(Math.abs(eco));
+            document.getElementById('savings-period').textContent  = 'de diferença — PF é mais vantajoso neste cenário';
+            document.getElementById('savings-annual-text').innerHTML =
+                'Neste caso, permanecer como PF pode ser mais adequado.<br>' +
+                '<strong style="color:var(--gold)">Fale com a Openn</strong> para uma análise personalizada.';
+        } else {
+            card.style.background = 'linear-gradient(135deg, var(--petrol) 0%, #014a69 100%)';
+            document.getElementById('savings-label').textContent   = 'Comparativo tributário';
+            document.getElementById('savings-monthly').textContent = 'Equivalente';
+            document.getElementById('savings-period').textContent  = 'a carga tributária é similar nos dois regimes';
+            document.getElementById('savings-annual-text').innerHTML =
+                'Outros fatores como <strong style="color:var(--gold)">benefícios previdenciários</strong> e<br>' +
+                'planejamento financeiro devem ser considerados.';
+        }
     }
 
     window.calcular = calcular;
