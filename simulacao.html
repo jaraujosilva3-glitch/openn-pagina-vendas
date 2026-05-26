@@ -1157,6 +1157,8 @@
    6. Copie a URL gerada e cole abaixo em SHEETS_URL
 ──────────────────────────────────────────────────────────── */
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz8RnNxgRTxbDE6VWjpGdOcCvx-d6cwx8pVAEtoJtuioRN6ggV2lESWlRndrPg76xdr/exec';
+let leadCapturado = { nome: '', email: '', telefone: '' };
+let simulacaoEnviada = false;
 
 function mascaraTel(el) {
     let v = el.value.replace(/\D/g, '').slice(0, 11);
@@ -1222,15 +1224,7 @@ function enviarLead() {
     btn.classList.add('loading');
     btn.textContent = 'Aguarde...';
 
-    const payload = { nome, telefone, origem: 'Simulação PF vs PJ' };
-
-    const url = SHEETS_URL
-        + '?nome='    + encodeURIComponent(nome)
-        + '&email='   + encodeURIComponent(email)
-        + '&telefone='+ encodeURIComponent(telefone)
-        + '&origem='  + encodeURIComponent('Simulação PF vs PJ');
-
-    new Image().src = url;
+    leadCapturado = { nome, email, telefone };
 
     setTimeout(() => goToScene('lead-gate', 'simulacao', 2), 800);
 }
@@ -1334,6 +1328,23 @@ function enviarLead() {
             document.getElementById('faturamento').style.borderColor = '#c0392b';
             setTimeout(() => document.getElementById('faturamento').style.borderColor = '', 1500);
             return;
+        }
+
+        /* Enviar linha completa ao Sheets — apenas na primeira vez com faturamento preenchido */
+        if (!simulacaoEnviada) {
+            const urlSim = SHEETS_URL
+                + '?tipo=simulacao'
+                + '&nome='       + encodeURIComponent(leadCapturado.nome)
+                + '&email='      + encodeURIComponent(leadCapturado.email)
+                + '&telefone='   + encodeURIComponent(leadCapturado.telefone)
+                + '&faturamento='+ encodeURIComponent(fat)
+                + '&deducoes='   + encodeURIComponent(ded)
+                + '&outras='     + encodeURIComponent(v('outras'))
+                + '&liquido_pf=' + encodeURIComponent(Math.round(liqPF))
+                + '&liquido_pj=' + encodeURIComponent(Math.round(liqPJ))
+                + '&economia='   + encodeURIComponent(Math.round(eco));
+            new Image().src = urlSim;
+            simulacaoEnviada = true;
         }
 
         /* Aviso isenção */
