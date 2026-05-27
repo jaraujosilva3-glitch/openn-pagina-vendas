@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostico Financeiro — Openn</title>
+    <title>Diagnóstico Financeiro — Openn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
@@ -158,13 +158,13 @@
 
         /* SECTIONS */
         .diag-section { padding: 2.5rem 0 4rem; position: relative; z-index: 1; }
-        .form-wrap { max-width: 560px; margin: 0 auto; }
+        .form-wrap { max-width: 680px; margin: 0 auto; }
 
         /* FORM CARD */
         .form-card {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 1.85rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(1,91,127,0.08);
         }
@@ -573,7 +573,6 @@
             <img src="images/openn-logo.png" alt="Openn">
         </a>
         <div style="display:flex;align-items:center;gap:1rem;">
-            <a href="simulacao.html" class="nav-back">Simulador PF/PJ</a>
             <a href="index.html" class="nav-back">&#8592; Voltar ao site</a>
         </div>
     </div>
@@ -582,10 +581,20 @@
 <!-- HERO -->
 <section id="diag-hero">
     <div class="container" style="position:relative;z-index:1;">
-        <div class="section-label">2 minutos para conhecer sua saude financeira</div>
-        <h1>Diagnostico Financeiro</h1>
+        <div class="section-label">Gratuito · 3 minutos · Resultado imediato</div>
+        <h1>Check-up da sua Clinica</h1>
         <div class="gold-line"></div>
-        <p>3 minutos para dar o proximo passo na profissionalizacao do seu negocio.</p>
+        <p style="font-size:1rem;line-height:1.7;max-width:560px;margin:0 auto 28px;">
+            Descubra em apenas 3 minutos quais são os próximos passos para a profissionalização da sua clínica — e saia com um plano claro do que fazer primeiro.
+        </p>
+        <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:rgba(255,255,255,0.75);">
+                <span style="color:rgb(213,171,57);font-size:1rem;">✓</span> Diagnóstico personalizado para o seu perfil
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:rgba(255,255,255,0.75);">
+                <span style="color:rgb(213,171,57);font-size:1rem;">✓</span> 100% gratuito, sem compromisso
+            </div>
+        </div>
     </div>
 </section>
 
@@ -603,7 +612,7 @@
     <div class="step-line" id="line-2"></div>
     <div class="step-item">
         <div class="step-dot" id="dot-3" onclick="dotClick(3)">3</div>
-        <span class="step-label">Situacao</span>
+        <span class="step-label">Situação</span>
     </div>
     <div class="step-line" id="line-3"></div>
     <div class="step-item">
@@ -619,8 +628,8 @@
             <div class="form-card">
                 <div style="text-align:center;margin-bottom:1.5rem;">
                     <div class="section-label">Acesso gratuito</div>
-                    <h3 style="color:var(--petrol);margin-top:0.5rem;">Para ver seu diagnostico, precisamos de alguns dados</h3>
-                    <p style="font-size:0.78rem;margin-top:0.5rem;color:rgba(64,64,64,0.6);">Usamos apenas para entrar em contato, caso voce queira saber mais.</p>
+                    <h3 style="color:var(--petrol);margin-top:0.5rem;">Para ver seu diagnóstico, precisamos de alguns dados</h3>
+                    <p style="font-size:0.78rem;margin-top:0.5rem;color:rgba(64,64,64,0.6);">Usamos apenas para entrar em contato, caso você queira saber mais.</p>
                 </div>
 
                 <div class="field-group">
@@ -655,9 +664,9 @@
 
                 <button class="btn-calcular" id="btn-acesso" onclick="enviarLead()">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
-                    Iniciar meu diagnostico
+                    Iniciar meu diagnóstico
                 </button>
-                <p style="font-size:0.60rem;color:rgba(64,64,64,0.35);text-align:center;margin-top:0.9rem;line-height:1.6;">Seus dados sao protegidos e nao serao compartilhados.</p>
+                <p style="font-size:0.60rem;color:rgba(64,64,64,0.35);text-align:center;margin-top:0.9rem;line-height:1.6;">Seus dados são protegidos e não serão compartilhados.</p>
             </div>
         </div>
     </div>
@@ -681,14 +690,23 @@
                 </div>
 
                 <div class="wiz-grp">
-                    <label class="wiz-lbl">Qual é sua faixa de despesas mensais?</label>
+                    <label class="wiz-lbl" style="display:flex;align-items:center;gap:6px;">
+                        Qual é sua faixa de despesas mensais?
+                        <span tabindex="0" style="position:relative;display:inline-flex;align-items:center;" onmouseenter="this.querySelector('.tooltip-box').style.display='block'" onmouseleave="this.querySelector('.tooltip-box').style.display='none'" onfocus="this.querySelector('.tooltip-box').style.display='block'" onblur="this.querySelector('.tooltip-box').style.display='none'">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(1,91,127)" stroke-width="2" style="cursor:pointer;flex-shrink:0;opacity:0.8;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11" stroke-width="2.8"/><circle cx="12" cy="7.5" r="1.8" fill="rgb(1,91,127)" stroke="none"/></svg>
+                            <span class="tooltip-box" style="display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06151d;color:rgba(255,255,255,0.88);font-size:0.68rem;font-weight:400;line-height:1.55;padding:10px 13px;border-radius:8px;width:220px;white-space:normal;text-transform:none;letter-spacing:0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                                Considere a soma de todas as suas despesas mensais: pessoais (moradia, alimentação, transporte) e da clínica (aluguel, materiais, plataformas).
+                                <span style="position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#06151d;"></span>
+                            </span>
+                        </span>
+                    </label>
                     <div id="desp-cards-wrap" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;"></div>
                     <span class="wiz-err" id="err-faixa">Selecione sua faixa de despesas.</span>
                 </div>
 
 
                 <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:0.5rem;">
-                    <button class="btn-calcular" onclick="avancarRenda()">Proximo passo &#8594;</button>
+                    <button class="btn-calcular" onclick="avancarRenda()">Próximo passo &#8594;</button>
                 </div>
             </div>
         </div>
@@ -703,26 +721,35 @@
             <div class="form-card">
 
                 <!-- bloco 1: formalizacao -->
-                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Formalizacao e impostos</div>
+                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Formalização e impostos</div>
 
                 <div class="wiz-grp">
-                    <label class="wiz-lbl">Como voce recebe pelos seus servicos?</label>
+                    <label class="wiz-lbl">Como você recebe pelos seus serviços?</label>
                     <div class="wiz-radio-stack">
                         <label class="wiz-rl"><input type="radio" name="wform" value="cpf" onchange="toggleContaGrp(this.value)"> Pessoa fisica (CPF / recibo)</label>
                         <label class="wiz-rl"><input type="radio" name="wform" value="cnpj" onchange="toggleContaGrp(this.value)"> Pessoa Juridica (CNPJ / Nota Fiscal)</label>
                     </div>
-                    <span class="wiz-err" id="err-form">Selecione uma opcao.</span>
+                    <span class="wiz-err" id="err-form">Selecione uma opção.</span>
                 </div>
 
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;">
                     <div>
-                        <label class="wiz-lbl">Contribui ao INSS?</label>
+                        <label class="wiz-lbl" style="display:flex;align-items:center;gap:6px;">
+                            Contribui ao INSS?
+                            <span tabindex="0" style="position:relative;display:inline-flex;align-items:center;" onmouseenter="this.querySelector('.tooltip-box').style.display='block'" onmouseleave="this.querySelector('.tooltip-box').style.display='none'" onfocus="this.querySelector('.tooltip-box').style.display='block'" onblur="this.querySelector('.tooltip-box').style.display='none'">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(1,91,127)" stroke-width="2" style="cursor:pointer;flex-shrink:0;opacity:0.8;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11" stroke-width="2.8"/><circle cx="12" cy="7.5" r="1.8" fill="rgb(1,91,127)" stroke="none"/></svg>
+                                <span class="tooltip-box" style="display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06151d;color:rgba(255,255,255,0.88);font-size:0.68rem;font-weight:400;line-height:1.55;padding:10px 13px;border-radius:8px;width:220px;white-space:normal;text-transform:none;letter-spacing:0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                                    A contribuição ao INSS garante seus direitos como auxílio-doença, licença-maternidade e aposentadoria. Psicólogos autônomos precisam contribuir como autônomo (código 1325) para manter esses benefícios ativos.
+                                    <span style="position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#06151d;"></span>
+                                </span>
+                            </span>
+                        </label>
                         <div class="pill-grp" id="pg-inss" style="flex-direction:column;">
                             <button class="wpill" onclick="wPick('pg-inss','sim-reg',this)">Sim, regularmente</button>
                             <button class="wpill" onclick="wPick('pg-inss','sim-irreg',this)">As vezes</button>
-                            <button class="wpill" onclick="wPick('pg-inss','nao',this)">Nao contribuo</button>
+                            <button class="wpill" onclick="wPick('pg-inss','nao',this)">Não contribuo</button>
                         </div>
-                        <span class="wiz-err" id="err-inss">Selecione uma opcao.</span>
+                        <span class="wiz-err" id="err-inss">Selecione uma opção.</span>
                     </div>
                     <div>
                         <label class="wiz-lbl">Emite recibos ou NF?</label>
@@ -731,12 +758,12 @@
                             <button class="wpill" onclick="wPick('pg-recibos','maioria',this)">As vezes</button>
                             <button class="wpill" onclick="wPick('pg-recibos','nunca',this)">Nunca</button>
                         </div>
-                        <span class="wiz-err" id="err-recibos">Selecione uma opcao.</span>
+                        <span class="wiz-err" id="err-recibos">Selecione uma opção.</span>
                     </div>
                 </div>
 
                 <!-- divisor -->
-                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin:1.4rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Organizacao financeira</div>
+                <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin:1.4rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Organização financeira</div>
 
                 <div class="wiz-grp" id="grp-conta" style="display:none;">
                     <label class="wiz-lbl">Tem conta bancaria separada para a clinica?</label>
@@ -745,7 +772,7 @@
                         <button class="wpill" onclick="wPick('pg-conta','org',this)">Estou organizando</button>
                         <button class="wpill" onclick="wPick('pg-conta','mesma',this)">Uso a mesma conta</button>
                     </div>
-                    <span class="wiz-err" id="err-conta">Selecione uma opcao.</span>
+                    <span class="wiz-err" id="err-conta">Selecione uma opção.</span>
                 </div>
 
                 <div class="wiz-grp">
@@ -753,25 +780,34 @@
                     <div class="pill-grp" id="pg-controle">
                         <button class="wpill" onclick="wPick('pg-controle','software',this)">Sistema / app</button>
                         <button class="wpill" onclick="wPick('pg-controle','planilha',this)">Planilha / Agenda</button>
-                        <button class="wpill" onclick="wPick('pg-controle','nao',this)">Nao controlo</button>
+                        <button class="wpill" onclick="wPick('pg-controle','nao',this)">Não controlo</button>
                     </div>
-                    <span class="wiz-err" id="err-controle">Selecione uma opcao.</span>
+                    <span class="wiz-err" id="err-controle">Selecione uma opção.</span>
                 </div>
 
                 <div class="wiz-grp" style="margin-bottom:0;">
-                    <label class="wiz-lbl">Quanto tem de reserva de emergencia?</label>
+                    <label class="wiz-lbl" style="display:flex;align-items:center;gap:6px;">
+                        Quanto tem de reserva de emergência?
+                        <span tabindex="0" style="position:relative;display:inline-flex;align-items:center;" onmouseenter="this.querySelector('.tooltip-box').style.display='block'" onmouseleave="this.querySelector('.tooltip-box').style.display='none'" onfocus="this.querySelector('.tooltip-box').style.display='block'" onblur="this.querySelector('.tooltip-box').style.display='none'">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(1,91,127)" stroke-width="2" style="cursor:pointer;flex-shrink:0;opacity:0.8;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11" stroke-width="2.8"/><circle cx="12" cy="7.5" r="1.8" fill="rgb(1,91,127)" stroke="none"/></svg>
+                            <span class="tooltip-box" style="display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06151d;color:rgba(255,255,255,0.88);font-size:0.68rem;font-weight:400;line-height:1.55;padding:10px 13px;border-radius:8px;width:220px;white-space:normal;text-transform:none;letter-spacing:0;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                                Reserva de emergência é o dinheiro guardado para cobrir seus gastos fixos caso você fique sem renda por um tempo. O ideal é ter entre 3 e 6 meses de despesas guardados.
+                                <span style="position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#06151d;"></span>
+                            </span>
+                        </span>
+                    </label>
                     <div class="pill-grp" id="pg-reserva">
                         <button class="wpill" onclick="wPick('pg-reserva','gt6m',this)">Mais de 6 meses</button>
                         <button class="wpill" onclick="wPick('pg-reserva','3-6m',this)">3 a 6 meses</button>
-                        <button class="wpill" onclick="wPick('pg-reserva','nao',this)">Nao tenho</button>
+                        <button class="wpill" onclick="wPick('pg-reserva','nao',this)">Não tenho</button>
                     </div>
-                    <span class="wiz-err" id="err-reserva">Selecione uma opcao.</span>
+                    <span class="wiz-err" id="err-reserva">Selecione uma opção.</span>
                 </div>
 
                 <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:1.25rem;">
                     <button class="btn-calcular gold" onclick="gerarDiagnostico()">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                        Ver meu diagnostico
+                        Ver meu diagnóstico
                     </button>
                 </div>
             </div>
@@ -786,14 +822,14 @@
         <div class="form-wrap" style="max-width:680px;">
             <div id="diag-result-html"></div>
             <div class="cta-card">
-                <p>Este diagnostico é baseado nas suas respostas. Para uma analise tributaria completa e personalizada, fale com a Openn.</p>
-                <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
+                <p>Este diagnóstico é baseado nas suas respostas. Para uma analise tributaria completa e personalizada, fale com a Openn.</p>
+                <a href="https://wa.me/5562996550808" target="_blank" class="btn-primary">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
                     Quero uma assessoria especializada
                 </a>
-                <button class="btn-outline" onclick="reiniciar()">Refazer o diagnostico</button>
+                <button class="btn-outline" onclick="reiniciar()">Refazer o diagnóstico</button>
             </div>
-            <p class="disclaimer">Diagnostico elaborado com base nas informacoes fornecidas e nos principios da Openn. Nao substitui orientacao contabil ou tributaria personalizada.</p>
+            <p class="disclaimer">Diagnóstico elaborado com base nas informações fornecidas e nos principios da Openn. Nao substitui orientação contabil ou tributaria personalizada.</p>
         </div>
     </div>
 </section>
@@ -804,10 +840,10 @@
         <div class="footer-logo-clip">
             <img src="images/openn-logo.png" alt="Openn">
         </div>
-        <p>Consultoria Financeira e Contabil para Psicologos</p>
+        <p>Consultoria Financeira e Contabil para Psicólogos</p>
         <div class="footer-links">
             <a href="index.html">&#8592; Voltar ao site</a>
-            <a href="simulacao.html">Simulador PF/PJ</a>
+
             <a href="https://instagram.com/openn.psi" target="_blank">@openn.psi</a>
             <a href="https://wa.me/5562996550808" target="_blank">WhatsApp</a>
         </div>
@@ -837,6 +873,9 @@
 
 /* ── DADOS ── */
 var WD = { renda:0, faixaDesp:0, formalizacao:'', inss:'', recibos:'', contaSep:'', controle:'', reserva:'' };
+var LEAD_DIAG = {nome:'',email:'',tel:''};
+var DIAG_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz0hXFRVos2JNSQnuefO6e_t_kfosEXDms7Nf75Qv6cLxVBoCYXdvsSSUZ404A5bUwINw/exec';
+var diagEnviado = false;
 
 /* ── STEP INDICATOR ── */
 var TOTAL_STEPS = 4;
@@ -890,10 +929,30 @@ function enviarLead() {
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){marcarErro('lead-email','Informe um e-mail valido.');return;}
     if(tel.replace(/\D/g,'').length<10){marcarErro('lead-telefone','Informe seu WhatsApp com DDD.');return;}
     var btn=document.getElementById('btn-acesso'); btn.classList.add('loading'); btn.textContent='Aguarde...';
-    var SHEETS_URL='https://script.google.com/macros/s/AKfycbz8RnNxgRTxbDE6VWjpGdOcCvx-d6cwx8pVAEtoJtuioRN6ggV2lESWlRndrPg76xdr/exec';
-    new Image().src=SHEETS_URL+'?nome='+encodeURIComponent(nome)+'&email='+encodeURIComponent(email)+'&telefone='+encodeURIComponent(tel);
+    LEAD_DIAG={nome:nome,email:email,tel:tel};
     fetch('https://joycehas.app.n8n.cloud/webhook/diagnostico-leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:nome,email:email,fone:tel,ts:Date.now()})}).catch(function(){});
     setTimeout(function(){goToScene('scene-acesso','scene-renda',2);},600);
+}
+
+/* ── ENVIO DIAGNÓSTICO ── */
+function enviarDiagnostico(){
+    if(DIAG_SHEETS_URL==='COLE_AQUI_A_URL_DO_APPS_SCRIPT') return;
+    var score=wCalcScore();
+    var url=DIAG_SHEETS_URL
+        +'?nome='         +encodeURIComponent(LEAD_DIAG.nome)
+        +'&email='        +encodeURIComponent(LEAD_DIAG.email)
+        +'&telefone='     +encodeURIComponent(LEAD_DIAG.tel)
+        +'&renda='        +encodeURIComponent(WD.renda)
+        +'&despesas_pct=' +encodeURIComponent(WD.faixaDesp)
+        +'&despesas_val=' +encodeURIComponent(Math.round(WD.renda*WD.faixaDesp/100))
+        +'&formalizacao=' +encodeURIComponent(WD.formalizacao)
+        +'&inss='         +encodeURIComponent(WD.inss)
+        +'&recibos='      +encodeURIComponent(WD.recibos)
+        +'&conta_sep='    +encodeURIComponent(WD.contaSep||'nao_se_aplica')
+        +'&controle='     +encodeURIComponent(WD.controle)
+        +'&reserva='      +encodeURIComponent(WD.reserva)
+        +'&score='        +encodeURIComponent(score);
+    fetch(url,{method:'GET',mode:'no-cors'}).catch(function(){});
 }
 
 /* ── HELPERS ── */
@@ -976,6 +1035,7 @@ function gerarDiagnostico() {
     WD.contaSep=contaVisivel?contaSep:'';
     WD.controle=controle;
     WD.reserva=reserva;
+    if(!diagEnviado){enviarDiagnostico();diagEnviado=true;}
     var sit=document.getElementById('scene-situacao');
     var res=document.getElementById('scene-resultado');
     sit.style.display='none';
@@ -1007,15 +1067,15 @@ function wCalcScore() {
 }
 
 function wScoreInfo(sc) {
-    if(sc<40) return{txt:'Atencao: sua base financeira precisa de estrutura',cor:'#ef5350'};
-    if(sc<65) return{txt:'Em construcao: voce tem potencial, mas ha lacunas importantes',cor:'#ffa726'};
-    if(sc<85) return{txt:'Bom caminho: sua gestao esta se consolidando',cor:'#42a5f5'};
-    return{txt:'Saude financeira solida: voce esta no caminho certo',cor:'#66bb6a'};
+    if(sc<40) return{txt:'Atenção: sua base financeira precisa de estrutura',cor:'#ef5350'};
+    if(sc<65) return{txt:'Em construção: você tem potencial, mas ha lacunas importantes',cor:'#ffa726'};
+    if(sc<85) return{txt:'Bom caminho: sua gestão está se consolidando',cor:'#42a5f5'};
+    return{txt:'Saude financeira sólida: você está no caminho certo',cor:'#66bb6a'};
 }
 
 function wScoreDisplay(sc) {
     var zoneColor = sc<40?'#b85450':sc<65?'#c28a3e':sc<85?'#4d8fa6':'#4e9068';
-    var zoneName  = sc<40?'Critico':sc<65?'Alerta':sc<85?'Bom':'Otimo';
+    var zoneName  = sc<40?'Critico':sc<65?'Alerta':sc<85?'Bom':'Ótimo';
     var info = wScoreInfo(sc);
     var parts = info.txt.split(':');
     var statusHtml = parts.length>1
@@ -1060,7 +1120,7 @@ function wScoreDisplay(sc) {
     html += '<span style="position:absolute;left:20%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#b85450;text-transform:uppercase;letter-spacing:0.5px;">Critico</span>';
     html += '<span style="position:absolute;left:52.5%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#c28a3e;text-transform:uppercase;letter-spacing:0.5px;">Alerta</span>';
     html += '<span style="position:absolute;left:75%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#4d8fa6;text-transform:uppercase;letter-spacing:0.5px;">Bom</span>';
-    html += '<span style="position:absolute;left:92.5%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#4e9068;text-transform:uppercase;letter-spacing:0.5px;">Otimo</span>';
+    html += '<span style="position:absolute;left:92.5%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#4e9068;text-transform:uppercase;letter-spacing:0.5px;">Ótimo</span>';
     html += '</div></div>';
 
     html += '</div>';
@@ -1074,15 +1134,15 @@ function animarBarra(pct) {
     }, 80);
 }
 
-function blkOrcamento(){
+function blkOrçamento(){
     var r=WD.renda,d=estimarDesp();
     if(!r||!d) return '';
     var pct=d/r*100;
     var tagCls,tagLbl,msg;
-    if(pct>=100){tagCls='dtag-alert';tagLbl='Atencao';msg='Suas despesas consomem toda a sua renda. Nao sobra margem para reservas ou imprevistos.';}
-    else if(pct>80){tagCls='dtag-warn';tagLbl='Oportunidade';msg='Suas despesas consomem cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Ha espaco para otimizacao.';}
-    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Suas despesas estao em <strong>'+pct.toFixed(0)+'%</strong> da renda — um bom equilibrio. Direcione o excedente para reservas e investimentos.';}
-    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Proporcao do Orcamento</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul><li>Proporcao ideal: 40% essenciais, 20% conforto, 15% lazer, 25% investimentos.</li>'+(d>r?'<li>Suas despesas superam sua renda. Prioridade: reduzir custos imediatamente.</li>':'')+'</ul></div>';
+    if(pct>=100){tagCls='dtag-alert';tagLbl='Atenção';msg='Suas despesas consomem toda a sua renda. Nao sobra margem para reservas ou imprevistos.';}
+    else if(pct>80){tagCls='dtag-warn';tagLbl='Oportunidade';msg='Suas despesas consomem cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Ha espaço para otimização.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Suas despesas estão em <strong>'+pct.toFixed(0)+'%</strong> da renda — um bom equilibrio. Direcione o excedente para reservas e investimentos.';}
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Proporção do Orçamento</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul><li>Proporção ideal: 40% essenciais, 20% conforto, 15% lazer, 25% investimentos.</li>'+(d>r?'<li>Suas despesas superam sua renda. Prioridade: reduzir custos imediatamente.</li>':'')+'</ul></div>';
 }
 
 function blkReserva(){
@@ -1090,19 +1150,19 @@ function blkReserva(){
     var ctaInvest='';
     if(WD.reserva==='gt6m'){
         tagCls='dtag-ok';tagLbl='Reserva completa';
-        msg='Sua reserva esta completa. Agora é hora de fazer o dinheiro trabalhar por voce.';
+        msg='Sua reserva está completa. Agora é hora de fazer o dinheiro trabalhar por você.';
         ctaInvest='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#f0f7f4;border:1.5px solid #6aab8e;">'
-            +'<p style="font-size:12px;color:#1a3d2b;line-height:1.6;margin:0 0 12px;">Com a reserva formada, voce ja pode comecar a investir em renda variavel e construir patrimonio. A Openn pode te ajudar a dar esse proximo passo com seguranca.</p>'
+            +'<p style="font-size:12px;color:#1a3d2b;line-height:1.6;margin:0 0 12px;">Com a reserva formada, é hora de fazer o dinheiro trabalhar por você. Podemos te orientar sobre as opções de investimento mais adequadas ao seu perfil e momento de vida.</p>'
             +'<a href="https://wa.me/5562996550808" target="_blank" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:#2d7a55;border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Falar com a Openn</a>'
             +'</div>';
     } else if(WD.reserva==='3-6m'){
         tagCls='dtag-ok';tagLbl='Bem encaminhado';
-        msg='Voce tem entre 3 e 6 meses de despesas reservados. Continue construindo ate atingir 6 meses.';
+        msg='Você tem entre 3 e 6 meses de despesas reservados. Continue construindo ate atingir 6 meses.';
         recs.push('Guarde em Tesouro Selic ou CDB com liquidez diaria.');
     } else {
-        tagCls='dtag-alert';tagLbl='Atencao';
-        msg='Voce ainda nao tem reserva de emergencia. Esta é a primeira prioridade antes de qualquer investimento.';
-        recs.push('Defina um valor fixo para guardar todo mes e automatize a transferencia.');
+        tagCls='dtag-alert';tagLbl='Atenção';
+        msg='Você ainda não tem reserva de emergência. Esta é a primeira prioridade antes de qualquer investimento.';
+        recs.push('Defina um valor fixo para guardar todo mês e automatize a transferência.');
     }
     return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Reserva de Emergencia</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p>'+(recs.length?'<ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>':'')+ctaInvest+'</div>';
 }
@@ -1114,26 +1174,26 @@ function blkFormalizacao(){
     var cargaCpf=r<=4000?'15% a 20%':r<=8000?'20% a 27%':r<=15000?'25% a 27,5%':'27,5%+';
     var cargaCnpj=r<=7500?'em torno de 6%':r<=15000?'6% a 11%':r<=25000?'11% a 14%':'14% a 19%';
     var infoCarga=f==='cnpj'
-        ?'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:10px 0 0;">Para o seu faturamento, a carga tributaria esperada como PJ é de <strong>'+cargaCnpj+'</strong>. Se estiver pagando mais do que isso, vale analisar sua contabilidade — pode haver oportunidade de reducao.</p>'
+        ?'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:10px 0 0;">Para o seu faturamento, a carga tributaria esperada como PJ é de <strong>'+cargaCnpj+'</strong>. Se estiver pagando mais do que isso, vale analisar sua contabilidade — pode haver oportunidade de redução.</p>'
         :'';
-    if(f==='cpf'){tagCls='dtag-warn';tagLbl='Regularizar';msg='Voce atua como Pessoa Fisica. O Carne-Leao é obrigatorio. Verifique se esta recolhendo corretamente e usando todas as deducoes permitidas.';}
-    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce possui CNPJ — uma grande vantagem fiscal. Mantenha sua contabilidade em dia para garantir a menor aliquota possivel.';}
-    if(i==='nao') recs.push('Voce nao esta contribuindo para o INSS. Sem contribuicao, perde direito a auxilio-doenca, maternidade e aposentadoria.');
-    else if(i==='sim-irreg') recs.push('Regularize suas contribuicoes ao INSS. Periodos sem contribuicao afetam o calculo de beneficios futuros.');
+    if(f==='cpf'){tagCls='dtag-warn';tagLbl='Regularizar';msg='Você atua como Pessoa Fisica. O Carnê-Leão é obrigatorio. Verifique se está recolhendo corretamente e usando todas as deduções permitidas.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Você possui CNPJ — uma grande vantagem fiscal. Mantenha sua contabilidade em dia para garantir a menor aliquota possivel.';}
+    if(i==='nao') recs.push('Você não está contribuindo para o INSS. Sem contribuição, perde direito a auxilio-doença, maternidade e aposentadoria.');
+    else if(i==='sim-irreg') recs.push('Regularize suas contribuições ao INSS. Periodos sem contribuição afetam o calculo de beneficios futuros.');
     var alertaCnpj='';
     if(f==='cpf'&&WD.renda>=8000){
         alertaCnpj='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#fdf8ec;border:1.5px solid #e0b84a;">'
-            +'<div style="font-size:10px;font-weight:800;color:#8a5e00;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Voce pode estar pagando ate 50% a mais de imposto</div>'
+            +'<div style="font-size:10px;font-weight:800;color:#8a5e00;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Você pode estar pagando ate 50% a mais de imposto</div>'
             +'<p style="font-size:12px;color:#4a3800;line-height:1.6;margin:0 0 12px;">Com R$8.000+ como PF, o CNPJ pode representar uma economia de ate 50% em impostos. Cada caso é diferente: simule ou fale com um especialista.</p>'
             +'<a href="simulacao.html" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:rgb(1,91,127);border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Simular economia com CNPJ</a>'
             +'</div>';
     } else if(f==='cpf'&&WD.renda>=7000){
         alertaCnpj='<div style="margin-top:14px;padding:12px 16px;border-radius:10px;background:#f7f9fb;border:1.5px solid rgba(1,91,127,0.2);">'
-            +'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:0 0 10px;">Vale comeca a pensar se ja é hora de migrar para PJ. Nao é urgente, mas pode ser o momento de entender as opcoes.</p>'
-            +'<a href="simulacao.html" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:rgb(1,91,127);border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Ver simulacao PF x PJ</a>'
+            +'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:0 0 10px;">Vale começa a pensar se já é hora de migrar para PJ. Nao é urgente, mas pode ser o momento de entender as opções.</p>'
+            +'<a href="simulacao.html" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:rgb(1,91,127);border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Ver simulação PF x PJ</a>'
             +'</div>';
     }
-    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Formalizacao e Impostos</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p>'+infoCarga+(recs.length?'<ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>':'')+alertaCnpj+'</div>';
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Formalização e Impostos</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p>'+infoCarga+(recs.length?'<ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>':'')+alertaCnpj+'</div>';
 }
 
 function blkControle(){
@@ -1142,18 +1202,18 @@ function blkControle(){
     if(WD.contaSep==='sim') pts++;
     if(WD.controle==='planilha'||WD.controle==='software') pts++;
     var tagCls=pts>=3?'dtag-ok':pts>=2?'dtag-warn':'dtag-alert';
-    var tagLbl=pts>=3?'Bem encaminhado':pts>=2?'Oportunidade':'Atencao';
-    var msg='Seu controle operacional '+(pts>=3?'esta bem estruturado.':pts>=2?'tem pontos positivos, mas ainda ha espaco para melhorar.':'precisa de atencao. Controlar entradas e saidas é a base de toda gestao financeira saudavel.');
+    var tagLbl=pts>=3?'Bem encaminhado':pts>=2?'Oportunidade':'Atenção';
+    var msg='Seu controle operacional '+(pts>=3?'está bem estruturado.':pts>=2?'tem pontos positivos, mas ainda ha espaço para melhorar.':'precisa de atenção. Controlar entradas e saidas é a base de toda gestão financeira saudavel.');
     var recs=[];
     if(WD.formalizacao==='cnpj'&&WD.contaSep!=='sim') recs.push('Abra uma conta bancaria exclusiva para a clinica. Banco digital é gratuito e facilita tudo.');
     if(WD.controle==='nao') recs.push('Implemente uma planilha ou app de controle de recebimentos.');
-    if(WD.recibos==='nunca') recs.push('Emita recibo ou nota fiscal para todos os atendimentos — isso protege voce fiscalmente.');
+    if(WD.recibos==='nunca') recs.push('Emita recibo ou nota fiscal para todos os atendimentos — isso protege você fiscalmente.');
     if(!recs.length) recs.push('Continue com as boas praticas! Revise seus controles a cada trimestre.');
     var alertaRfb='';
     if(WD.recibos==='maioria'||WD.recibos==='nunca'){
         alertaRfb='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#fdf0ef;border:1.5px solid #e8a09d;">'
-            +'<div style="font-size:10px;font-weight:800;color:#a03030;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Atencao: risco fiscal identificado</div>'
-            +'<p style="font-size:12px;color:#4a1f1f;line-height:1.6;margin:0 0 12px;">A Receita Federal cruza dados de pagamentos e pode identificar divergencias em quem nao emite documentos regularmente. Regularize com a orientacao de um especialista antes que vire um problema.</p>'
+            +'<div style="font-size:10px;font-weight:800;color:#a03030;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Atenção: risco fiscal identificado</div>'
+            +'<p style="font-size:12px;color:#4a1f1f;line-height:1.6;margin:0 0 12px;">A Receita Federal cruza dados de pagamentos e pode identificar divergências em quem não emite documentos regularmente. Regularize com a orientação de um especialista antes que vire um problema.</p>'
             +'<a href="https://wa.me/5562996550808" target="_blank" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:#a03030;border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Falar com a Openn</a>'
             +'</div>';
     }
@@ -1162,33 +1222,36 @@ function blkControle(){
 
 function wGenActions(){
     var d=WD;
-    var openn={t:'Migre para uma contabilidade especialista em psicologos',d:'Contar com quem conhece a sua realidade faz toda a diferenca. A Openn é especializada exclusivamente em psicologos e pode cuidar de tudo por voce.',prazo:'Quando quiser'};
+    var openn={t:'Migre para uma contabilidade especialista em psicólogos',d:'Contar com quem conhece a sua realidade faz toda a diferença. A Openn é especializada exclusivamente em psicólogos e pode cuidar de tudo por você.',prazo:'Imediato'};
+    var prazoPeso={'Esta semana':1,'Este mes':2,'Próximos meses':3,'Próximos 3 meses':4,'Próximos 6 meses':5,'Todo mes':6};
     var especificos=[
-        {c:d.inss==='nao',                                         t:'Regularize sua contribuicao ao INSS',            d:'Sem contribuicao voce perde direito a auxilio-doenca, maternidade e aposentadoria.',                                 prazo:'Este mes'},
+        {c:d.inss==='nao',                                         t:'Regularize sua contribuição ao INSS',            d:'Sem contribuição você perde direito a auxilio-doença, maternidade e aposentadoria.',                                 prazo:'Este mes'},
         {c:d.recibos==='nunca'&&d.formalizacao==='cnpj',           t:'Emita nota fiscal em todos os atendimentos',     d:'É a forma mais simples de proteger sua renda perante a Receita Federal.',                                          prazo:'Esta semana'},
         {c:d.recibos==='nunca'&&d.formalizacao!=='cnpj',           t:'Emita recibo em todos os atendimentos',          d:'É a forma mais simples de proteger sua renda perante a Receita Federal.',                                          prazo:'Esta semana'},
-        {c:d.reserva==='nao',                                      t:'Comece a construir sua reserva de emergencia',   d:'Defina um valor fixo mensal e automatize a transferencia. Qualquer valor ja é um inicio.',                          prazo:'Este mes'},
-        {c:d.formalizacao==='cnpj'&&d.contaSep!=='sim',            t:'Abra uma conta exclusiva para a clinica',        d:'Separar financas pessoais das profissionais é o passo mais importante para ter clareza financeira.',             prazo:'Esta semana'},
-        {c:d.controle==='nao',                                     t:'Implemente controle de recebimentos',            d:'Uma planilha simples ja muda tudo. Esse controle é a base de qualquer gestao financeira saudavel.',                prazo:'Esta semana'},
-        {c:d.inss==='sim-irreg',                                   t:'Regularize suas contribuicoes ao INSS',          d:'Periodos sem contribuicao afetam o calculo de beneficios futuros. Vale resolver agora.',                          prazo:'Este mes'},
-        {c:d.recibos==='maioria'&&d.formalizacao==='cnpj',         t:'Emita nota fiscal em todos os atendimentos',     d:'Emitir sempre — nao so as vezes — é o que garante sua seguranca fiscal no longo prazo.',                         prazo:'Esta semana'},
-        {c:d.recibos==='maioria'&&d.formalizacao!=='cnpj',         t:'Emita recibo em todos os atendimentos',          d:'Emitir sempre — nao so as vezes — é o que garante sua seguranca fiscal no longo prazo.',                         prazo:'Esta semana'},
-        {c:d.formalizacao==='cpf'&&d.renda>=8000,                  t:'Simule a migracao para CNPJ',                    d:'Com esse faturamento como PF, o CNPJ pode representar economia de 30 a 50% em impostos.',                         prazo:'Proximos 3 meses'},
-        {c:d.formalizacao==='cpf'&&d.renda>=7000&&d.renda<8000,    t:'Avalie se ja é hora de abrir CNPJ',              d:'Seu faturamento esta chegando no ponto em que a migracao para PJ costuma fazer sentido. Vale simular.',            prazo:'Proximos 6 meses'},
-        {c:d.reserva==='3-6m',                                     t:'Continue construindo sua reserva',               d:'Voce esta no caminho certo. Mantenha o habito ate atingir pelo menos 6 meses de despesas guardados.',             prazo:'Proximos meses'},
-        {c:d.formalizacao==='cnpj',                                 t:'Revise sua carga tributaria com um especialista',d:'Mesmo com CNPJ, ha formas de garantir que voce esta na menor aliquota possivel para o seu faturamento.',         prazo:'Proximos 3 meses'}
+        {c:d.reserva==='nao',                                      t:'Comece a construir sua reserva de emergência',   d:'Defina um valor fixo mensal e automatize a transferência. Qualquer valor já é um inicio.',                          prazo:'Este mes'},
+        {c:d.formalizacao==='cnpj'&&d.contaSep!=='sim',            t:'Abra uma conta exclusiva para a clinica',        d:'Separar finanças pessoais das profissionais é o passo mais importante para ter clareza financeira.',             prazo:'Esta semana'},
+        {c:d.controle==='nao',                                     t:'Implemente controle de recebimentos',            d:'Uma planilha simples já muda tudo. Esse controle é a base de qualquer gestão financeira saudavel.',                prazo:'Esta semana'},
+        {c:d.inss==='sim-irreg',                                   t:'Regularize suas contribuições ao INSS',          d:'Periodos sem contribuição afetam o calculo de beneficios futuros. Vale resolver agora.',                          prazo:'Este mes'},
+        {c:d.recibos==='maioria'&&d.formalizacao==='cnpj',         t:'Emita nota fiscal em todos os atendimentos',     d:'Emitir sempre — não só às vezes — é o que garante sua segurança fiscal no longo prazo.',                         prazo:'Esta semana'},
+        {c:d.recibos==='maioria'&&d.formalizacao!=='cnpj',         t:'Emita recibo em todos os atendimentos',          d:'Emitir sempre — não só às vezes — é o que garante sua segurança fiscal no longo prazo.',                         prazo:'Esta semana'},
+        {c:d.formalizacao==='cpf'&&d.renda>=8000,                  t:'Simule a migração para CNPJ',                    d:'Com esse faturamento como PF, o CNPJ pode representar economia de 30 a 50% em impostos.',                         prazo:'Próximos 3 meses'},
+        {c:d.formalizacao==='cpf'&&d.renda>=7000&&d.renda<8000,    t:'Avalie se já é hora de abrir CNPJ',              d:'Seu faturamento está chegando no ponto em que a migração para PJ costuma fazer sentido. Vale simular.',            prazo:'Próximos 6 meses'},
+        {c:d.reserva==='3-6m',                                     t:'Continue construindo sua reserva',               d:'Você está no caminho certo. Mantenha o habito ate atingir pelo menos 6 meses de despesas guardados.',             prazo:'Próximos meses'},
+        {c:d.formalizacao==='cnpj',                                 t:'Revise sua carga tributaria com um especialista',d:'Mesmo com CNPJ, há formas de garantir que você está na menor aliquota possivel para o seu faturamento.',         prazo:'Esta semana'}
     ];
     var fallbacks=[
-        {t:'Revise seu planejamento financeiro',  d:'Sua base esta estruturada. Reserve um momento por trimestre para revisar metas e ajustar o que precisar.',prazo:'Proximos 3 meses'},
-        {t:'Acompanhe sua margem mensal',         d:'Saber quanto sobra todo mes é o que separa quem constroi patrimonio de quem apenas paga contas.',        prazo:'Todo mes'},
+        {t:'Revise seu planejamento financeiro',  d:'Sua base está estruturada. Reserve um momento por trimestre para revisar metas e ajustar o que precisar.',prazo:'Próximos 3 meses'},
+        {t:'Acompanhe sua margem mensal',         d:'Saber quanto sobra todo mês é o que separa quem constrói patrimônio de quem apenas paga contas.',        prazo:'Todo mes'},
         {t:'Defina uma meta de reserva para o ano',d:'Ter uma meta clara de quanto quer guardar torna o habito mais facil de manter.',                        prazo:'Esta semana'}
     ];
     var ativos=especificos.filter(function(a){return a.c;});
+    ativos.sort(function(a,b){return (prazoPeso[a.prazo]||99)-(prazoPeso[b.prazo]||99);});
     var base=ativos.slice(0,2);
     var fi=0;
     while(base.length<2&&fi<fallbacks.length) base.push(fallbacks[fi++]);
+    base.sort(function(a,b){return (prazoPeso[a.prazo]||99)-(prazoPeso[b.prazo]||99);});
     var actions=base.concat([openn]);
-    var html='<div class="diag-act"><h3>Seus 3 Proximos Passos</h3>';
+    var html='<div class="diag-act"><h3>Seus 3 Próximos Passos</h3>';
     actions.forEach(function(a,i){html+='<div class="diag-act-item"><div class="diag-act-n">0'+(i+1)+'</div><div class="diag-act-c"><strong>'+a.t+'</strong><span>'+a.d+'</span><br><span class="diag-act-tag">'+a.prazo+'</span></div></div>';});
     html+='</div>';
     return html;
@@ -1198,7 +1261,7 @@ function renderDiagnostico(){
     var sc=wCalcScore();
     var score=wScoreDisplay(sc);
     var html=score.html;
-    html+=blkOrcamento();
+    html+=blkOrçamento();
     html+=blkReserva();
     html+=blkFormalizacao();
     html+=blkControle();
