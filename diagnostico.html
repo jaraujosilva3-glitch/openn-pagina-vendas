@@ -585,7 +585,7 @@
         <div class="section-label">2 minutos para conhecer sua saude financeira</div>
         <h1>Diagnostico Financeiro</h1>
         <div class="gold-line"></div>
-        <p>Apenas 2 passos rapidos para descobrir como esta sua saude financeira.</p>
+        <p>3 minutos para dar o proximo passo na profissionalizacao do seu negocio.</p>
     </div>
 </section>
 
@@ -672,44 +672,20 @@
                 <div class="form-section-title">Renda e Despesas</div>
 
                 <div class="wiz-grp">
-                    <label class="wiz-lbl">Qual e sua renda mensal media?</label>
+                    <label class="wiz-lbl">Qual é sua renda mensal media?</label>
                     <div class="wiz-big-wrap">
                         <span class="wiz-big-sym">R$</span>
-                        <input type="text" id="wiz-renda" class="wiz-big-inp" placeholder="0,00" inputmode="decimal" oninput="this.value=this.value.replace(/[^0-9.,]/g,'')" onblur="wFmt(this)">
+                        <input type="text" id="wiz-renda" class="wiz-big-inp" placeholder="0,00" inputmode="decimal" oninput="this.value=this.value.replace(/[^0-9.,]/g,'');renderFaixaCards()" onblur="wFmt(this);renderFaixaCards()">
                     </div>
                     <span class="wiz-err" id="err-renda">Informe sua renda para continuar.</span>
                 </div>
 
                 <div class="wiz-grp">
-                    <label class="wiz-lbl">Ha quanto tempo voce atua como psicologa(o)?</label>
-                    <select id="wiz-tempo" class="wiz-sel">
-                        <option value="">Selecione...</option>
-                        <option value="lt1">Menos de 1 ano</option>
-                        <option value="1-3">1 a 3 anos</option>
-                        <option value="3-5">3 a 5 anos</option>
-                        <option value="gt5">Mais de 5 anos</option>
-                    </select>
-                </div>
-
-                <div class="wiz-grp">
-                    <label class="wiz-lbl">Qual e sua faixa de despesas mensais?</label>
-                    <div class="pill-grp" id="pg-faixa-desp">
-                        <button class="wpill" onclick="wPick('pg-faixa-desp','ate2k',this)">Ate R$ 2.000</button>
-                        <button class="wpill" onclick="wPick('pg-faixa-desp','2k-4k',this)">R$ 2k a R$ 4k</button>
-                        <button class="wpill" onclick="wPick('pg-faixa-desp','4k-7k',this)">R$ 4k a R$ 7k</button>
-                        <button class="wpill" onclick="wPick('pg-faixa-desp','gt7k',this)">Acima de R$ 7k</button>
-                    </div>
+                    <label class="wiz-lbl">Qual é sua faixa de despesas mensais?</label>
+                    <div id="desp-cards-wrap" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;"></div>
                     <span class="wiz-err" id="err-faixa">Selecione sua faixa de despesas.</span>
                 </div>
 
-                <div class="wiz-grp">
-                    <label class="wiz-lbl">Sua renda varia muito entre os meses?</label>
-                    <div class="pill-grp" id="pg-variacao">
-                        <button class="wpill" onclick="wPick('pg-variacao','muito',this)">Sim, bastante</button>
-                        <button class="wpill" onclick="wPick('pg-variacao','pouco',this)">Um pouco</button>
-                        <button class="wpill" onclick="wPick('pg-variacao','estavel',this)">Nao, e estavel</button>
-                    </div>
-                </div>
 
                 <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:0.5rem;">
                     <button class="btn-calcular" onclick="avancarRenda()">Proximo passo &#8594;</button>
@@ -732,11 +708,10 @@
                 <div class="wiz-grp">
                     <label class="wiz-lbl">Como voce recebe pelos seus servicos?</label>
                     <div class="wiz-radio-stack">
-                        <label class="wiz-rl"><input type="radio" name="wform" value="nenhum"> Sem formalizacao</label>
-                        <label class="wiz-rl"><input type="radio" name="wform" value="cpf"> Pessoa fisica (CPF / recibo)</label>
-                        <label class="wiz-rl"><input type="radio" name="wform" value="cnpj-simples"> CNPJ — Simples Nacional</label>
-                        <label class="wiz-rl"><input type="radio" name="wform" value="cnpj-lp"> CNPJ — Lucro Presumido</label>
+                        <label class="wiz-rl"><input type="radio" name="wform" value="cpf" onchange="toggleContaGrp(this.value)"> Pessoa fisica (CPF / recibo)</label>
+                        <label class="wiz-rl"><input type="radio" name="wform" value="cnpj" onchange="toggleContaGrp(this.value)"> Pessoa Juridica (CNPJ / Nota Fiscal)</label>
                     </div>
+                    <span class="wiz-err" id="err-form">Selecione uma opcao.</span>
                 </div>
 
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;">
@@ -747,6 +722,7 @@
                             <button class="wpill" onclick="wPick('pg-inss','sim-irreg',this)">As vezes</button>
                             <button class="wpill" onclick="wPick('pg-inss','nao',this)">Nao contribuo</button>
                         </div>
+                        <span class="wiz-err" id="err-inss">Selecione uma opcao.</span>
                     </div>
                     <div>
                         <label class="wiz-lbl">Emite recibos ou NF?</label>
@@ -755,29 +731,31 @@
                             <button class="wpill" onclick="wPick('pg-recibos','maioria',this)">As vezes</button>
                             <button class="wpill" onclick="wPick('pg-recibos','nunca',this)">Nunca</button>
                         </div>
+                        <span class="wiz-err" id="err-recibos">Selecione uma opcao.</span>
                     </div>
                 </div>
 
                 <!-- divisor -->
                 <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(1,91,127,0.4);margin:1.4rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(1,91,127,0.08);">Organizacao financeira</div>
 
-                <div class="wiz-grp">
+                <div class="wiz-grp" id="grp-conta" style="display:none;">
                     <label class="wiz-lbl">Tem conta bancaria separada para a clinica?</label>
                     <div class="pill-grp" id="pg-conta">
                         <button class="wpill" onclick="wPick('pg-conta','sim',this)">Sim, separada</button>
                         <button class="wpill" onclick="wPick('pg-conta','org',this)">Estou organizando</button>
                         <button class="wpill" onclick="wPick('pg-conta','mesma',this)">Uso a mesma conta</button>
                     </div>
+                    <span class="wiz-err" id="err-conta">Selecione uma opcao.</span>
                 </div>
 
                 <div class="wiz-grp">
                     <label class="wiz-lbl">Como controla seus recebimentos?</label>
                     <div class="pill-grp" id="pg-controle">
                         <button class="wpill" onclick="wPick('pg-controle','software',this)">Sistema / app</button>
-                        <button class="wpill" onclick="wPick('pg-controle','planilha',this)">Planilha</button>
-                        <button class="wpill" onclick="wPick('pg-controle','anotacoes',this)">Anotacoes simples</button>
+                        <button class="wpill" onclick="wPick('pg-controle','planilha',this)">Planilha / Agenda</button>
                         <button class="wpill" onclick="wPick('pg-controle','nao',this)">Nao controlo</button>
                     </div>
+                    <span class="wiz-err" id="err-controle">Selecione uma opcao.</span>
                 </div>
 
                 <div class="wiz-grp" style="margin-bottom:0;">
@@ -785,9 +763,9 @@
                     <div class="pill-grp" id="pg-reserva">
                         <button class="wpill" onclick="wPick('pg-reserva','gt6m',this)">Mais de 6 meses</button>
                         <button class="wpill" onclick="wPick('pg-reserva','3-6m',this)">3 a 6 meses</button>
-                        <button class="wpill" onclick="wPick('pg-reserva','ate3m',this)">Menos de 3 meses</button>
                         <button class="wpill" onclick="wPick('pg-reserva','nao',this)">Nao tenho</button>
                     </div>
+                    <span class="wiz-err" id="err-reserva">Selecione uma opcao.</span>
                 </div>
 
                 <div style="padding-top:1.25rem;border-top:1px solid rgba(1,91,127,0.08);margin-top:1.25rem;">
@@ -808,7 +786,7 @@
         <div class="form-wrap" style="max-width:680px;">
             <div id="diag-result-html"></div>
             <div class="cta-card">
-                <p>Este diagnostico e baseado nas suas respostas. Para uma analise tributaria completa e personalizada, fale com a Openn.</p>
+                <p>Este diagnostico é baseado nas suas respostas. Para uma analise tributaria completa e personalizada, fale com a Openn.</p>
                 <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
                     Quero uma assessoria especializada
@@ -858,7 +836,7 @@
 })();
 
 /* ── DADOS ── */
-var WD = { renda:0, tempo:'', variacao:'', faixaDesp:'', formalizacao:'', inss:'', recibos:'', contaSep:'', controle:'', reserva:'' };
+var WD = { renda:0, faixaDesp:0, formalizacao:'', inss:'', recibos:'', contaSep:'', controle:'', reserva:'' };
 
 /* ── STEP INDICATOR ── */
 var TOTAL_STEPS = 4;
@@ -923,6 +901,37 @@ function wFmt(inp){var p=wParse(inp.value);if(!isNaN(p)&&p>=0)inp.value=p>0?fBR(
 function wParse(s){if(!s)return NaN;s=s.replace(/[R$\s]/g,'');if(s.indexOf(',')>-1)s=s.replace(/\./g,'').replace(',','.');return parseFloat(s);}
 function fBR(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function wPick(grpId,val,btn){document.querySelectorAll('#'+grpId+' .wpill').forEach(function(b){b.classList.remove('wpill-on');delete b.dataset.val;});btn.classList.add('wpill-on');btn.dataset.val=val;}
+
+function renderFaixaCards(){
+    var r=wParse(document.getElementById('wiz-renda').value)||0;
+    var wrap=document.getElementById('desp-cards-wrap');
+    if(!wrap)return;
+    var pcts=[{pct:50,label:'Despesas baixas'},{pct:75,label:'Despesas moderadas'},{pct:100,label:'Despesas altas'}];
+    wrap.innerHTML=pcts.map(function(p){
+        var amt=r>0?fBR(Math.round(r*p.pct/100)):'R$ ---';
+        var sel=WD.faixaDesp===p.pct;
+        var gold='rgb(213,171,57)';
+        var goldDark='rgb(150,110,20)';
+        return '<div onclick="selecionarFaixa('+p.pct+')" style="cursor:pointer;flex:1;min-width:90px;padding:14px 10px;border-radius:10px;border:2px solid '+(sel?gold:'rgba(1,91,127,0.2)')+';background:'+(sel?'rgba(213,171,57,0.1)':'#f0f4f7')+';text-align:center;transition:border-color 0.2s,background 0.2s;">'
+            +'<div style="font-size:9px;font-weight:700;color:'+(sel?goldDark:'rgb(1,91,127)')+';text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">'+p.pct+'% da renda</div>'
+            +'<div style="font-size:17px;font-weight:800;color:#06151d;">'+amt+'</div>'
+            +'<div style="font-size:9px;color:'+(sel?goldDark:'rgba(1,91,127,0.7)')+';margin-top:5px;">'+p.label+'</div>'
+            +'</div>';
+    }).join('');
+}
+
+function toggleContaGrp(val){
+    var grp=document.getElementById('grp-conta');
+    if(!grp)return;
+    if(val==='cnpj'){grp.style.display='block';}
+    else{grp.style.display='none';document.querySelectorAll('#pg-conta .wpill').forEach(function(b){b.classList.remove('wpill-on');delete b.dataset.val;});}
+}
+
+function selecionarFaixa(pct){
+    WD.faixaDesp=pct;
+    document.getElementById('err-faixa').style.display='none';
+    renderFaixaCards();
+}
 function pickVal(grpId){var s=document.querySelector('#'+grpId+' .wpill-on');return s?s.dataset.val:'';}
 
 /* ── NAVEGACAO ── */
@@ -931,24 +940,42 @@ function avancarRenda() {
     var errR=document.getElementById('err-renda');
     if(!r||r<=0){errR.style.display='block';document.getElementById('wiz-renda').focus();return;}
     errR.style.display='none';
-    var faixa=pickVal('pg-faixa-desp');
     var errF=document.getElementById('err-faixa');
-    if(!faixa){errF.style.display='block';return;}
+    if(!WD.faixaDesp){errF.style.display='block';return;}
     errF.style.display='none';
     WD.renda=r;
-    WD.tempo=document.getElementById('wiz-tempo').value;
-    WD.variacao=pickVal('pg-variacao');
-    WD.faixaDesp=faixa;
     goToScene('scene-renda','scene-situacao',3);
 }
 
 function gerarDiagnostico() {
-    WD.formalizacao=document.querySelector('[name="wform"]:checked')?document.querySelector('[name="wform"]:checked').value:'';
-    WD.inss=pickVal('pg-inss');
-    WD.recibos=pickVal('pg-recibos');
-    WD.contaSep=pickVal('pg-conta');
-    WD.controle=pickVal('pg-controle');
-    WD.reserva=pickVal('pg-reserva');
+    var form=document.querySelector('[name="wform"]:checked')?document.querySelector('[name="wform"]:checked').value:'';
+    var inss=pickVal('pg-inss');
+    var recibos=pickVal('pg-recibos');
+    var contaSep=pickVal('pg-conta');
+    var controle=pickVal('pg-controle');
+    var reserva=pickVal('pg-reserva');
+    var contaVisivel=document.getElementById('grp-conta').style.display!=='none';
+    var erros=[
+        {id:'err-form',   val:form},
+        {id:'err-inss',   val:inss},
+        {id:'err-recibos',val:recibos},
+        {id:'err-conta',  val:contaVisivel?contaSep:'ok'},
+        {id:'err-controle',val:controle},
+        {id:'err-reserva', val:reserva}
+    ];
+    var primeiroErro=null;
+    erros.forEach(function(e){
+        var el=document.getElementById(e.id);
+        if(!e.val){el.style.display='block';if(!primeiroErro)primeiroErro=el;}
+        else el.style.display='none';
+    });
+    if(primeiroErro){primeiroErro.scrollIntoView({behavior:'smooth',block:'center'});return;}
+    WD.formalizacao=form;
+    WD.inss=inss;
+    WD.recibos=recibos;
+    WD.contaSep=contaVisivel?contaSep:'';
+    WD.controle=controle;
+    WD.reserva=reserva;
     var sit=document.getElementById('scene-situacao');
     var res=document.getElementById('scene-resultado');
     sit.style.display='none';
@@ -962,8 +989,8 @@ function gerarDiagnostico() {
 
 /* ── ENGINE ── */
 function estimarDesp() {
-    var map={'ate2k':1500,'2k-4k':3000,'4k-7k':5500,'gt7k':8000};
-    return map[WD.faixaDesp]||0;
+    if(!WD.faixaDesp||!WD.renda) return 0;
+    return Math.round(WD.renda * WD.faixaDesp / 100);
 }
 
 function wCalcScore() {
@@ -971,9 +998,9 @@ function wCalcScore() {
     if(WD.contaSep==='sim') s+=18;
     if(WD.recibos==='sempre'||WD.recibos==='maioria') s+=14;
     if(WD.inss==='sim-reg') s+=14;
-    if(WD.reserva==='gt6m') s+=25; else if(WD.reserva==='3-6m') s+=16; else if(WD.reserva==='ate3m') s+=6;
+    if(WD.reserva==='gt6m') s+=25; else if(WD.reserva==='3-6m') s+=16;
     if(WD.controle==='planilha'||WD.controle==='software') s+=14;
-    if(WD.formalizacao==='cnpj-simples'||WD.formalizacao==='cnpj-lp') s+=11;
+    if(WD.formalizacao==='cnpj') s+=11;
     var d=estimarDesp();
     if(WD.renda>0&&d>0&&d<WD.renda*0.75) s+=9;
     return Math.min(100,s);
@@ -986,44 +1013,127 @@ function wScoreInfo(sc) {
     return{txt:'Saude financeira solida: voce esta no caminho certo',cor:'#66bb6a'};
 }
 
-function wGaugeSVG(){var r=72,sw=13,cx=100,cy=100,C=2*Math.PI*r,HALF=Math.PI*r,segs=[{pct:0.39,c:'#b85450'},{pct:0.25,c:'#c28a3e'},{pct:0.20,c:'#4d8fa6'},{pct:0.16,c:'#4e9068'}],s='';s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="'+sw+'" stroke-dasharray="'+HALF.toFixed(2)+','+(C-HALF).toFixed(2)+'" stroke-dashoffset="'+(-HALF).toFixed(2)+'" stroke-linecap="butt"/>';var acc=0;segs.forEach(function(seg){var len=(HALF*seg.pct).toFixed(2),off=(-HALF-acc).toFixed(2);s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+seg.c+'" stroke-width="'+sw+'" stroke-dasharray="'+len+','+(C-parseFloat(len)).toFixed(2)+'" stroke-dashoffset="'+off+'" stroke-linecap="butt"/>';acc+=HALF*seg.pct;});[40,65,85].forEach(function(b){var ar=((b/100)*180-180)*Math.PI/180,ri=r-sw/2-1,ro=r+sw/2+1;s+='<line x1="'+(cx+ri*Math.cos(ar)).toFixed(1)+'" y1="'+(cy+ri*Math.sin(ar)).toFixed(1)+'" x2="'+(cx+ro*Math.cos(ar)).toFixed(1)+'" y2="'+(cy+ro*Math.sin(ar)).toFixed(1)+'" stroke="rgba(13,27,42,0.85)" stroke-width="2"/>';});s+='<line id="gauge-needle" x1="'+cx+'" y1="'+cy+'" x2="'+(cx+58)+'" y2="'+cy+'" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-180,'+cx+','+cy+')"/>';s+='<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="rgba(255,255,255,0.1)" stroke="white" stroke-width="1.5"/><circle cx="'+cx+'" cy="'+cy+'" r="2.5" fill="white"/>';return'<svg viewBox="0 0 200 106" style="width:200px;max-width:100%;display:block;" xmlns="http://www.w3.org/2000/svg">'+s+'</svg>';}
+function wScoreDisplay(sc) {
+    var zoneColor = sc<40?'#b85450':sc<65?'#c28a3e':sc<85?'#4d8fa6':'#4e9068';
+    var zoneName  = sc<40?'Critico':sc<65?'Alerta':sc<85?'Bom':'Otimo';
+    var info = wScoreInfo(sc);
+    var parts = info.txt.split(':');
+    var statusHtml = parts.length>1
+        ? '<span style="color:'+zoneColor+';font-weight:800;">'+parts[0]+'</span><span style="color:rgba(255,255,255,0.72);">:'+parts.slice(1).join(':')+'</span>'
+        : '<span style="color:rgba(255,255,255,0.72);">'+info.txt+'</span>';
 
-function animarGauge(sc){var target=(sc/100*180)-180,start=-180,dur=1000,t0=null;function ease(t){return 1-(1-t)*(1-t)*(1-t);}function tick(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),a=start+(target-start)*ease(p),n=document.getElementById('gauge-needle');if(n)n.setAttribute('transform','rotate('+a.toFixed(2)+',100,100)');if(p<1)requestAnimationFrame(tick);}requestAnimationFrame(function(){requestAnimationFrame(tick);});}
+    var html = '<div class="diag-score">';
+
+    /* topo: circulo com nota + texto */
+    html += '<div style="display:flex;align-items:center;gap:20px;margin-bottom:22px;">';
+    html += '<div style="width:76px;height:76px;border-radius:50%;background:'+zoneColor+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 24px '+zoneColor+'55;">';
+    html += '<span style="font-size:30px;font-weight:800;color:white;line-height:1;">'+sc+'</span>';
+    html += '<span style="font-size:7px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;">/100</span>';
+    html += '</div>';
+    html += '<div style="flex:1;">';
+    html += '<div style="font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;font-weight:600;margin-bottom:6px;">Saude financeira</div>';
+    html += '<div style="font-size:13px;font-weight:600;line-height:1.5;">'+statusHtml+'</div>';
+    html += '</div></div>';
+
+    /* barra de progresso com zonas */
+    var pct = Math.min(sc, 100);
+    html += '<div style="margin-bottom:6px;position:relative;">';
+    /* trilho */
+    html += '<div style="height:12px;border-radius:6px;overflow:visible;background:linear-gradient(to right,#b85450 0%,#b85450 40%,#c28a3e 40%,#c28a3e 65%,#4d8fa6 65%,#4d8fa6 85%,#4e9068 85%,#4e9068 100%);position:relative;">';
+    /* marcador animado */
+    html += '<div id="score-marker" style="position:absolute;top:50%;transform:translateY(-50%) translateX(-50%);left:0%;width:20px;height:20px;border-radius:50%;background:white;border:3px solid '+zoneColor+';box-shadow:0 2px 10px rgba(0,0,0,0.4);transition:left 1s cubic-bezier(0.4,0,0.2,1);z-index:2;"></div>';
+    /* divisores entre zonas */
+    html += '<div style="position:absolute;top:0;bottom:0;left:40%;width:2px;background:rgba(6,21,29,0.6);"></div>';
+    html += '<div style="position:absolute;top:0;bottom:0;left:65%;width:2px;background:rgba(6,21,29,0.6);"></div>';
+    html += '<div style="position:absolute;top:0;bottom:0;left:85%;width:2px;background:rgba(6,21,29,0.6);"></div>';
+    html += '</div>';
+    /* numeros de referencia */
+    html += '<div style="position:relative;height:14px;margin-top:5px;">';
+    html += '<span style="position:absolute;left:0%;transform:translateX(0);font-size:9px;color:rgba(255,255,255,0.35);font-weight:600;">0</span>';
+    html += '<span style="position:absolute;left:40%;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,0.35);font-weight:600;">40</span>';
+    html += '<span style="position:absolute;left:65%;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,0.35);font-weight:600;">65</span>';
+    html += '<span style="position:absolute;left:85%;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,0.35);font-weight:600;">85</span>';
+    html += '<span style="position:absolute;left:100%;transform:translateX(-100%);font-size:9px;color:rgba(255,255,255,0.35);font-weight:600;">100</span>';
+    html += '</div>';
+    /* labels das zonas */
+    html += '<div style="position:relative;height:14px;margin-top:4px;">';
+    html += '<span style="position:absolute;left:20%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#b85450;text-transform:uppercase;letter-spacing:0.5px;">Critico</span>';
+    html += '<span style="position:absolute;left:52.5%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#c28a3e;text-transform:uppercase;letter-spacing:0.5px;">Alerta</span>';
+    html += '<span style="position:absolute;left:75%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#4d8fa6;text-transform:uppercase;letter-spacing:0.5px;">Bom</span>';
+    html += '<span style="position:absolute;left:92.5%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#4e9068;text-transform:uppercase;letter-spacing:0.5px;">Otimo</span>';
+    html += '</div></div>';
+
+    html += '</div>';
+    return {html:html, pct:pct, color:zoneColor};
+}
+
+function animarBarra(pct) {
+    setTimeout(function(){
+        var m = document.getElementById('score-marker');
+        if(m) m.style.left = pct + '%';
+    }, 80);
+}
 
 function blkOrcamento(){
     var r=WD.renda,d=estimarDesp();
     if(!r||!d) return '';
     var pct=d/r*100;
     var tagCls,tagLbl,msg;
-    if(pct>85){tagCls='dtag-alert';tagLbl='Atencao';msg='Suas despesas estimadas representam cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Sobra pouco para reservas e imprevistos.';}
-    else if(pct>65){tagCls='dtag-warn';tagLbl='Oportunidade';msg='Suas despesas consomem cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Ha espaco para otimizacao.';}
-    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce tem aproximadamente <strong>'+(100-pct).toFixed(0)+'%</strong> da renda disponivel apos as despesas. Direcione esse excedente para reservas e investimentos.';}
+    if(pct>=100){tagCls='dtag-alert';tagLbl='Atencao';msg='Suas despesas consomem toda a sua renda. Nao sobra margem para reservas ou imprevistos.';}
+    else if(pct>80){tagCls='dtag-warn';tagLbl='Oportunidade';msg='Suas despesas consomem cerca de <strong>'+pct.toFixed(0)+'%</strong> da sua renda. Ha espaco para otimizacao.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Suas despesas estao em <strong>'+pct.toFixed(0)+'%</strong> da renda — um bom equilibrio. Direcione o excedente para reservas e investimentos.';}
     return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Proporcao do Orcamento</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul><li>Proporcao ideal: 40% essenciais, 20% conforto, 15% lazer, 25% investimentos.</li>'+(d>r?'<li>Suas despesas superam sua renda. Prioridade: reduzir custos imediatamente.</li>':'')+'</ul></div>';
 }
 
 function blkReserva(){
     var tagCls,tagLbl,msg,recs=[];
-    if(WD.reserva==='gt6m'){tagCls='dtag-ok';tagLbl='Reserva completa';msg='Parabens — voce ja atingiu a meta ideal de reserva (mais de 6 meses de despesas). Direcione o excedente para investimentos de longo prazo.';}
-    else if(WD.reserva==='3-6m'){tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce tem entre 3 e 6 meses de despesas reservados — acima da meta minima. Continue construindo ate atingir 12 meses.';}
-    else if(WD.reserva==='ate3m'){tagCls='dtag-warn';tagLbl='Em construcao';msg='Voce tem menos de 3 meses de reserva. A meta minima e 6 meses. Continue poupando com regularidade.';}
-    else{tagCls='dtag-alert';tagLbl='Atencao';msg='Voce ainda nao tem reserva de emergencia formada. Esta e a primeira prioridade antes de qualquer investimento.';}
-    recs.push('Guarde a reserva em Tesouro Selic ou CDB com liquidez diaria.');
-    recs.push('Meta minima: 6 meses de despesas. Meta ideal: 12 meses.');
-    if(WD.poupanca==='nao') recs.push('Mesmo poupando um valor pequeno todo mes, o habito faz diferenca. Comece com o que for possivel.');
-    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Reserva de Emergencia</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+    var ctaInvest='';
+    if(WD.reserva==='gt6m'){
+        tagCls='dtag-ok';tagLbl='Reserva completa';
+        msg='Sua reserva esta completa. Agora é hora de fazer o dinheiro trabalhar por voce.';
+        ctaInvest='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#f0f7f4;border:1.5px solid #6aab8e;">'
+            +'<p style="font-size:12px;color:#1a3d2b;line-height:1.6;margin:0 0 12px;">Com a reserva formada, voce ja pode comecar a investir em renda variavel e construir patrimonio. A Openn pode te ajudar a dar esse proximo passo com seguranca.</p>'
+            +'<a href="https://wa.me/5562996550808" target="_blank" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:#2d7a55;border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Falar com a Openn</a>'
+            +'</div>';
+    } else if(WD.reserva==='3-6m'){
+        tagCls='dtag-ok';tagLbl='Bem encaminhado';
+        msg='Voce tem entre 3 e 6 meses de despesas reservados. Continue construindo ate atingir 6 meses.';
+        recs.push('Guarde em Tesouro Selic ou CDB com liquidez diaria.');
+    } else {
+        tagCls='dtag-alert';tagLbl='Atencao';
+        msg='Voce ainda nao tem reserva de emergencia. Esta é a primeira prioridade antes de qualquer investimento.';
+        recs.push('Defina um valor fixo para guardar todo mes e automatize a transferencia.');
+    }
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Reserva de Emergencia</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p>'+(recs.length?'<ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>':'')+ctaInvest+'</div>';
 }
 
 function blkFormalizacao(){
     var f=WD.formalizacao,i=WD.inss;
     var tagCls,tagLbl,msg,recs=[];
-    if(f==='nenhum'){tagCls='dtag-alert';tagLbl='Atencao urgente';msg='Voce ainda nao possui formalizacao. Atuar sem emitir documentos fiscais expoe voce a riscos tributarios.';}
-    else if(f==='cpf'){tagCls='dtag-warn';tagLbl='Regularizar';msg='Voce atua como Pessoa Fisica. O Carne-Leao e obrigatorio. Verifique se esta recolhendo corretamente e usando todas as deducoes permitidas.';}
-    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce possui CNPJ — uma grande vantagem fiscal. Verifique se o Fator R esta acima de 28% para garantir a menor aliquota (Anexo III, 6%).';}
+    var r=WD.renda;
+    var cargaCpf=r<=4000?'15% a 20%':r<=8000?'20% a 27%':r<=15000?'25% a 27,5%':'27,5%+';
+    var cargaCnpj=r<=7500?'em torno de 6%':r<=15000?'6% a 11%':r<=25000?'11% a 14%':'14% a 19%';
+    var infoCarga=f==='cnpj'
+        ?'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:10px 0 0;">Para o seu faturamento, a carga tributaria esperada como PJ é de <strong>'+cargaCnpj+'</strong>. Se estiver pagando mais do que isso, vale analisar sua contabilidade — pode haver oportunidade de reducao.</p>'
+        :'';
+    if(f==='cpf'){tagCls='dtag-warn';tagLbl='Regularizar';msg='Voce atua como Pessoa Fisica. O Carne-Leao é obrigatorio. Verifique se esta recolhendo corretamente e usando todas as deducoes permitidas.';}
+    else{tagCls='dtag-ok';tagLbl='Bem encaminhado';msg='Voce possui CNPJ — uma grande vantagem fiscal. Mantenha sua contabilidade em dia para garantir a menor aliquota possivel.';}
     if(i==='nao') recs.push('Voce nao esta contribuindo para o INSS. Sem contribuicao, perde direito a auxilio-doenca, maternidade e aposentadoria.');
     else if(i==='sim-irreg') recs.push('Regularize suas contribuicoes ao INSS. Periodos sem contribuicao afetam o calculo de beneficios futuros.');
-    if(f==='nenhum'||f==='cpf') recs.push('Simule a migracao para CNPJ: psicologos que faturam acima de R$8.000/mes economizam 30% a 50% em impostos.');
-    else recs.push('Mantenha o pro-labore em 28% do faturamento para garantir o Fator R favoravel no Simples Nacional.');
-    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Formalizacao e Impostos</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+    var alertaCnpj='';
+    if(f==='cpf'&&WD.renda>=8000){
+        alertaCnpj='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#fdf8ec;border:1.5px solid #e0b84a;">'
+            +'<div style="font-size:10px;font-weight:800;color:#8a5e00;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Voce pode estar pagando ate 50% a mais de imposto</div>'
+            +'<p style="font-size:12px;color:#4a3800;line-height:1.6;margin:0 0 12px;">Com R$8.000+ como PF, o CNPJ pode representar uma economia de ate 50% em impostos. Cada caso é diferente: simule ou fale com um especialista.</p>'
+            +'<a href="simulacao.html" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:rgb(1,91,127);border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Simular economia com CNPJ</a>'
+            +'</div>';
+    } else if(f==='cpf'&&WD.renda>=7000){
+        alertaCnpj='<div style="margin-top:14px;padding:12px 16px;border-radius:10px;background:#f7f9fb;border:1.5px solid rgba(1,91,127,0.2);">'
+            +'<p style="font-size:12px;color:#2c4a5a;line-height:1.6;margin:0 0 10px;">Vale comeca a pensar se ja é hora de migrar para PJ. Nao é urgente, mas pode ser o momento de entender as opcoes.</p>'
+            +'<a href="simulacao.html" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:rgb(1,91,127);border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Ver simulacao PF x PJ</a>'
+            +'</div>';
+    }
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Formalizacao e Impostos</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p>'+infoCarga+(recs.length?'<ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>':'')+alertaCnpj+'</div>';
 }
 
 function blkControle(){
@@ -1033,25 +1143,51 @@ function blkControle(){
     if(WD.controle==='planilha'||WD.controle==='software') pts++;
     var tagCls=pts>=3?'dtag-ok':pts>=2?'dtag-warn':'dtag-alert';
     var tagLbl=pts>=3?'Bem encaminhado':pts>=2?'Oportunidade':'Atencao';
-    var msg='Seu controle operacional '+(pts>=3?'esta bem estruturado.':pts>=2?'tem pontos positivos, mas ainda ha espaco para melhorar.':'precisa de atencao. Controlar entradas e saidas e a base de toda gestao financeira saudavel.');
+    var msg='Seu controle operacional '+(pts>=3?'esta bem estruturado.':pts>=2?'tem pontos positivos, mas ainda ha espaco para melhorar.':'precisa de atencao. Controlar entradas e saidas é a base de toda gestao financeira saudavel.');
     var recs=[];
-    if(WD.contaSep!=='sim') recs.push('Abra uma conta bancaria exclusiva para a clinica. Banco digital e gratuito e facilita tudo.');
-    if(WD.controle==='nao'||WD.controle==='anotacoes') recs.push('Implemente uma planilha ou app de controle de recebimentos.');
+    if(WD.formalizacao==='cnpj'&&WD.contaSep!=='sim') recs.push('Abra uma conta bancaria exclusiva para a clinica. Banco digital é gratuito e facilita tudo.');
+    if(WD.controle==='nao') recs.push('Implemente uma planilha ou app de controle de recebimentos.');
     if(WD.recibos==='nunca') recs.push('Emita recibo ou nota fiscal para todos os atendimentos — isso protege voce fiscalmente.');
     if(!recs.length) recs.push('Continue com as boas praticas! Revise seus controles a cada trimestre.');
-    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Controle da Clinica</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div>';
+    var alertaRfb='';
+    if(WD.recibos==='maioria'||WD.recibos==='nunca'){
+        alertaRfb='<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#fdf0ef;border:1.5px solid #e8a09d;">'
+            +'<div style="font-size:10px;font-weight:800;color:#a03030;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Atencao: risco fiscal identificado</div>'
+            +'<p style="font-size:12px;color:#4a1f1f;line-height:1.6;margin:0 0 12px;">A Receita Federal cruza dados de pagamentos e pode identificar divergencias em quem nao emite documentos regularmente. Regularize com a orientacao de um especialista antes que vire um problema.</p>'
+            +'<a href="https://wa.me/5562996550808" target="_blank" style="display:inline-block;font-size:12px;font-weight:800;color:#ffffff;background:#a03030;border-radius:8px;padding:10px 20px;text-decoration:none;letter-spacing:0.3px;">Falar com a Openn</a>'
+            +'</div>';
+    }
+    return '<div class="diag-blk"><div class="diag-blk-hd"><span class="diag-blk-ttl">Controle da Clinica</span><span class="dtag '+tagCls+'">'+tagLbl+'</span></div><p>'+msg+'</p><ul>'+recs.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul>'+alertaRfb+'</div>';
 }
 
 function wGenActions(){
-    var actions=[],d=WD;
-    if(d.formalizacao==='nenhum') actions.push({t:'Regularize sua situacao fiscal',d:'Busque orientacao especializada para entender se CPF ou CNPJ e o melhor caminho para o seu caso.',prazo:'Esta semana'});
-    if(d.reserva==='nao') actions.push({t:'Construa sua reserva de emergencia',d:'Defina um valor mensal para guardar e automatize a transferencia. Comece com o que for possivel.',prazo:'Este mes'});
-    if(d.inss==='nao') actions.push({t:'Regularize sua contribuicao ao INSS',d:'Contribuicao ao INSS garante protecao em caso de doenca, maternidade e aposentadoria.',prazo:'Este mes'});
-    if(d.contaSep!=='sim') actions.push({t:'Abra uma conta exclusiva para a clinica',d:'Separar financas pessoais das profissionais e o passo mais importante para ter clareza financeira.',prazo:'Esta semana'});
-    if(d.controle==='nao') actions.push({t:'Implemente controle de recebimentos',d:'Crie uma planilha simples para registrar todos os pagamentos. Esse controle e a base de qualquer gestao.',prazo:'Esta semana'});
-    if((d.formalizacao==='cpf'||d.formalizacao==='nenhum')&&WD.renda>8000) actions.push({t:'Simule a migracao para CNPJ',d:'Com seu faturamento, a abertura de CNPJ pode representar economia de 30% a 50% em impostos.',prazo:'Proximos 3 meses'});
-    if(!actions.length) actions.push({t:'Mantenha e evolua seus controles',d:'Sua situacao ja esta bem estruturada. Foque em aumentar a reserva e revisar anualmente seu planejamento.',prazo:'Proximos 3 meses'});
-    actions=actions.slice(0,3);
+    var d=WD;
+    var openn={t:'Migre para uma contabilidade especialista em psicologos',d:'Contar com quem conhece a sua realidade faz toda a diferenca. A Openn é especializada exclusivamente em psicologos e pode cuidar de tudo por voce.',prazo:'Quando quiser'};
+    var especificos=[
+        {c:d.inss==='nao',                                         t:'Regularize sua contribuicao ao INSS',            d:'Sem contribuicao voce perde direito a auxilio-doenca, maternidade e aposentadoria.',                                 prazo:'Este mes'},
+        {c:d.recibos==='nunca'&&d.formalizacao==='cnpj',           t:'Emita nota fiscal em todos os atendimentos',     d:'É a forma mais simples de proteger sua renda perante a Receita Federal.',                                          prazo:'Esta semana'},
+        {c:d.recibos==='nunca'&&d.formalizacao!=='cnpj',           t:'Emita recibo em todos os atendimentos',          d:'É a forma mais simples de proteger sua renda perante a Receita Federal.',                                          prazo:'Esta semana'},
+        {c:d.reserva==='nao',                                      t:'Comece a construir sua reserva de emergencia',   d:'Defina um valor fixo mensal e automatize a transferencia. Qualquer valor ja é um inicio.',                          prazo:'Este mes'},
+        {c:d.formalizacao==='cnpj'&&d.contaSep!=='sim',            t:'Abra uma conta exclusiva para a clinica',        d:'Separar financas pessoais das profissionais é o passo mais importante para ter clareza financeira.',             prazo:'Esta semana'},
+        {c:d.controle==='nao',                                     t:'Implemente controle de recebimentos',            d:'Uma planilha simples ja muda tudo. Esse controle é a base de qualquer gestao financeira saudavel.',                prazo:'Esta semana'},
+        {c:d.inss==='sim-irreg',                                   t:'Regularize suas contribuicoes ao INSS',          d:'Periodos sem contribuicao afetam o calculo de beneficios futuros. Vale resolver agora.',                          prazo:'Este mes'},
+        {c:d.recibos==='maioria'&&d.formalizacao==='cnpj',         t:'Emita nota fiscal em todos os atendimentos',     d:'Emitir sempre — nao so as vezes — é o que garante sua seguranca fiscal no longo prazo.',                         prazo:'Esta semana'},
+        {c:d.recibos==='maioria'&&d.formalizacao!=='cnpj',         t:'Emita recibo em todos os atendimentos',          d:'Emitir sempre — nao so as vezes — é o que garante sua seguranca fiscal no longo prazo.',                         prazo:'Esta semana'},
+        {c:d.formalizacao==='cpf'&&d.renda>=8000,                  t:'Simule a migracao para CNPJ',                    d:'Com esse faturamento como PF, o CNPJ pode representar economia de 30 a 50% em impostos.',                         prazo:'Proximos 3 meses'},
+        {c:d.formalizacao==='cpf'&&d.renda>=7000&&d.renda<8000,    t:'Avalie se ja é hora de abrir CNPJ',              d:'Seu faturamento esta chegando no ponto em que a migracao para PJ costuma fazer sentido. Vale simular.',            prazo:'Proximos 6 meses'},
+        {c:d.reserva==='3-6m',                                     t:'Continue construindo sua reserva',               d:'Voce esta no caminho certo. Mantenha o habito ate atingir pelo menos 6 meses de despesas guardados.',             prazo:'Proximos meses'},
+        {c:d.formalizacao==='cnpj',                                 t:'Revise sua carga tributaria com um especialista',d:'Mesmo com CNPJ, ha formas de garantir que voce esta na menor aliquota possivel para o seu faturamento.',         prazo:'Proximos 3 meses'}
+    ];
+    var fallbacks=[
+        {t:'Revise seu planejamento financeiro',  d:'Sua base esta estruturada. Reserve um momento por trimestre para revisar metas e ajustar o que precisar.',prazo:'Proximos 3 meses'},
+        {t:'Acompanhe sua margem mensal',         d:'Saber quanto sobra todo mes é o que separa quem constroi patrimonio de quem apenas paga contas.',        prazo:'Todo mes'},
+        {t:'Defina uma meta de reserva para o ano',d:'Ter uma meta clara de quanto quer guardar torna o habito mais facil de manter.',                        prazo:'Esta semana'}
+    ];
+    var ativos=especificos.filter(function(a){return a.c;});
+    var base=ativos.slice(0,2);
+    var fi=0;
+    while(base.length<2&&fi<fallbacks.length) base.push(fallbacks[fi++]);
+    var actions=base.concat([openn]);
     var html='<div class="diag-act"><h3>Seus 3 Proximos Passos</h3>';
     actions.forEach(function(a,i){html+='<div class="diag-act-item"><div class="diag-act-n">0'+(i+1)+'</div><div class="diag-act-c"><strong>'+a.t+'</strong><span>'+a.d+'</span><br><span class="diag-act-tag">'+a.prazo+'</span></div></div>';});
     html+='</div>';
@@ -1059,29 +1195,27 @@ function wGenActions(){
 }
 
 function renderDiagnostico(){
-    var sc=wCalcScore(),info=wScoreInfo(sc);
-    var parts=info.txt.split(':');
-    var statusHtml=parts.length>1?'<span style="color:#FFC223;font-weight:800;">'+parts[0]+'</span><span style="color:rgba(255,255,255,0.72);">:'+parts.slice(1).join(':')+'</span>':'<span style="color:rgba(255,255,255,0.72);">'+info.txt+'</span>';
-    var legend='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;"><span style="font-size:8px;color:rgba(184,84,80,0.8);font-weight:600;">Critico</span><span style="font-size:8px;color:rgba(194,138,62,0.8);font-weight:600;">Alerta</span><span style="font-size:8px;color:rgba(77,143,166,0.8);font-weight:600;">Bom</span><span style="font-size:8px;color:rgba(78,144,104,0.8);font-weight:600;">Otimo</span></div>';
-    var html='<div class="diag-score"><div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;"><div style="flex:0 0 auto;">'+wGaugeSVG()+'</div><div style="flex:1;min-width:140px;"><div style="font-size:56px;font-weight:800;color:#FFC223;line-height:1;text-shadow:0 0 22px rgba(255,194,35,0.32);">'+sc+'</div><div style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.28);margin:8px 0 12px;text-transform:uppercase;font-weight:600;">pontuacao de saude financeira</div><div style="font-size:12px;font-weight:600;line-height:1.5;">'+statusHtml+'</div>'+legend+'</div></div></div>';
+    var sc=wCalcScore();
+    var score=wScoreDisplay(sc);
+    var html=score.html;
     html+=blkOrcamento();
     html+=blkReserva();
     html+=blkFormalizacao();
     html+=blkControle();
     html+=wGenActions();
     document.getElementById('diag-result-html').innerHTML=html;
-    setTimeout(function(){ animarGauge(sc); }, 450);
+    animarBarra(score.pct);
 }
 
 function reiniciar(){
-    WD={renda:0,tempo:'',variacao:'',faixaDesp:'',formalizacao:'',inss:'',recibos:'',contaSep:'',controle:'',reserva:''};
+    WD={renda:0,variacao:'',faixaDesp:0,formalizacao:'',inss:'',recibos:'',contaSep:'',controle:'',reserva:''};
     document.getElementById('wiz-renda').value='';
-    document.getElementById('wiz-tempo').value='';
     document.querySelectorAll('[name="wform"]').forEach(function(r){r.checked=false;});
     document.querySelectorAll('.wpill').forEach(function(p){p.classList.remove('wpill-on');delete p.dataset.val;});
     document.getElementById('diag-result-html').innerHTML='';
     document.getElementById('err-renda').style.display='none';
     document.getElementById('err-faixa').style.display='none';
+    renderFaixaCards();
     goBack('scene-resultado','scene-renda',2);
 }
 </script>
