@@ -456,27 +456,23 @@
             object-position: center 30%;
         }
         .hs-slide:first-child img { object-position: center 15%; }
+        /* Mobile: imagem estática, slideshow oculto */
+        .hero-mobile-img { display: none; }
+        .hero-mobile-tag { display: none; }
         @media (max-width: 860px) {
-            .hs-slide img { object-position: center 20%; }
-            .hs-slide:first-child img { object-position: center 10%; }
-            .hero-slideshow {
-                position: absolute !important;
-                top: 0; left: 0; right: 0; bottom: 0;
-                display: block !important;
+            .hero-slideshow { display: none !important; }
+            .hero-mobile-img {
+                display: block;
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 15%;
+                border-radius: var(--radius);
             }
-            .hs-slide {
-                position: absolute !important;
-                top: 0; left: 0; right: 0; bottom: 0;
-            }
-            .hs-slide.active {
-                opacity: 1 !important;
-                transform: translateX(0) scale(1) !important;
-                filter: brightness(1) !important;
-            }
-            .hs-slide img {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
+            .hero-mobile-tag {
+                display: block;
             }
         }
         .hs-slide:nth-child(3) img { object-position: center 50%; clip-path: inset(8% 0 0 0 round 12px); }
@@ -2099,6 +2095,14 @@
 
             <!-- COLUNA DIREITA -->
             <div class="hero-right-col">
+                <!-- Imagem estática mobile -->
+                <img class="hero-mobile-img" src="images/hero-person.png" alt="Joyce Araújo - Contadora da Openn">
+                <div class="hs-name-tag hero-mobile-tag">
+                    <div class="hs-name-tag-name">Joyce Araújo</div>
+                    <div class="hs-name-tag-cargo">Contadora da Openn</div>
+                    <div class="hs-name-tag-crc">CRC GO 27331/O</div>
+                </div>
+                <!-- Slideshow desktop -->
                 <div class="hero-slideshow">
                     <div class="hs-slide active">
                         <img src="images/hero-person.png" alt="Especialista Openn">
