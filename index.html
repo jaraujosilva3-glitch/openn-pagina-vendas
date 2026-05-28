@@ -298,7 +298,7 @@
                 order: 1;
                 position: relative;
                 width: 100%;
-                height: 240px;
+                height: 320px;
                 min-height: unset !important;
                 max-height: unset !important;
                 align-self: auto;
@@ -456,7 +456,41 @@
             object-position: center 30%;
         }
         .hs-slide:first-child img { object-position: center 15%; }
+        @media (max-width: 860px) {
+            .hs-slide img { object-position: center 20%; }
+            .hs-slide:first-child img { object-position: center 10%; }
+        }
         .hs-slide:nth-child(3) img { object-position: center 50%; clip-path: inset(8% 0 0 0 round 12px); }
+        .hs-name-tag {
+            position: absolute;
+            bottom: 1.1rem;
+            left: 1rem;
+            background: rgba(6,21,29,0.78);
+            backdrop-filter: blur(6px);
+            border-left: 3px solid rgb(213,171,57);
+            border-radius: 0 8px 8px 0;
+            padding: 0.45rem 0.85rem;
+            z-index: 5;
+        }
+        .hs-name-tag-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .hs-name-tag-cargo {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.75);
+            margin-top: 0.08rem;
+        }
+        .hs-name-tag-crc {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgb(213,171,57);
+            letter-spacing: 0.05em;
+            margin-top: 0.2rem;
+        }
         .hs-dots {
             position: absolute;
             bottom: 0.75rem;
@@ -1857,7 +1891,7 @@
             .calc-box { padding: 1.5rem; }
 
             /* Hero fotos */
-            .hero-right-col { min-height: 220px; max-height: 240px; }
+            .hero-right-col { min-height: 300px; max-height: 340px; }
             .hero-photo-badge { font-size: 0.58rem; padding: 0.25rem 0.65rem; }
 
             /* Stats bar */
@@ -1898,7 +1932,7 @@
             .preco-valor { font-size: 1.35rem; }
             .num-card .big { font-size: 2rem; }
             .autoridade-card { padding: 1.5rem 1rem; border-radius: 16px; }
-            .hero-right-col { min-height: 180px; max-height: 200px; }
+            .hero-right-col { min-height: 260px; max-height: 300px; }
             .hsb-num { font-size: 1.4rem; }
             .proc-timeline::before { left: 13px; }
             .proc-num { width: 28px; height: 28px; font-size: 0.62rem; }
@@ -1936,7 +1970,7 @@
             .nav-sim-btn { padding: 0.35rem 0.75rem; font-size: 0.6rem; }
 
             /* Hero */
-            .hero-right-col { max-height: 160px; }
+            .hero-right-col { min-height: 240px; max-height: 270px; }
             .hero-sub { margin: 0.85rem 0 1.1rem; }
             .hero-bullets li { font-size: 0.85rem; margin-bottom: 0.35rem; }
             .hero-stats { gap: 1rem 1.5rem; }
@@ -2047,6 +2081,11 @@
                 <div class="hero-slideshow">
                     <div class="hs-slide active">
                         <img src="images/hero-person.png" alt="Especialista Openn">
+                        <div class="hs-name-tag">
+                            <div class="hs-name-tag-name">Joyce Araújo</div>
+                            <div class="hs-name-tag-cargo">Contadora da Openn</div>
+                            <div class="hs-name-tag-crc">CRC GO 27331/O</div>
+                        </div>
                     </div>
                     <div class="hs-slide">
                         <img src="images/hero-escritorio.png" alt="Escritório Openn">
