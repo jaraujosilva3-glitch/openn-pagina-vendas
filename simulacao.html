@@ -178,6 +178,106 @@
         .resultado-title h2 { color: var(--petrol); font-size: clamp(1rem, 3vw, 1.4rem); }
         .resultado-title .gold-line { margin: 0.7rem auto; }
 
+        /* BANNER DIAGNOSTICO */
+        .diag-banner {
+            background: linear-gradient(135deg, var(--petrol) 0%, #014a69 100%);
+            border-radius: var(--radius);
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+        .diag-banner.pf-melhor {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        }
+        .diag-banner-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+        }
+        .diag-banner-title {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            line-height: 1.35;
+        }
+        .diag-banner-desc {
+            font-size: 0.82rem;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.82);
+            margin-bottom: 1.25rem;
+        }
+        .diag-banner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.65rem 1.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .diag-banner-cta:hover { opacity: 0.85; }
+        .diag-banner-stats {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .diag-banner-stat-bloco {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .diag-banner-stat-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.2rem;
+        }
+        .diag-banner-stat-pct {
+            font-size: clamp(2rem, 6vw, 2.6rem);
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .diag-banner-stat-sub {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.92);
+            margin-top: 0.2rem;
+        }
+        .diag-banner-stat-sep {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.3);
+            font-weight: 300;
+        }
+        .diag-banner-stat-info {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.85);
+        }
+        .diag-banner-stat-info strong {
+            display: block;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
         /* FORM CARD */
         .form-card {
             background: var(--white);
@@ -540,13 +640,13 @@
 
         .carga-pct {
             font-size: 0.62rem;
-            color: rgba(64,64,64,0.38);
-            font-weight: 400;
+            color: rgba(64,64,64,0.65);
+            font-weight: 600;
             text-align: right;
             padding: 0.18rem 0 0.45rem;
             letter-spacing: 0.03em;
         }
-        .result-card.pj .carga-pct { color: rgba(64,64,64,0.38); }
+        .result-card.pj .carga-pct { color: rgba(64,64,64,0.65); }
 
         /* ── STEP INDICATOR ── */
         .step-indicator {
@@ -761,6 +861,22 @@
             /* Resultado título */
             .resultado-title h2 { font-size: 0.95rem; }
         }
+
+        .aviso-estimativa {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            background: rgba(1,91,127,0.06);
+            border: 1px solid rgba(1,91,127,0.15);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.5rem;
+            font-size: 0.78rem;
+            color: #444;
+            line-height: 1.6;
+        }
+        .aviso-estimativa svg { color: var(--petrol); }
+        .aviso-estimativa strong { color: var(--petrol); }
 
         .disclaimer {
             font-size: 0.60rem;
@@ -1001,17 +1117,6 @@
             <div class="gold-line"></div>
         </div>
 
-        <!-- ALERTA ISENCAO -->
-        <div id="isencao-alert" class="isencao-alert" style="display:none;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(213,171,57)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            <div class="isencao-alert-body">
-                <strong>Isento de imposto não significa isento de emitir documentos.</strong>
-                Mesmo sem pagar IRPF, você ainda precisa emitir recibos ou notas fiscais para cada atendimento. Seus pacientes utilizam esses documentos para deduzir as consultas no IRPF deles, e você é obrigada a fornecê-los.
-            </div>
-        </div>
-
         <!-- AVISO ALTA RENDA -->
         <div id="alta-renda-alert" class="alta-renda-card" style="display:none;">
             <div class="alta-renda-icon">
@@ -1068,31 +1173,28 @@
             </div>
         </div><!-- /resultado-grid -->
 
-        <div class="resultado-extras">
-            <!-- SAVINGS -->
-            <div class="savings-card" id="savings-card">
-                <div class="savings-label" id="savings-label">Comparativo tributário</div>
-                <div class="savings-value" id="savings-monthly">—</div>
-                <div class="savings-period" id="savings-period">—</div>
-                <div class="savings-annual">
-                    <span id="savings-annual-text">—</span>
-                </div>
-            </div>
+        <!-- BANNER DIAGNOSTICO -->
+        <div id="diag-banner" style="display:none;margin-top:1.5rem;"></div>
 
-            <!-- CTA -->
-            <div class="sim-cta">
-                <p>Esta é uma estimativa. Para um plano personalizado e garantido, fale com a Openn.</p>
-                <a href="https://www.grupoopenn.com/opennpsi" target="_blank" class="btn-primary">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
-                    Quero economizar agora
-                </a>
+        <!-- ALERTA ISENCAO -->
+        <div id="isencao-alert" class="isencao-alert" style="display:none;margin-bottom:1.5rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(213,171,57)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div class="isencao-alert-body">
+                <strong>Isento de imposto não significa isento de emitir documentos.</strong>
+                Mesmo sem pagar IRPF, você ainda precisa emitir recibos ou notas fiscais para cada atendimento. Seus pacientes utilizam esses documentos para deduzir as consultas no IRPF deles, e você é obrigada a fornecê-los.
             </div>
-        </div><!-- /resultado-extras -->
+        </div>
 
-        <p class="disclaimer">
-            Cálculo baseado na tabela IRPF vigente, INSS 2025 e Simples Nacional Anexo III vigente.<br>
-            Fator R simulado a 28% (pro-labore mínimo). Os valores são estimativas — não substituem consultoria personalizada.
-        </p>
+        <div class="aviso-estimativa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div>
+                <strong>Estes valores são apenas uma estimativa.</strong> Os números apresentados não representam um cálculo real e podem variar de acordo com o seu perfil, despesas e enquadramento tributário específico. Para um planejamento tributário adequado e valores precisos, consulte a Openn.
+            </div>
+        </div>
     </div>
 </section>
 
@@ -1402,6 +1504,50 @@ function enviarLead() {
         document.getElementById('pj-total').textContent           = fmt(totalPJ);
         document.getElementById('pj-carga').textContent           = 'carga tributária: ' + (totalPJ/fat*100).toFixed(1) + '% do faturamento';
         document.getElementById('pj-liquido').textContent         = fmt(liqPJ);
+
+        /* Fill diagnostico banner */
+        const banner = document.getElementById('diag-banner');
+        banner.style.display = 'block';
+        let waMensagem, bannerClass, bannerTitle, bannerDesc, bannerCTA, bannerStats;
+        const waSVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>';
+        if (eco > 0) {
+            bannerClass = '';
+            bannerTitle = 'Abrir CNPJ faz sentido para o seu perfil';
+            bannerStats = '<div class="diag-banner-stats">'
+                + '<div class="diag-banner-stat-bloco">'
+                + '<div class="diag-banner-stat-label">Economia</div>'
+                + '<div class="diag-banner-stat-pct">' + pct(ecoPct) + '</div>'
+                + '<div class="diag-banner-stat-sub">a menos em impostos</div>'
+                + '</div>'
+                + '<div class="diag-banner-stat-sep">|</div>'
+                + '<div class="diag-banner-stat-info"><strong>' + fmt(eco) + ' por mês</strong>a mais no seu bolso sendo PJ</div>'
+                + '</div>';
+            bannerDesc = 'O próximo passo é formalizar a abertura do CNPJ no regime correto, e a Openn cuida de tudo isso por você.';
+            bannerCTA = 'Quero abrir meu CNPJ com a Openn';
+            waMensagem = 'Olá! Fiz a simulação PF x PJ e quero abrir meu CNPJ com a Openn.';
+        } else if (eco < 0) {
+            bannerClass = 'pf-melhor';
+            bannerTitle = 'Por enquanto, manter-se como PF é o mais adequado';
+            bannerStats = '';
+            bannerDesc = 'Com a sua faixa de faturamento, a PJ ainda não traz vantagem tributária. Mas você pode estar perdendo dinheiro por não declarar corretamente o carnê-leão. A Openn te ajuda a otimizar isso.';
+            bannerCTA = 'Quero otimizar minha declaração';
+            waMensagem = 'Olá! Fiz a simulação PF x PJ e quero otimizar minha declaração como PF com a Openn.';
+        } else {
+            bannerClass = '';
+            bannerTitle = 'Os regimes estão próximos, mas há outros fatores a considerar';
+            bannerStats = '';
+            bannerDesc = 'Além da carga tributária, a PJ traz benefícios como INSS próprio, separação das finanças e planejamento de longo prazo. Vale uma análise completa para o seu caso.';
+            bannerCTA = 'Quero uma análise personalizada';
+            waMensagem = 'Olá! Fiz a simulação PF x PJ e gostaria de uma análise personalizada com a Openn.';
+        }
+        const waUrl = 'https://wa.me/5562996550808?text=' + encodeURIComponent(waMensagem);
+        banner.className = 'diag-banner' + (bannerClass ? ' ' + bannerClass : '');
+        banner.innerHTML = '<div class="diag-banner-label">Seu diagnóstico</div>'
+            + '<div class="diag-banner-title">' + bannerTitle + '</div>'
+            + bannerStats
+            + '<div class="diag-banner-desc">' + bannerDesc + '</div>'
+            + '<a href="' + waUrl + '" target="_blank" class="diag-banner-cta">'
+            + waSVG + bannerCTA + '</a>';
 
         /* Fill savings */
         const card = document.getElementById('savings-card');
